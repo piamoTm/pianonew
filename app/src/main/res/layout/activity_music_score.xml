@@ -137,14 +137,27 @@
     </LinearLayout>
 -->
 
+
+    <ImageView
+        android:id="@+id/img0"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dodol_icon2"
+        android:layout_above="@+id/line1"
+
+        />
+
+
     <ImageView
         android:visibility="invisible"
         android:id="@+id/img1"
+        android:layout_toRightOf="@+id/img0"
         android:layout_above="@+id/view1"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginBottom="7dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/do_icon" />
+
 
     <ImageView
         android:visibility="invisible"
@@ -153,7 +166,7 @@
         android:layout_above="@+id/view2"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
     <ImageView
         android:visibility="invisible"
@@ -163,7 +176,7 @@
         android:layout_above="@+id/view2"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
     <ImageView
         android:visibility="invisible"
@@ -172,7 +185,7 @@
         android:layout_above="@+id/view3"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
     <ImageView
         android:visibility="invisible"
@@ -182,7 +195,7 @@
         android:layout_above="@+id/view3"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
     <ImageView
         android:visibility="invisible"
@@ -191,7 +204,7 @@
         android:layout_above="@+id/view4"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
     <ImageView
         android:visibility="invisible"
@@ -201,7 +214,7 @@
         android:layout_above="@+id/view1"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
     <ImageView
         android:visibility="invisible"
@@ -210,7 +223,7 @@
         android:layout_above="@+id/view2"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
     <ImageView
         android:visibility="invisible"
@@ -220,7 +233,7 @@
         android:layout_above="@+id/view2"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
     <ImageView
         android:visibility="invisible"
@@ -229,7 +242,7 @@
         android:layout_above="@+id/view1"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/music_1" />
+        android:src="@drawable/music_icon" />
 
 
     <Button
