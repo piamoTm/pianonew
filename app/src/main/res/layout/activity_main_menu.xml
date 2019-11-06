@@ -6,5 +6,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Main_menu">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/bakcgroud_piano">
+
+
+        <Button
+            android:id="@+id/play_btn"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_rectangle_line_white"
+            android:padding="70px"
+            android:textSize="25sp"
+            android:text="연 주 하 기"/>
+
+        <Button
+            android:id="@+id/write_btn"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"
+            android:padding="70px"
+            android:textSize="25sp"
+            android:text="작 곡 하 기"
+            android:background="@drawable/btn_rectangle_line_white"/>
+    </LinearLayout>
 
 </LinearLayout>
