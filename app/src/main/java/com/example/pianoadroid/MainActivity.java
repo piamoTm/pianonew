@@ -30,25 +30,25 @@ public class MainActivity extends AppCompatActivity  implements View.OnTouchList
         setContentView(R.layout.activity_main);
 
         //xml에 정의한 뷰들을 불러옴
-        RL = (RelativeLayout)findViewById(R.id.RL);
-        RL2 = (RelativeLayout)findViewById(R.id.RL2);
-        RL3 = (RelativeLayout)findViewById(R.id.RL3);
-        RL4 = (RelativeLayout)findViewById(R.id.RL4);
-        RL5 = (RelativeLayout)findViewById(R.id.RL5);
-        RL6 = (RelativeLayout)findViewById(R.id.RL6);
-        RL7 = (RelativeLayout)findViewById(R.id.RL7);
-        RL8 = (RelativeLayout)findViewById(R.id.RL8);
-        RL9 = (RelativeLayout)findViewById(R.id.RL9);
-        //mTvCoord = (TextView)findViewById(R.id.tvCoord);
-        mTipsView = (TipsView)findViewById(R.id.tipsView);
-        mTipsView2 = (TipsView)findViewById(R.id.tipsView2);
-        mTipsView3 = (TipsView)findViewById(R.id.tipsView3);
-        mTipsView4 = (TipsView)findViewById(R.id.tipsView4);
-        mTipsView5 = (TipsView)findViewById(R.id.tipsView5);
-        mTipsView6 = (TipsView)findViewById(R.id.tipsView6);
-        mTipsView7 = (TipsView)findViewById(R.id.tipsView7);
-        mTipsView8 = (TipsView)findViewById(R.id.tipsView8);
-        mTipsView9 = (TipsView)findViewById(R.id.tipsView9);
+//        RL = (RelativeLayout)findViewById(R.id.RL);
+//        RL2 = (RelativeLayout)findViewById(R.id.RL2);
+//        RL3 = (RelativeLayout)findViewById(R.id.RL3);
+//        RL4 = (RelativeLayout)findViewById(R.id.RL4);
+//        RL5 = (RelativeLayout)findViewById(R.id.RL5);
+//        RL6 = (RelativeLayout)findViewById(R.id.RL6);
+//        RL7 = (RelativeLayout)findViewById(R.id.RL7);
+//        RL8 = (RelativeLayout)findViewById(R.id.RL8);
+//        RL9 = (RelativeLayout)findViewById(R.id.RL9);
+//        //mTvCoord = (TextView)findViewById(R.id.tvCoord);
+//        mTipsView = (TipsView)findViewById(R.id.tipsView);
+//        mTipsView2 = (TipsView)findViewById(R.id.tipsView2);
+//        mTipsView3 = (TipsView)findViewById(R.id.tipsView3);
+//        mTipsView4 = (TipsView)findViewById(R.id.tipsView4);
+//        mTipsView5 = (TipsView)findViewById(R.id.tipsView5);
+//        mTipsView6 = (TipsView)findViewById(R.id.tipsView6);
+//        mTipsView7 = (TipsView)findViewById(R.id.tipsView7);
+//        mTipsView8 = (TipsView)findViewById(R.id.tipsView8);
+//        mTipsView9 = (TipsView)findViewById(R.id.tipsView9);
        // imgs =(ImageView)findViewById(R.id.RefirImage);
         //텍스트뷰에 텍스트 삽입
        // mTvCoord.setText("Touch!!!");
@@ -95,17 +95,17 @@ public class MainActivity extends AppCompatActivity  implements View.OnTouchList
 //                //최상단 릴레이티브 레이아웃에 이미지를 Add
 //                RL.addView(img);
                 Log.i("SDFSDFSDf", "sdfsdfsdfds"+ v.getTag());
-                if(v.getId() == R.id.tipsView) {
-                    ImageView img = new ImageView(this);
-                    img.setImageResource(R.drawable.crotchet_1);
-
-
-                    //이미지가 저장될 곳의 x,y좌표를 표현
-                    img.setX(x - 40);
-                    img.setY(y - 90);
-                  //  Log.i("SDFSDFSDf", img.getX());
-                    RL.addView(img);
-                }//else if()
+//                if(v.getId() == R.id.tipsView) {
+//                    ImageView img = new ImageView(this);
+//                    img.setImageResource(R.drawable.crotchet_1);
+//
+//
+//                    //이미지가 저장될 곳의 x,y좌표를 표현
+//                    img.setX(x - 40);
+//                    img.setY(y - 90);
+//                  //  Log.i("SDFSDFSDf", img.getX());
+//                    RL.addView(img);
+//                }//else if()
 //                        break;
 //        case R.id.RL2:
 //        ImageView img2 = new ImageView(this);

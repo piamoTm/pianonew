@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.UUID;
 
 
-public class Bluetooth_test extends AppCompatActivity {
+public class Bluetooth_test extends AppCompatActivity { //
     private final int REQUEST_BLUETOOTH_ENABLE = 100;
 
     private TextView mConnectionStatus;
