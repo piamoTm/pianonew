@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end">
-                        <com.example.pianoAdroid.TipsView
+                        <com.example.pianoadroid.TipsView
                             android:layout_gravity="end"
                             android:layout_width="match_parent"
                             android:layout_height="200px"
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
-                    <com.example.pianoAdroid.TipsView
+                    <com.example.pianoadroid.TipsView
                         android:layout_gravity="end"
                         android:layout_width="match_parent"
                         android:layout_height="210px"
@@ -157,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
-                    <com.example.pianoAdroid.TipsView
+                    <com.example.pianoadroid.TipsView
                         android:layout_gravity="end"
                         android:layout_width="match_parent"
                         android:layout_height="210px"
@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
-                    <com.example.pianoAdroid.TipsView
+                    <com.example.pianoadroid.TipsView
                         android:layout_gravity="end"
                         android:layout_width="match_parent"
                         android:layout_height="210px"
@@ -189,7 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
-                    <com.example.pianoAdroid.TipsView
+                    <com.example.pianoadroid.TipsView
                         android:layout_gravity="end"
                         android:layout_width="match_parent"
                         android:layout_height="210px"
@@ -206,7 +206,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
-                    <com.example.pianoAdroid.TipsView
+                    <com.example.pianoadroid.TipsView
                         android:layout_gravity="end"
                         android:layout_width="match_parent"
                         android:layout_height="210px"
@@ -223,7 +223,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
-                    <com.example.pianoAdroid.TipsView
+                    <com.example.pianoadroid.TipsView
                         android:layout_gravity="end"
                         android:layout_width="match_parent"
                         android:layout_height="210px"
@@ -241,7 +241,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
-                    <com.example.pianotm.TipsView
+                    <com.example.pianoadroid.TipsView
                         android:layout_gravity="end"
                         android:layout_width="match_parent"
                         android:layout_height="210px"
@@ -259,7 +259,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end">
-                    <com.example.pianotm.TipsView
+                    <com.example.pianoadroid.TipsView
                         android:layout_gravity="end"
                         android:layout_width="match_parent"
                         android:layout_height="210px"
