@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 public class MainActivity extends AppCompatActivity  implements View.OnTouchListener{
 
     //좌표를 출력할 텍스트뷰
- //   private TextView mTvCoord; dfsdfsdfsfsd
+ //   private TextView mTvCoord; dfsdfsdfsfsd//
     //터치 위에 원이 그려지는 사용자 정의 뷰
     private TipsView mTipsView,mTipsView2,mTipsView3,mTipsView4,mTipsView5,mTipsView6,mTipsView7,mTipsView8,mTipsView9;
 
