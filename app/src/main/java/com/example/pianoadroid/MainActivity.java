@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnTouchList
     //터치 위에 원이 그려지는 사용자 정의 뷰
     private TipsView mTipsView,mTipsView2,mTipsView3,mTipsView4,mTipsView5,mTipsView6,mTipsView7,mTipsView8,mTipsView9;
 
-    //터치 이벤트의 좌표를 받아올 변수
+    //터치 이벤트의 좌표를 받아올 변수//juh2Test
     private float x = -1, y = -1;
     //최상단 RelativeLayout
     private RelativeLayout RL,RL2,RL3,RL4,RL5,RL6,RL7,RL8,RL9;
