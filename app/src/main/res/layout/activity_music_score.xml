@@ -1,9 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/relative_1"
     tools:context=".MusicScore">
 
-</android.support.constraint.ConstraintLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="5px"
+        android:background="#ffff"
+        android:layout_centerInParent="true"
+        />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_above="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#ffff">
+    </View>
+
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="5px"
+        android:background="#ffff"
+        android:layout_above="@+id/line1"
+        />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_above="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="#ffff"
+        />
+
+
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="wrap_content"
+        android:layout_height="5px"
+        android:background="#000"
+        android:layout_above="@+id/line2"
+        />
+
+    <View
+        android:id="@+id/line3"
+        android:layout_above="@+id/view3"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="#ffff"
+        />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="wrap_content"
+        android:layout_height="5px"
+        android:background="#000"
+        android:layout_above="@+id/line3"
+        />
+
+    <View
+        android:id="@+id/line4"
+        android:layout_above="@+id/view4"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="#ffff"
+        />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="wrap_content"
+        android:layout_height="5px"
+        android:background="#000"
+        android:layout_above="@+id/line4"
+        />
+
+    <View
+        android:id="@+id/line5"
+        android:layout_above="@+id/view5"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="#ffff"
+        />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="wrap_content"
+        android:layout_height="5px"
+        android:background="#000"
+        android:layout_above="@+id/line5"
+        />
+
+    <View
+        android:id="@+id/line6"
+        android:layout_above="@+id/view6"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="#ffff"
+        />
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="wrap_content"
+        android:layout_height="5px"
+        android:background="#000"
+        android:layout_above="@+id/line6"
+        />
+
+    <!--<LinearLayout
+        android:layout_above="@+id/view3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_above="@+id/view2"
+            android:layout_marginBottom="7dp"
+            android:src="@drawable/music_1" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="7dp"
+            android:src="@drawable/music_1" />
+
+    </LinearLayout>
+-->
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/img1"
+        android:layout_above="@+id/view1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="7dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/img2"
+        android:layout_toRightOf="@+id/img1"
+        android:layout_above="@+id/view2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_marginBottom="7dp"
+        android:id="@+id/img3"
+        android:layout_toRightOf="@+id/img2"
+        android:layout_above="@+id/view2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/img4"
+        android:layout_toRightOf="@+id/img3"
+        android:layout_above="@+id/view3"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_marginBottom="7dp"
+        android:id="@+id/img5"
+        android:layout_toRightOf="@+id/img4"
+        android:layout_above="@+id/view3"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/img6"
+        android:layout_toRightOf="@+id/img5"
+        android:layout_above="@+id/view4"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_marginBottom="7dp"
+        android:id="@+id/img7"
+        android:layout_toRightOf="@+id/img6"
+        android:layout_above="@+id/view1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/img8"
+        android:layout_toRightOf="@+id/img7"
+        android:layout_above="@+id/view2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_marginBottom="7dp"
+        android:id="@+id/img9"
+        android:layout_toRightOf="@+id/img8"
+        android:layout_above="@+id/view2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/img10"
+        android:layout_toRightOf="@+id/img9"
+        android:layout_above="@+id/view1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/music_1" />
+
+
+    <Button
+        android:id="@+id/btn_1"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="맞음"
+
+        />
+    <Button
+        android:id="@+id/btn_2"
+        android:layout_toRightOf="@+id/btn_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="틀림"
+        />
+
+
+
+
+</RelativeLayout>
