@@ -4,9 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:gravity="center|center_vertical"
+    android:orientation="vertical"
     tools:context=".Play_List">
+    <ImageView
+        android:id="@+id/backpressBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_button"
+        android:layout_marginLeft="30px"
+        android:layout_marginTop="30px"
+        android:layout_gravity="left|top"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_gravity="center|center_vertical"
