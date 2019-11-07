@@ -94,6 +94,7 @@ public class MusicScore extends AppCompatActivity {
                         // 이미지 크기 조절
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
                         layoutParams.bottomMargin = (int)(7*dp);
                         img1.setImageResource(R.drawable.do_icon);
 
@@ -101,29 +102,35 @@ public class MusicScore extends AppCompatActivity {
                         Log.e("0번째: ", "레");
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
 
                     }else if(list.get(0).equals("미")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
                         layoutParams.bottomMargin = (int)(7*dp);
 
                     }else if(list.get(0).equals("파")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
 
                     }else if(list.get(0).equals("솔")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
                         layoutParams.bottomMargin = (int)(7*dp);
 
                     }else if(list.get(0).equals("라")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
 
                     }else if(list.get(0).equals("시")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
 
                     }
 
