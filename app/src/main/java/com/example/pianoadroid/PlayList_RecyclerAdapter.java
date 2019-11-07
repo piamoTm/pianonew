@@ -1,11 +1,14 @@
 package com.example.pianoadroid;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -59,23 +62,55 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTitle; // 노래 제목 ㄴ
+        private LinearLayout mLay;
+        private TextView mTitle; // 노래 제목
         private TextView mWriter; //작곡가
         private  int mId;   // 노래 sqlite id
 
 
         ItemViewHolder(View itemView) {
             super(itemView);
-
+            mLay = itemView.findViewById(R.id.lay_item);
             mTitle = itemView.findViewById(R.id.title);
             mWriter = itemView.findViewById(R.id.writer);
 
+
+//            mLay.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int pos = getAdapterPosition();
+//                    if(pos != RecyclerView.NO_POSITION){
+//                        if(mListener != null) {
+//                            Music item = listData.get(pos);
+//                            Toast.makeText(v.getContext(),"선택됨 id: "+item.getId(),Toast.LENGTH_SHORT).show();
+////                            Intent intent = new Intent(v.getContext(),MainActivity.class);
+////                            intent.putExtra("id", item.getId());
+////                            v.getContext().startActivity(intent);
+//
+//                            //notifyItemChanged(pos) ;
+//                        }
+//                    }
+//                }
+//            });
         }
 
         void onBind(Music data) {
             mTitle.setText(data.getTitle());
             mTitle.setText(data.getWriter());
             mId = data.getId();
+
+
+
+
+            mLay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Intent intent = new Intent(v.getContext(),MainActivity.class);
+//                            intent.putExtra("id", item.getId());
+//                            v.getContext().startActivity(intent);
+                    Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
