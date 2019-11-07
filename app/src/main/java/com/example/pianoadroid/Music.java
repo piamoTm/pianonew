@@ -102,6 +102,7 @@ public class Music {
         return dateStr;
     }
 
+    //DB용입니다. 사용하지마세요.
     public String getDateStrForDB(){
         //db에 저장할때 사용하려고 만든 함수.
 
