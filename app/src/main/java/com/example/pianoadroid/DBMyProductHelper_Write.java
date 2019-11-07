@@ -22,7 +22,7 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-/*사용하는 방법
+/*사용하는 방법//////
 
 //SQLite db 개체 생성
 private DBMyProductHelper db;
