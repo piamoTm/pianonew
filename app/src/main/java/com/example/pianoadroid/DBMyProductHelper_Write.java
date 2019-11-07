@@ -53,7 +53,6 @@ db.deleteMusic(music);
 
 */
 
-
 public class DBMyProductHelper_Write extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
@@ -71,6 +70,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
     private static final String KEY_WRITER = "writer";
     private static final String KEY_CODE = "code";
     private static final String KEY_DATE = "date";
+    private static final String KEY_BEAT = "beat";
 
 
     public DBMyProductHelper_Write(Context context) {
@@ -89,7 +89,8 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
                 + KEY_TITLE + " TEXT, " //1
                 + KEY_WRITER + " TEXT, " //2
                 + KEY_CODE + " TEXT, " //3
-                + KEY_DATE + " TEXT" //4
+                + KEY_DATE + " TEXT, " //4
+                + KEY_BEAT + " TEXT " //5
                 + ")";
 
         //date  datetime not null default current_timestamp
@@ -141,6 +142,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         values.put(KEY_WRITER, music.getWriter());
         values.put(KEY_CODE, music.getCode());
         values.put(KEY_DATE, music.getDateStrForDB());
+        values.put(KEY_BEAT,music.getBeatStr());
 
         //새로운 row 추가
         //insert(String table, String nullColumnHack, ContentValues values)
@@ -189,6 +191,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         //KEY_WRITER + " TEXT, " //2
         //KEY_CODE + "  TEXT " //3
         //KEY_DATE +TEXT //4
+        //KEY_BEAT /TEXT / 5
 
         //Music(int id, String title, String writer, String code, String dateStr) <-생성자
         Music music = new Music(
@@ -196,7 +199,8 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
                 cursor.getString(1),     //title
                 cursor.getString(2),    //writer
                 cursor.getString(3),    //code
-                cursor.getString(4)     //date
+                cursor.getString(4),     //date
+                cursor.getString(5)     //beat
         );
 
         return music;
@@ -226,7 +230,9 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
                         cursor.getString(1),     //title
                         cursor.getString(2),    //writer
                         cursor.getString(3),     //code
-                        cursor.getString(4)     //date
+                        cursor.getString(4),     //date
+                        cursor.getString(5)     //beat
+
                 );
 
                 //adding myProduct to list
@@ -270,6 +276,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         values.put(KEY_WRITER, music.getWriter());
         values.put(KEY_CODE, music.getCode());
         values.put(KEY_DATE, music.getDateStrForDB());
+        values.put(KEY_BEAT,music.getBeatStr());
 
 
         //return : update row count
