@@ -1,9 +1,11 @@
 package com.example.pianoadroid;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 
 public class Main_menu extends AppCompatActivity {
 
@@ -29,7 +31,9 @@ public class Main_menu extends AppCompatActivity {
         mWriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), Play_List.class);
+                //intent.putExtra("imageUri", uri);
+                startActivity(intent);
 
             }
         });
