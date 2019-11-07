@@ -70,7 +70,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
     private static final String KEY_TITLE = "title";
     private static final String KEY_WRITER = "writer";
     private static final String KEY_CODE = "code";
-
+    private static final String KEY_BEAT = "beat";
 
     public DBMyProductHelper_Read(Context context) {
         //세번째 인수 factory 는 표준 cursor를 이용할 경우 null 로 지정
@@ -87,7 +87,8 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " //0
                 + KEY_TITLE + " TEXT, " //1
                 + KEY_WRITER + " TEXT, " //2
-                + KEY_CODE + " TEXT " //3
+                + KEY_CODE + " TEXT, " //3
+                + KEY_BEAT + " TEXT " //4
                 + ")";
 
         sqLiteDatabase.execSQL(CREATE_MY_PRODUCT_TABLE);
@@ -136,6 +137,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
         values.put(KEY_CODE, music.getCode());
+        values.put(KEY_BEAT,music.getBeatStr());
 
         //새로운 row 추가
         //insert(String table, String nullColumnHack, ContentValues values)
@@ -183,13 +185,15 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
         //KEY_TITLE + " TEXT, " //1
         //KEY_WRITER + " TEXT, " //2
         //KEY_CODE + "  TEXT " //3
+        //KEY_BEAT /TEXT / 4
 
-        //Music(int id, String title, String writer, String code) <-생성
+        //Music(int id, String title, String writer, String code, String beatStr) <-생성자
         Music music = new Music(
                 Integer.parseInt(cursor.getString(0)), //id
                 cursor.getString(1),     //title
                 cursor.getString(2),    //writer
-                cursor.getString(3)     //code
+                cursor.getString(3),     //code
+                cursor.getString(4)     //beat
         );
 
         return music;
@@ -213,12 +217,13 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
         //looping through all rows and adding to list
         if(cursor.moveToFirst()){
             do{
-                //Music(int id, String title, String writer, String code) <-생성자
+                //Music(int id, String title, String writer, String code, String beatStr) <-생성자
                 Music music = new Music(
                         Integer.parseInt(cursor.getString(0)), //id
                         cursor.getString(1),     //title
                         cursor.getString(2),    //writer
-                        cursor.getString(3)     //code
+                        cursor.getString(3),     //code
+                        cursor.getString(4)     //beat
                 );
 
                 //adding myProduct to list
@@ -261,6 +266,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
         values.put(KEY_CODE, music.getCode());
+        values.put(KEY_BEAT,music.getBeatStr());
 
         //return : update row count
         return db.update(TABLE_NAME_MY_PRODUCTS, values, KEY_ID + " = ? ", new String[]{String.valueOf(music.getId())});
