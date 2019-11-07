@@ -21,7 +21,7 @@ public class Music {
     private Calendar date; //작곡한 날짜
 
 
-
+    Music(){}
     public Music(int id, String title, String writer, String code, Calendar date) {
         this.id = id;
         this.title = title;
