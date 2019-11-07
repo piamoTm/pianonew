@@ -31,7 +31,7 @@ public class Main_menu extends AppCompatActivity {
         mWriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Play_List.class);
+                Intent intent = new Intent(getApplicationContext(), MakeMusic.class);
                 //intent.putExtra("imageUri", uri);
                 startActivity(intent);
 

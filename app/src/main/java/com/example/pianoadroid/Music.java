@@ -17,9 +17,11 @@ public class Music {
     private int id;//고유아이디
     private String title; //노래제목
     private String writer; //작곡가
-    private String code; //코드
+    private String code; //코드 "CCDDCCDD CCFFAA CCCCAA" <-이런 모양
     private Calendar date; //작곡한 날짜
 
+
+    Music(){}
     public Music(int id, String title, String writer, String code, Calendar date) {
         this.id = id;
         this.title = title;
@@ -92,7 +94,7 @@ public class Music {
     public void setDate(Calendar date) {
         this.date = date;
     }
-    //날짜를 2019/11/7 형식으로 반환
+
     public String getDateStr(){
         String dateStr = date.get(Calendar.YEAR) + "/"
                 +(date.get(Calendar.MONTH)+1) +"/"
@@ -100,6 +102,7 @@ public class Music {
         return dateStr;
     }
 
+    //DB용입니다. 사용하지마세요.
     public String getDateStrForDB(){
         //db에 저장할때 사용하려고 만든 함수.
 
