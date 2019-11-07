@@ -233,16 +233,7 @@
         android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
-    <ImageView
-        android:visibility="invisible"
-        android:layout_marginBottom="7dp"
-        android:id="@+id/img9"
-        android:layout_toRightOf="@+id/img8"
-        android:layout_above="@+id/view2"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginRight="22dp"
-        android:src="@drawable/music_icon" />
+
 
 
 
