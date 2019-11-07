@@ -149,7 +149,7 @@
 
 
     <ImageView
-
+        android:visibility="invisible"
         android:id="@+id/img1"
         android:layout_toRightOf="@+id/img0"
         android:layout_above="@+id/view1"
@@ -161,7 +161,7 @@
 
 
     <ImageView
-
+        android:visibility="invisible"
         android:id="@+id/img2"
         android:layout_toRightOf="@+id/img1"
         android:layout_above="@+id/view2"
@@ -171,7 +171,7 @@
         android:src="@drawable/music_icon" />
 
     <ImageView
-
+        android:visibility="invisible"
         android:layout_marginBottom="7dp"
         android:id="@+id/img3"
         android:layout_toRightOf="@+id/img2"
