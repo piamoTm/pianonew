@@ -96,7 +96,7 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
 
         void onBind(Music data) {
             mTitle.setText(data.getTitle());
-            mTitle.setText(data.getWriter());
+            mWriter.setText(data.getWriter());
             mId = data.getId();
 
 

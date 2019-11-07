@@ -20,6 +20,8 @@ public class Music {
     private String code; //코드
     private Calendar date; //작곡한 날짜
 
+
+
     public Music(int id, String title, String writer, String code, Calendar date) {
         this.id = id;
         this.title = title;
@@ -92,7 +94,7 @@ public class Music {
     public void setDate(Calendar date) {
         this.date = date;
     }
-    //날짜를 2019/11/7 형식으로 반환
+
     public String getDateStr(){
         String dateStr = date.get(Calendar.YEAR) + "/"
                 +(date.get(Calendar.MONTH)+1) +"/"

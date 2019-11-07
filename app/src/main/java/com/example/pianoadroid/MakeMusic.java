@@ -22,7 +22,7 @@ public class MakeMusic extends AppCompatActivity {
 
 
     private MakeMusic_RecyclerAdapter adapter;
-    private PlayList_RecyclerAdapter adapter2;
+    //private PlayList_RecyclerAdapter adapter2;
     private ImageView mBackBtn;
     private ImageButton mPlayBtn,mUploadBtn;
     private RecyclerView mMakeNoteRecycler;
@@ -38,7 +38,7 @@ public class MakeMusic extends AppCompatActivity {
         mPlayBtn =(ImageButton)findViewById(R.id.playbtn);
 
         init();
-        getData();
+        //getData();
         //show();// 안내 다이얼로그
 
 
@@ -56,36 +56,40 @@ public class MakeMusic extends AppCompatActivity {
     private void init() {
         mMakeNoteRecycler = (RecyclerView)findViewById(R.id.makenote);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mMakeNoteRecycler.setLayoutManager(linearLayoutManager);
 
         //adapter = new MakeMusic_RecyclerAdapter();
-        adapter2 = new PlayList_RecyclerAdapter();
-        mMakeNoteRecycler.setAdapter(adapter2);
+        adapter = new MakeMusic_RecyclerAdapter();
+        mMakeNoteRecycler.setAdapter(adapter);
+
+        Music data = new Music();
+        adapter.addItem(data);
+        adapter.notifyDataSetChanged();
 
     }
 
-    private void getData() {
-        // 임의의 데이터입니다.
-        List<String> listTitle = Arrays.asList("작은별","비행기","비행기","비행기","비행기","비행기");
-        List<String> listWriter = Arrays.asList("미상","미상","미상","미상","미상","미상");
-        List<Integer> listId = Arrays.asList(0,1,2,3,4,5);
-
-        for (int i = 0; i < listTitle.size(); i++) {
-            // 각 List의 값들을 data 객체에 set 해줍니다.
-
-            Music data = new Music();
-            data.setTitle(listTitle.get(i));   // 노래제목
-            data.setWriter(listWriter.get(i));  // 작곡가
-            data.setId(listId.get(i));   // 노래 고유 ID
-
-            // 각 값이 들어간 data를 adapter에 추가합니다.
-            adapter2.addItem(data);
-        }
-
-        // adapter의 값이 변경되었다는 것을 알려줍니다.
-        adapter2.notifyDataSetChanged();
-    }
+//    private void getData() {
+//        // 임의의 데이터입니다.
+//        List<String> listTitle = Arrays.asList("작은별","비행기","비행기","비행기","비행기","비행기");
+//        List<String> listWriter = Arrays.asList("미상","미상","미상","미상","미상","미상");
+//        List<Integer> listId = Arrays.asList(0,1,2,3,4,5);
+//
+//        for (int i = 0; i < listTitle.size(); i++) {
+//            // 각 List의 값들을 data 객체에 set 해줍니다.
+//
+//            Music data = new Music();
+//            data.setTitle(listTitle.get(i));   // 노래제목
+//            data.setWriter(listWriter.get(i));  // 작곡가
+//            data.setId(listId.get(i));   // 노래 고유 ID
+//
+//            // 각 값이 들어간 data를 adapter에 추가합니다.
+//            adapter.addItem(data);
+//        }
+//
+//        // adapter의 값이 변경되었다는 것을 알려줍니다.
+//        v.notifyDataSetChanged();
+//    }
 //    void show()
 //    {
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);

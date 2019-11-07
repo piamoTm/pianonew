@@ -64,6 +64,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
+
+        RelativeLayout relative;
         ImageView img1, img2, img3, img4, img5, img6, img7, img8, img9, img10;
 
 
@@ -75,6 +77,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
 
         ItemViewHolder(View itemView) {
             super(itemView);
+            relative = itemView.findViewById(R.id.relative_1);
             img1 = itemView.findViewById(R.id.img1);
             img2 = itemView.findViewById(R.id.img2);
             img3 = itemView.findViewById(R.id.img3);
