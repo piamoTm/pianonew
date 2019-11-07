@@ -95,7 +95,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.bottomMargin = (int)(7*dp);
-
+                        img1.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(0).equals("레")){
                         Log.e("0번째: ", "레");
@@ -139,6 +139,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img2.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(1).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -187,6 +188,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img3.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(2).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -235,6 +237,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img4.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(3).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -284,6 +287,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img5.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(4).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -333,6 +337,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img6.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(5).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -382,6 +387,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img7.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(6).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -431,6 +437,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img8.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(7).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -480,6 +487,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img9.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(8).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -529,6 +537,7 @@ public class MusicScore extends AppCompatActivity {
                         layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img9);
                         layoutParams.bottomMargin = (int)(7*dp);
+                        img10.setImageResource(R.drawable.do_icon);
 
                     }else if(list.get(9).equals("레")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
