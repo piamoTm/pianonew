@@ -20,7 +20,7 @@ import java.util.List;
 
 public class MakeMusic extends AppCompatActivity {
 
-
+///ㄹㄴㅇㄹㄴㅇ
     private MakeMusic_RecyclerAdapter adapter;
     //private PlayList_RecyclerAdapter adapter2;
     private ImageView mBackBtn;
