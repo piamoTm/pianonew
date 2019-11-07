@@ -26,7 +26,7 @@ public class MakeMusic extends AppCompatActivity {
     private ImageView mBackBtn;
     private ImageButton mPlayBtn,mUploadBtn;
     private RecyclerView mMakeNoteRecycler;
-
+    Music data = new Music();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,7 @@ public class MakeMusic extends AppCompatActivity {
         mPlayBtn =(ImageButton)findViewById(R.id.playbtn);
 
         init();
-        //getData();
+
         //show();// 안내 다이얼로그
 
 
@@ -49,6 +49,16 @@ public class MakeMusic extends AppCompatActivity {
             }
         });
 
+        mUploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                data.setId(1);
+                data.setTitle("도");
+
+                adapter.notifyDataSetChanged();
+            }
+        });
 
 
     }
@@ -63,52 +73,28 @@ public class MakeMusic extends AppCompatActivity {
         adapter = new MakeMusic_RecyclerAdapter();
         mMakeNoteRecycler.setAdapter(adapter);
 
-        Music data = new Music();
+        //Music data = new Music();
+        data.setId(0);
+       // data.setTitle("도");
         adapter.addItem(data);
         adapter.notifyDataSetChanged();
 
     }
 
-//    private void getData() {
-//        // 임의의 데이터입니다.
-//        List<String> listTitle = Arrays.asList("작은별","비행기","비행기","비행기","비행기","비행기");
-//        List<String> listWriter = Arrays.asList("미상","미상","미상","미상","미상","미상");
-//        List<Integer> listId = Arrays.asList(0,1,2,3,4,5);
-//
-//        for (int i = 0; i < listTitle.size(); i++) {
-//            // 각 List의 값들을 data 객체에 set 해줍니다.
-//
-//            Music data = new Music();
-//            data.setTitle(listTitle.get(i));   // 노래제목
-//            data.setWriter(listWriter.get(i));  // 작곡가
-//            data.setId(listId.get(i));   // 노래 고유 ID
-//
-//            // 각 값이 들어간 data를 adapter에 추가합니다.
-//            adapter.addItem(data);
-//        }
-//
-//        // adapter의 값이 변경되었다는 것을 알려줍니다.
-//        v.notifyDataSetChanged();
-//    }
-//    void show()
-//    {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//       // builder.setTitle("AlertDialog Title");
-//        builder.setMessage("건반을 눌러주세요.:)");
-//        builder.setPositiveButton("확인",
-//                new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        //Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//
-//        builder.show();
-//    }
-//
-//
-//
+    void show()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       // builder.setTitle("AlertDialog Title");
+        builder.setMessage("건반을 눌러주세요.:)");
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+                    }
+                });
 
-
+        builder.show();
+    }
 
 
 
