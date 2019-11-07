@@ -1,9 +1,18 @@
 package com.example.pianoadroid;
 
-public class Data {
+public class Music {
 
     private String title;
     private String writer;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
