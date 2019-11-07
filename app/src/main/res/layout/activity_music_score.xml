@@ -156,6 +156,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginBottom="7dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/do_icon" />
 
 
@@ -166,6 +167,7 @@
         android:layout_above="@+id/view2"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
     <ImageView
@@ -176,6 +178,7 @@
         android:layout_above="@+id/view2"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
     <ImageView
@@ -185,6 +188,7 @@
         android:layout_above="@+id/view3"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
     <ImageView
@@ -195,6 +199,7 @@
         android:layout_above="@+id/view3"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
     <ImageView
@@ -204,6 +209,7 @@
         android:layout_above="@+id/view4"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
     <ImageView
@@ -214,6 +220,7 @@
         android:layout_above="@+id/view1"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
     <ImageView
@@ -223,6 +230,7 @@
         android:layout_above="@+id/view2"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
     <ImageView
@@ -233,16 +241,10 @@
         android:layout_above="@+id/view2"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
-    <ImageView
-        android:visibility="invisible"
-        android:id="@+id/img10"
-        android:layout_toRightOf="@+id/img9"
-        android:layout_above="@+id/view1"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/music_icon" />
+
 
 
     <Button
