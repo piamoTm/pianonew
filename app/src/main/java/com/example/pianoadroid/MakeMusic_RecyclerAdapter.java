@@ -114,7 +114,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
             db_value.add("파");
             db_value.add("파");
             db_value.add("도");
-            db_value.add("라");
+            db_value.add("솔");
             db_value.add("라");
 
 

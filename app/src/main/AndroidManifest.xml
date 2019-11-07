@@ -7,13 +7,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/music_yyj"
+        android:icon="@drawable/piano_yyj_bk"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/music_yyj"
+        android:roundIcon="@drawable/piano_yyj_bk"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MakeMusic"></activity>
-        <activity android:name=".Play_List"></activity>
+        <activity android:name=".MakeMusic"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".Play_List"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".Main_menu"
             android:screenOrientation="landscape">
@@ -22,8 +24,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".Bluetooth_test"></activity>
+        <activity android:name=".Bluetooth_test">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape" />
