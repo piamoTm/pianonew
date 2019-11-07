@@ -17,7 +17,7 @@ public class Music {
     private int id;//고유아이디
     private String title; //노래제목
     private String writer; //작곡가
-    private String code; //코드
+    private String code; //코드 "CCDDCCDD CCFFAA CCCCAA" <-이런 모양
     private Calendar date; //작곡한 날짜
 
 
