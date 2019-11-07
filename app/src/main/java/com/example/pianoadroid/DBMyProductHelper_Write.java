@@ -22,6 +22,38 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/*사용하는 방법
+
+//SQLite db 개체 생성
+private DBMyProductHelper db;
+
+//SQLite db helper init 초기화
+db = new DBMyProductHelper(this);
+
+//새로운 노래 추가
+db.addMusic(music);
+
+//새로운 노래를(Music 개체를) db에 추가
+db.addMusic(Music);
+
+//id에 해당하는 Music을 db에서 가져오기
+db.getMusic(id);
+
+//모든 music 리스트를 가져온다
+db.getAllMusic();
+
+//db에서 가져온 Music 개수 가져오기
+db.getMusicCount();
+
+//매개변수로 넘어온 Music 개체를 업데이트.
+db.updateMusic(music);
+
+//매개변수로 넘어온 Music 개체를 삭제한다.
+db.deleteMusic(music);
+
+*/
+
+
 public class DBMyProductHelper_Write extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
