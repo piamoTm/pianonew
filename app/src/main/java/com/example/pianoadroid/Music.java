@@ -29,6 +29,15 @@ public class Music {
     public Music(){
         this.date = Calendar.getInstance(); // 기본값으로 오늘을 넣음.
     }
+
+    public Music(String title, String writer, String score, int[] beat) {
+        this();
+        this.title = title;
+        this.writer = writer;
+        this.score = score;
+        this.beat = beat;
+    }
+
     public Music(int id, String title, String writer, String score, Calendar date, int[] beat) {
         this(id,title,writer,score,beat);
         this.date = date;
@@ -47,13 +56,13 @@ public class Music {
         this.score = score;
         //this.date = Calendar.getInstance(); // 기본값으로 오늘을 넣음
     }
-    //db용_Write
+    //db용_생성자 (Write)
     public Music(int id, String title, String writer, String score, String dateStr, String beatStr){
         this(id,title,writer,score);
         setDate(dateStr);
         setBeat(beatStr);
     }
-    //db용 read
+    //db용 생성자 (read)
     public Music(int id, String title, String writer, String score,  String beatStr){
         this(id,title,writer,score);
         setBeat(beatStr);
