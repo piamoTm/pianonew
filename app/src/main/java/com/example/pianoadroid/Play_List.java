@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Play_List extends AppCompatActivity {
 
@@ -18,6 +18,11 @@ public class Play_List extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ImageView mBackbtn;
 
+    private ArrayList<Music> musicArr;
+
+    //SQLite db 개체 생성
+    DBMyProductHelper_Read db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,50 +30,45 @@ public class Play_List extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_play_list);
 
+        //SQLite db helper init 초기화
+        db = new DBMyProductHelper_Read(this);
+
         mBackbtn = (ImageView)findViewById(R.id.backpressBtn);
 
-        init();
+        musicArr = loadMusicList();//데이터 불러오기
 
-        getData();
+        init(musicArr);//리사이클러뷰 세팅
 
-        //뒤로가기 버튼
+        //뒤로가기 버튼 이벤트
         mBackbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+//        int beat[] = {1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,21,1,1,1,1,1,2};
+//        Music music = new Music("작은 별", "미상", "CCGGAAG FFEEDDC GGFFEED GGFFEED CCGGAAG FFEEDDC ",beat);
+//        db.addMusic(music);
     }
 
-    private void init() {
+    //리사이클러뷰 세팅
+    private void init(ArrayList<Music> musicArr) {
         recyclerView = findViewById(R.id.recyclerView);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new PlayList_RecyclerAdapter();
+        adapter = new PlayList_RecyclerAdapter(musicArr);
         recyclerView.setAdapter(adapter);
     }
 
-    private void getData() {
-        // 임의의 데이터입니다.
-        List<String> listTitle = Arrays.asList("작은별","비행기","비행기","비행기","비행기","비행기");
-        List<String> listWriter = Arrays.asList("미상","미상","미상","미상","미상","미상");
-        List<Integer> listId = Arrays.asList(0,1,2,3,4,5);
-
-        for (int i = 0; i < listTitle.size(); i++) {
-            // 각 List의 값들을 data 객체에 set 해줍니다.
-
-            Music data = new Music();
-            data.setTitle(listTitle.get(i));   // 노래제목
-            data.setWriter(listWriter.get(i));  // 작곡가
-            data.setId(listId.get(i));   // 노래 고유 ID
-
-            // 각 값이 들어간 data를 adapter에 추가합니다.
-            adapter.addItem(data);
+    private ArrayList<Music> loadMusicList() {
+        ArrayList<Music> musicArrayList = db.getAllMusic();
+        for (Music m: musicArrayList
+             ) {
+            Log.i("testLog", "music title " +m.getTitle());
         }
-
-        // adapter의 값이 변경되었다는 것을 알려줍니다.
-        adapter.notifyDataSetChanged();
+        return musicArrayList;
     }
 }

@@ -136,7 +136,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
 
         //Content Values를 통해 각 column의 명칭과 값을 짝지어준 후 insert()를 통해 테이블에 데이터를 삽입
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, music.getId());
+        //values.put(KEY_ID, music.getId());
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
         values.put(KEY_SCORE, music.getScore());
