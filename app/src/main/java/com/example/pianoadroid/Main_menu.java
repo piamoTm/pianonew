@@ -46,7 +46,7 @@ public class Main_menu extends AppCompatActivity {
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MusicTest.class);
+                Intent intent = new Intent(getApplicationContext(), Play_List.class);
                 //intent.putExtra("imageUri", uri);
                 startActivity(intent);
             }

@@ -17,7 +17,11 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
     // adapter에 들어갈 list 입니다.
     private ArrayList<Music> listData = new ArrayList<>();
 
-        //============================================================================================
+    public PlayList_RecyclerAdapter(ArrayList<Music> listData) {
+        this.listData = listData;
+    }
+
+    //============================================================================================
         // EVENT 관련
         public interface Playlist_viewClickListener{
             void onPlatlistClicked(int position, String id);
@@ -99,15 +103,12 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
             mWriter.setText(data.getWriter());
             mId = data.getId();
 
-
-
-
             mLay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent(v.getContext(),MainActivity.class);
-//                            intent.putExtra("id", item.getId());
-//                            v.getContext().startActivity(intent);
+                    Intent intent = new Intent(v.getContext(),MusicTest.class);
+                    intent.putExtra("id", mId);
+                    v.getContext().startActivity(intent);
                     Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
                 }
             });

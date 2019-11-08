@@ -24,13 +24,10 @@ import java.util.ArrayList;
 /*사용하는 방법///////////
 
 //SQLite db 개체 생성
-private DBMyProductHelper db;
+private DBMyProductHelper_Read db;
 
 //SQLite db helper init 초기화
 db = new DBMyProductHelper(this);
-
-//새로운 노래 추가
-db.addMusic(music);
 
 //새로운 노래를(Music 개체를) db에 추가
 db.addMusic(Music);
@@ -133,7 +130,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
 
         //Content Values를 통해 각 column의 명칭과 값을 짝지어준 후 insert()를 통해 테이블에 데이터를 삽입
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, music.getId());
+        //values.put(KEY_ID, music.getId());
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
         values.put(KEY_SCORE, music.getScore());

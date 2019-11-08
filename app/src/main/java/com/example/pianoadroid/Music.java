@@ -130,8 +130,11 @@ public class Music {
         for (String b : beatSplit
              ) {
             //한글자씩 자른 beatStr을(String type) -> beatArr배열에 숫자로 바꿔 넣는다.
-            beatArr[i++] = Integer.parseInt(b);
+            if(!b.equals("")){
+                beatArr[i++] = Integer.parseInt(b);
+            }
         }
+
 
         this.beat = beatArr;
     }
