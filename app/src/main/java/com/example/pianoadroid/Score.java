@@ -9,10 +9,13 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+//MusicScore.java 코드 정리
+
+
 public class Score extends AppCompatActivity {
     //음표png를 넣을 이미지뷰 8개
     ImageView[] imageViews;
-    int[] imageViewID;
+    int[] imageViewID; //이미지뷰 아이디 8개
 
     //RelativeLayout relative_1;
 
@@ -21,7 +24,7 @@ public class Score extends AppCompatActivity {
 
     int width = 35; //너비
     int height = 35; //높이
-    int space = 7; //반음올리기위한 크기, 선에 걸치게 하려
+    int space = 7; //반음올리기위한 크기, 선에 걸치게 하려고
 
 
     @Override
@@ -65,9 +68,9 @@ public class Score extends AppCompatActivity {
         //img1.setVisibility(View.VISIBLE);
         //img1.setLayoutParams(layoutParams);
 
-        // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
+        // 임시로 디비에서 꺼내온 코드을 담는 arrayList
         ArrayList<String> db_value=  new ArrayList<>();
-        db_value.add("C");
+        db_value.add("C"); //dump
         db_value.add("D");
         db_value.add("E");
         db_value.add("F");
@@ -82,7 +85,7 @@ public class Score extends AppCompatActivity {
         Log.e("db_value: ", db_value.size() + " ");
     }
 
-    // 계이름(도,레,..)을 받아오면 xml에 동적으로 계이름에 맞게 이미지를 설정함
+    // 계이름(도,레,..)을 받아오면 xml에 동적으로 계이름에 맞게 위치를 설정함
     public void makeScore(ArrayList<String> noteArr){
 
         dp = getResources().getDisplayMetrics().density;
@@ -141,6 +144,4 @@ public class Score extends AppCompatActivity {
             }
         }
     }
-
-
 }
