@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MakeMusic"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity android:name=".Play_List"
             android:screenOrientation="landscape"></activity>
         <activity
@@ -24,6 +26,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".Bluetooth_test">
 
         </activity>
         <activity android:name=".Bluetooth_test">

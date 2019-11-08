@@ -15,12 +15,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
 
 public class Main_menu extends AppCompatActivity {
 
+     SocketHandler socketdata = new SocketHandler();
     private Button mPlayBtn, mWriteBtn;
     private static final String TAG = "Main_BluetoothC";
     private final int REQUEST_BLUETOOTH_ENABLE = 100;
@@ -171,7 +173,7 @@ public class Main_menu extends AppCompatActivity {
 
             if ( isSucess ) {
                 // 연결된후 서로 메세지보낼수 있는 메소드
-                connected(mBluetoothSocket);
+                connected(mBluetoothSocket,mConnectedDeviceName);
             }
             else{
 
@@ -184,9 +186,10 @@ public class Main_menu extends AppCompatActivity {
 
 
     //기기와 연결된후 통신하기
-    public void connected( BluetoothSocket socket ) {
-        mConnectedTask = new MakeMusic.ConnectedTask(socket);
-        mConnectedTask.execute();
+    public void connected( BluetoothSocket socket , String mDevicename) {
+        socketdata.setmBluetoothsocket(socket);
+        socketdata.setmDeviceName(mDevicename);
+
     }
     public void showErrorDialog(String message)
     {
