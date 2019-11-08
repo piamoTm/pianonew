@@ -61,7 +61,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             img6 = itemView.findViewById(R.id.img6);
             img7 = itemView.findViewById(R.id.img7);
             img8 = itemView.findViewById(R.id.img8);
-            img9 = itemView.findViewById(R.id.img9);
+
 
             // 배경색이 칠해진 칼러
             img1_color = itemView.findViewById(R.id.img1_color);
