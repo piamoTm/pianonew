@@ -12,10 +12,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-//원곡재생, 연습모드를 위해 악보를 그리는 리사이클러뷰
-//음악 클래스를 받고 String score를 getScore()로 받아서.
-//글자씩 잘라서 아이템 생성하고
-//아이템 하나에 한글자씩 위치를 지정해주면 됨.
+//작곡 위해 악보를 그리는 리사이클러뷰
 public class testAdapter3 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     ArrayList<String> noteArr;
@@ -52,7 +49,7 @@ public class testAdapter3 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         Log.i("testLog", "악보 조각 " + startNote + scorePiece + endNote);
 
-        //악보조각(한줄)을 계이름 하나씩 자르기
+        //악보 조각(한줄)을 계이름 하나씩 자르기
         String[] split = scorePiece.split("");
 
         for (ImageView iv: ((ItemViewHolder)viewHolder).imageViews
@@ -111,11 +108,7 @@ public class testAdapter3 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ItemViewHolder)viewHolder).imageViews[n].setLayoutParams(((ItemViewHolder)viewHolder).layoutParams);
             }
             int position = n+(i*8);
-
-
         }
-
-
     }
 
     @Override
@@ -131,8 +124,7 @@ public class testAdapter3 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         return cnt;
     }
-
-
+    
     private static class ItemViewHolder extends RecyclerView.ViewHolder{
         ImageView[] imageViews;
         int[] imageViewID;
