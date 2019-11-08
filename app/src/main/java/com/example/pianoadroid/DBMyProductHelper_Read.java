@@ -21,7 +21,7 @@ import java.util.ArrayList;
 //안드로이드(android) SQLite 데이타 베이스 다루기
 //출처: https://mainia.tistory.com/670 [녹두장군 - 상상을 현실로]
 
-/*사용하는 방법
+/*사용하는 방법///////////
 
 //SQLite db 개체 생성
 private DBMyProductHelper db;

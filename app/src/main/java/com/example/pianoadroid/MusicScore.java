@@ -45,8 +45,6 @@ public class MusicScore extends AppCompatActivity {
         //img1.setVisibility(View.VISIBLE);
         //img1.setLayoutParams(layoutParams);
 
-
-
         // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
         ArrayList<String> db_value=  new ArrayList<>();
         db_value.add("솔");
