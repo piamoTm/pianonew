@@ -13,28 +13,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TestActivity">
+
+        </activity>
+        <activity
+            android:name=".MakeMusic"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Play_List"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Main_menu"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MakeMusic"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".Play_List"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Main_menu"
-            android:screenOrientation="landscape">
 
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="landscape" />
         <activity android:name=".Score" />
 
+        <activity android:name=".MusicTest"></activity>
     </application>
 
 </manifest>

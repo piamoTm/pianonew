@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MusicTest">
+
+    <RelativeLayout
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_button"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/tv_title"
+            android:layout_toRightOf="@+id/img_back"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="작은별"
+            android:textSize="20dp"
+            />
+
+
+
+        <Button
+            android:id="@+id/btn_listen"
+            android:layout_toLeftOf="@+id/btn_practice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원곡듣기"
+
+            />
+
+        <Button
+            android:visibility="invisible"
+            android:id="@+id/btn_stop"
+            android:layout_toLeftOf="@+id/btn_practice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="중지"
+
+            />
+
+        <Button
+            android:layout_alignParentRight="true"
+            android:id="@+id/btn_practice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연습하기"
+            android:layout_marginRight="20dp"
+            />
+
+
+    </RelativeLayout>
+
+
+
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/recycler_music_note"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+
+
+</LinearLayout>
