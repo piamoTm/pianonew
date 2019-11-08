@@ -23,8 +23,11 @@ public class MusicTest extends AppCompatActivity {
     // 원곡듣기 버튼
     Button btn_listen, btn_stop;
 
-    // 임시로 디비에서 악보의 계이름들을 받은 문자열 변수
+    // 최종 계이름을 담는 변수
     String musicnote;
+
+    // 임시로 디비에서 악보의 계이름을 코드상으로 받는 함수
+    String musicnote_eng;
 
     // 문자열로 온 악보정보를 split로 나눠서 저장한 배열변수
     String [] array;
@@ -55,8 +58,49 @@ public class MusicTest extends AppCompatActivity {
         //리사이클러뷰에 위에서 지정한 layoutManager인 LinearLayout을 대입.
         mRecyclerView.setLayoutManager(layoutManager);
 
-        // 임시로 디비에서 악보의 계이름들을 받은 문자열 변수
-        musicnote = "도미미파도레미미도레미파도레미파미";
+
+        // 디비에서 계이름 코드를 받는 변수
+        musicnote_eng = "BDEFGABCDEFGAB";
+
+        // 한글로 바꾸는 변수
+        String musicnote_kor = "";
+
+        String musicnote_eng_array[] = musicnote_eng.split("");
+        Log.e("musicnote_eng_array크기: ", musicnote_eng_array.length + "");
+
+        for (int i = 0; i < musicnote_eng_array.length; i++){
+            if (i != 0){
+                if (musicnote_eng_array[i].equals("C")){
+                    musicnote_eng_array[i] = "도";
+                    musicnote_kor += musicnote_eng_array[i];
+                }else if(musicnote_eng_array[i].equals("D")){
+                    musicnote_eng_array[i] = "레";
+                    musicnote_kor += musicnote_eng_array[i];
+                }else if(musicnote_eng_array[i].equals("E")){
+                    musicnote_eng_array[i] = "미";
+                    musicnote_kor += musicnote_eng_array[i];
+                }else if(musicnote_eng_array[i].equals("F")){
+                    musicnote_eng_array[i] = "파";
+                    musicnote_kor += musicnote_eng_array[i];
+                }else if(musicnote_eng_array[i].equals("G")){
+                    musicnote_eng_array[i] = "솔";
+                    musicnote_kor += musicnote_eng_array[i];
+                }else if(musicnote_eng_array[i].equals("A")){
+                    musicnote_eng_array[i] = "라";
+                    musicnote_kor += musicnote_eng_array[i];
+                }else if(musicnote_eng_array[i].equals("B")){
+                    musicnote_eng_array[i] = "시";
+                    musicnote_kor += musicnote_eng_array[i];
+                }
+            }
+        }
+
+        Log.e("한글변환계이름: ", musicnote_kor);
+
+
+
+        // 코드로 온 계이름을 한글로 변환 후 musicnote변수에 넣음
+        musicnote = musicnote_kor;
 
 
         // 8개씩 악보를 담아서 배열로 보낸 뒤 초기화 하는 변수
