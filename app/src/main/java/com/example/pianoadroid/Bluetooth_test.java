@@ -47,10 +47,8 @@ public class Bluetooth_test extends AppCompatActivity { //
         Button sendButton = (Button)findViewById(R.id.send_button);
 
 
-
-
-        //아두이노에 데이터 보내기
-        sendButton.setOnClickListener(new View.OnClickListener(){
+        //아두이노에 데이터 보내기 이벤트 등록
+        sendButton.setOnClickListener(new View.OnClickListener(){ //전송버튼 누르면
             public void onClick(View v){
                 //Edittext 값 읽어와서 아두이노에 데이터 보내기
                 String sendMessage = mInputEditText.getText().toString();
