@@ -98,7 +98,7 @@ public class MakeMusic extends AppCompatActivity {
                 }
                 else {
                     data.setId(con);
-                    data.setTitle("미");
+                    data.setTitle("C");
                     //여기서 setTitle은 계이름이 아니라 노래제목임..."나비야"같은..
                     //data.addNote("E");를 사용해야 할듯.
                 }
