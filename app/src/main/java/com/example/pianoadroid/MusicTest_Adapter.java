@@ -288,7 +288,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(list[1].equals("시")){
                     if (index == hight_pos){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -298,7 +298,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         myViewHolder.img1_color.setVisibility(View.VISIBLE);
                     }else{
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -478,7 +478,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(list[2].equals("시")){
                     if (index == hight_pos){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -492,7 +492,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                     }else{
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -668,7 +668,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(list[3].equals("시")){
                     if (index == hight_pos){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -681,7 +681,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
                     }else{
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -856,7 +856,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(list[4].equals("시")){
                     if (index == hight_pos){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -869,7 +869,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -1040,7 +1040,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(list[5].equals("시")){
                     if (index == hight_pos){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -1053,7 +1053,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -1227,7 +1227,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(list[6].equals("시")){
                     if (index == hight_pos){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -1240,7 +1240,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
                     }else{
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -1407,7 +1407,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(list[7].equals("시")){
                     if (index == hight_pos){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -1420,7 +1420,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
                     }else{
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
                         layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -1589,7 +1589,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(list[8].equals("시")){
                     if (index == hight_pos){
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
                         //layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
@@ -1602,7 +1602,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
                         layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
                         //layoutParams.rightMargin = (int)(22*dp);
                         layoutParams.bottomMargin = (int)(7*dp);
