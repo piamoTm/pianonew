@@ -28,15 +28,18 @@ import java.util.List;
 public class MakeMusic extends AppCompatActivity {
 
 ///ㄹㄴㅇㄹㄴㅇ
+
     private MakeMusic_RecyclerAdapter adapter;
     //private PlayList_RecyclerAdapter adapter2;
     private ImageView mBackBtn;
     private ImageButton mPlayBtn,mUploadBtn;
     private RecyclerView mMakeNoteRecycler;
-    private String mConnectedDeviceName = null;
+    private static String mConnectedDeviceName = null;
     static boolean isConnectionError = false;
     private ArrayAdapter<String> mConversationArrayAdapter;
     private static final String TAG = "MakeMusic";
+
+    ConnectedTask mConnectedTask = null;
 
     Music data = new Music();
     int count =0, con=1;
@@ -50,11 +53,18 @@ public class MakeMusic extends AppCompatActivity {
         mUploadBtn = (ImageButton)findViewById(R.id.uploadbtn);
         mPlayBtn =(ImageButton)findViewById(R.id.playbtn);
 
+
+
         init();
 
         //show();// 안내 다이얼로그
 
 
+        mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
+        mConnectedTask.execute();
+
+
+        sendMessage("P"); //작곡모드로
 
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +73,13 @@ public class MakeMusic extends AppCompatActivity {
             }
         });
 
+        mPlayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage("GGAAGGE GGEED GGAAGGE GEDEC");
+
+            }
+        });
         mUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +106,48 @@ public class MakeMusic extends AppCompatActivity {
     }
 
 
-    public static class ConnectedTask extends AsyncTask<Void, String, Boolean> {
+    private void init() {
+        mMakeNoteRecycler = (RecyclerView)findViewById(R.id.makenote);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mMakeNoteRecycler.setLayoutManager(linearLayoutManager);
+
+        //adapter = new MakeMusic_RecyclerAdapter();
+        adapter = new MakeMusic_RecyclerAdapter();
+        mMakeNoteRecycler.setAdapter(adapter);
+
+        //Music data = new Music();
+        data.setId(0);
+        // data.setTitle("도");
+        adapter.addItem(data);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    //아두이노로 데이터 보내기
+    void sendMessage(String msg){
+
+        if ( mConnectedTask != null ) {
+            mConnectedTask.write(msg.trim());
+            Log.d(TAG, "메세지 전송 : " + msg);
+        }
+    }
+
+
+
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+
+            if ( mConnectedTask != null ) {
+
+                mConnectedTask.cancel(true);
+                sendMessage("N");  //노말 모드로
+            }
+        }
+
+
+    public  class ConnectedTask extends AsyncTask<Void, String, Boolean> {
 
         private InputStream mInputStream = null;
         private OutputStream mOutputStream = null;
@@ -100,10 +158,10 @@ public class MakeMusic extends AppCompatActivity {
 
 
 
-        ConnectedTask(BluetoothSocket socket){
+        ConnectedTask(BluetoothSocket socket, String devicename){
 
-            mConnectedDeviceName = mBluetoothDevice.getName();
 
+            mConnectedDeviceName = devicename;
             mBluetoothSocket = socket;
             try {
                 mInputStream = mBluetoothSocket.getInputStream();
@@ -113,7 +171,7 @@ public class MakeMusic extends AppCompatActivity {
             }
 
             Log.d( TAG, mConnectedDeviceName+"에 연결");
-            Toast.makeText(getApplicationContext(),mConnectedDeviceName+"에 연결",Toast.LENGTH_LONG).show();
+            Toast.makeText(MakeMusic.this,mConnectedDeviceName+"에 연결",Toast.LENGTH_LONG).show();
         }
 
 
@@ -171,7 +229,7 @@ public class MakeMusic extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... recvMessage) {
 
-            mConversationArrayAdapter.insert(mConnectedDeviceName + ": " + recvMessage[0], 0);
+            Log.i("MakeMusic : ",mConnectedDeviceName + ": " + recvMessage[0]);
         }
 
         @Override
@@ -223,23 +281,7 @@ public class MakeMusic extends AppCompatActivity {
             ///mInputEditText.setText(" ");
         }
     }
-    private void init() {
-        mMakeNoteRecycler = (RecyclerView)findViewById(R.id.makenote);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mMakeNoteRecycler.setLayoutManager(linearLayoutManager);
-
-        //adapter = new MakeMusic_RecyclerAdapter();
-        adapter = new MakeMusic_RecyclerAdapter();
-        mMakeNoteRecycler.setAdapter(adapter);
-
-        //Music data = new Music();
-        data.setId(0);
-       // data.setTitle("도");
-        adapter.addItem(data);
-        adapter.notifyDataSetChanged();
-
-    }
 
     void show()
     {
