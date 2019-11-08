@@ -17,7 +17,7 @@ public class Music {
     private int id;//고유아이디
     private String title; //노래제목
     private String writer; //작곡가
-    private String code; //코드 "CCDDCCDD CCFFAA CCCCAA" <-이런 모양
+    private String score; //악보 "CCDDCCDD CCFFAA CCCCAA" <-이런 모양
     private Calendar date; //작곡한 날짜
     private int[] beat; //박자
     //"CCGGaaG FFEEDDC GGFFEEDGGFFEED CCGGaaG FFEEDDC " <-코드
@@ -29,33 +29,33 @@ public class Music {
     public Music(){
         this.date = Calendar.getInstance(); // 기본값으로 오늘을 넣음.
     }
-    public Music(int id, String title, String writer, String code, Calendar date, int[] beat) {
-        this(id,title,writer,code,beat);
+    public Music(int id, String title, String writer, String score, Calendar date, int[] beat) {
+        this(id,title,writer,score,beat);
         this.date = date;
     }
 
-    public Music(int id, String title, String writer, String code, int[] beat) {
-        this(id,title,writer,code);
+    public Music(int id, String title, String writer, String score, int[] beat) {
+        this(id,title,writer,score);
         this.beat = beat;
     }
 
-    public Music(int id, String title, String writer, String code) {
+    public Music(int id, String title, String writer, String score) {
         this();
         this.id = id;
         this.title = title;
         this.writer = writer;
-        this.code = code;
+        this.score = score;
         //this.date = Calendar.getInstance(); // 기본값으로 오늘을 넣음
     }
     //db용_Write
-    public Music(int id, String title, String writer, String code, String dateStr, String beatStr){
-        this(id,title,writer,code);
+    public Music(int id, String title, String writer, String score, String dateStr, String beatStr){
+        this(id,title,writer,score);
         setDate(dateStr);
         setBeat(beatStr);
     }
     //db용 read
-    public Music(int id, String title, String writer, String code,  String beatStr){
-        this(id,title,writer,code);
+    public Music(int id, String title, String writer, String score,  String beatStr){
+        this(id,title,writer,score);
         setBeat(beatStr);
     }
 
@@ -66,8 +66,8 @@ public class Music {
     public void setTitle(String title) { this.title = title; }
     public String getWriter() {return writer;}
     public void setWriter(String writer) {this.writer = writer;}
-    public String getCode() {return code;}
-    public void setCode(String code) {this.code = code;}
+    public String getCode() {return score;}
+    public void setCode(String code) {this.score = code;}
     public Calendar getDate() {return date;}
     public void setDate(Calendar date) {this.date = date;}
     public int[] getBeat() {return beat;}
@@ -80,6 +80,16 @@ public class Music {
                 +(date.get(Calendar.MONTH)+1) +"/"
                 +date.get(Calendar.DATE);
         return dateStr;
+    }
+
+    //코드에 음표('C')하나를 악보(score)에 추가
+    public void addNote(String note){
+        this.score += note;
+    }
+
+    //악보의 길이 반환
+    public int getScoreLen(){
+        return score.length();
     }
 
     ///////////////////////////////////////////////////////////

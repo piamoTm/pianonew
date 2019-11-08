@@ -68,7 +68,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_WRITER = "writer";
-    private static final String KEY_CODE = "code";
+    private static final String KEY_SCORE = "score";
     private static final String KEY_DATE = "date";
     private static final String KEY_BEAT = "beat";
 
@@ -88,7 +88,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " //0
                 + KEY_TITLE + " TEXT, " //1
                 + KEY_WRITER + " TEXT, " //2
-                + KEY_CODE + " TEXT, " //3
+                + KEY_SCORE + " TEXT, " //3
                 + KEY_DATE + " TEXT, " //4
                 + KEY_BEAT + " TEXT " //5
                 + ")";
@@ -140,7 +140,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         values.put(KEY_ID, music.getId());
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
-        values.put(KEY_CODE, music.getCode());
+        values.put(KEY_SCORE, music.getCode());
         values.put(KEY_DATE, music.getDateStrForDB());
         values.put(KEY_BEAT,music.getBeatStr());
 
@@ -179,7 +179,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         // php에서 select하고 한줄씩 rows에 담아 사용하듯이 여기는 cursor에서 한줄씩 사용하나보네
         //
         Cursor cursor = db.query(TABLE_NAME_MY_PRODUCTS,
-                new String[]{KEY_ID, KEY_TITLE, KEY_WRITER, KEY_CODE},
+                new String[]{KEY_ID, KEY_TITLE, KEY_WRITER, KEY_SCORE},
                 KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null) {
@@ -274,7 +274,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
-        values.put(KEY_CODE, music.getCode());
+        values.put(KEY_SCORE, music.getCode());
         values.put(KEY_DATE, music.getDateStrForDB());
         values.put(KEY_BEAT,music.getBeatStr());
 

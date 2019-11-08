@@ -14,11 +14,15 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+//작곡 MakeMusic 액티비티에서 사용되는 리사이클러뷰 어댑터
+//아두이노로부터 블루투스 통신으로 'C' 라는 데이터가 오면 악보에 도를 그리는 역할
+
 public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_RecyclerAdapter.ItemViewHolder> {
 
     // adapter에 들어갈 list 입니다.
     private ArrayList<Music> listData = new ArrayList<>();
-    private  ArrayList<String> db_value = new ArrayList<>();
+    private ArrayList<String> db_value = new ArrayList<>();
+    private Music music; //노래 한곡
     //============================================================================================
 //    // EVENT 관련
 //    public interface Playlist_viewClickListener{
@@ -33,6 +37,16 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
 //        this.mListener = listener;
 //    }
     //============================================================================================
+
+
+    public MakeMusic_RecyclerAdapter() {
+    }
+
+    public MakeMusic_RecyclerAdapter(ArrayList<Music> listData, ArrayList<String> db_value, Music music) {
+        this.listData = listData;
+        this.db_value = db_value;
+        this.music = music;
+    }
 
     @NonNull
     @Override
@@ -50,13 +64,15 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
     }
 
     @Override
-    public int getItemCount() {
-        // RecyclerView의 총 개수 입니다.
+    public int getItemCount(){
+        // RecyclerView item의 총 개수 입니다.
+        // 오선지의 개수
         return listData.size();
     }
 
     void addItem(Music data) {
         // 외부에서 item을 추가시킬 함수입니다.
+        // 오선지를 추가하는 함수
         listData.add(data);
     }
 
@@ -64,545 +80,104 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-
+        //레이아웃 설정용 변수
         RelativeLayout relative;
-        ImageView img0, img1, img2, img3, img4, img5, img6, img7, img8;
-
-
-        //RelativeLayout relative_1;
-
         RelativeLayout.LayoutParams layoutParams;
         float dp;
+
+        //음표png를 넣을 이미지뷰 8개
+        ImageView[] imageViews;
+        int[] imageViewID; //이미지뷰 아이디 8개
 
 
         ItemViewHolder(View itemView) {
             super(itemView);
             relative = itemView.findViewById(R.id.relative_1);
-            img0 = itemView.findViewById(R.id.img0);
-            img1 = itemView.findViewById(R.id.img1);
-            img2 = itemView.findViewById(R.id.img2);
-            img3 = itemView.findViewById(R.id.img3);
-            img4 = itemView.findViewById(R.id.img4);
-            img5 = itemView.findViewById(R.id.img5);
-            img6 = itemView.findViewById(R.id.img6);
-            img7 = itemView.findViewById(R.id.img7);
-            img8 = itemView.findViewById(R.id.img8);
 
+            imageViews[0] = itemView.findViewById(R.id.img1);
+            imageViews[1] = itemView.findViewById(R.id.img2);
+            imageViews[2] = itemView.findViewById(R.id.img3);
+            imageViews[3] = itemView.findViewById(R.id.img4);
+            imageViews[4] = itemView.findViewById(R.id.img5);
+            imageViews[5] = itemView.findViewById(R.id.img6);
+            imageViews[6] = itemView.findViewById(R.id.img7);
+            imageViews[7] = itemView.findViewById(R.id.img8);
 
+            imageViewID[0] = R.id.img0;
+            imageViewID[1] = R.id.img1;
+            imageViewID[2] = R.id.img2;
+            imageViewID[3] = R.id.img3;
+            imageViewID[4] = R.id.img4;
+            imageViewID[5] = R.id.img5;
+            imageViewID[6] = R.id.img6;
+            imageViewID[7] = R.id.img7;
 
-            dp = itemView.getResources().getDisplayMetrics().density;
 
             // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
+            dp = itemView.getResources().getDisplayMetrics().density;
             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-//            int pos = getAdapterPosition();
-//            notifyItemChanged(pos) ;
-//            // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
-//            ArrayList<String> db_value=  new ArrayList<>();
-//            db_value.add("솔");
-//            db_value.add("레");
-//            db_value.add("도");
-//            db_value.add("미");
-//            db_value.add("도");
-//            db_value.add("파");
-//            db_value.add("파");
-//            db_value.add("도");
-//           // db_value.add("솔");
-//
-//
-//
-//            // 함수호출
-//            M_name(db_value,dp);
-//            Log.e("db_value: ", db_value.size() + " ");
 
-//            mLay.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-
-//                    int pos = getAdapterPosition();
-//                    if(pos != RecyclerView.NO_POSITION){
-//                        if(mListener != null) {
-//                            Music item = listData.get(pos);
-//                            Toast.makeText(v.getContext(),"선택됨 id: "+item.getId(),Toast.LENGTH_SHORT).show();
-////                            Intent intent = new Intent(v.getContext(),MainActivity.class);
-////                            intent.putExtra("id", item.getId());
-////                            v.getContext().startActivity(intent);
-//
-//                            //notifyItemChanged(pos) ;
-//                        }
-//                    }
-//                }
-//            });
 
         }
         // 계이름(도,레,..)을 받아오면 xml에 동적으로 계이름에 맞게 이미지를 설정함
-        public void M_name(ArrayList<String> list, float dp){
-
-
-            // 배열에 있는 계이름 수만큼 반복문을 돌림
-            for (int i = 0; i < list.size(); i++){
-
-                // 이 if문은 신경쓰지 말것
-                if(list.get(i).equals("도") || list.get(i).equals("레") || list.get(i).equals("미") || list.get(i).equals("파") || list.get(i).equals("솔") || list.get(i).equals("라") || list.get(i).equals("시")){
-                    Log.e("list값: ", list.get(i));
-                    Log.e("i: ", i + "");
-
-                    // 여기서 부터 배열 첫번째 계이름을 찾음
-                    if(i == 0){
-
-                        Log.e("배열 0번째: ", list.get(0));
-
-                        if(list.get(0).equals("도")){
-                            Log.e("0번째: ", "도");
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
-                            img1.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(0).equals("레")){
-                            Log.e("0번째: ", "레");
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
-
-                        }else if(list.get(0).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
-
-                        }else if(list.get(0).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
-
-                        }else if(list.get(0).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
-
-                        }else if(list.get(0).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
-
-                        }else if(list.get(0).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
-                        }
-
-                        img1.setVisibility(View.VISIBLE);
-                        img1.setLayoutParams(layoutParams);
-
-                    }else if(i == 1){
-                        Log.e("배열 1번째: ", list.get(1));
-
-                        if(list.get(1).equals("도")){
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            img2.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(1).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
-
-                        }else if(list.get(1).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-
-                        }else if(list.get(1).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
-
-                        }else if(list.get(1).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }else if(list.get(1).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
-
-                        }else if(list.get(1).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img1);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                        }
-
-                        img2.setVisibility(View.VISIBLE);
-                        img2.setLayoutParams(layoutParams);
-
-                    }else if(i == 2){
-                        Log.e("배열 2번째: ", list.get(2));
-
-                        if(list.get(2).equals("도")){
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            img3.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(2).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
-
-                        }else if(list.get(2).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-
-                        }else if(list.get(2).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
-
-                        }else if(list.get(2).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }else if(list.get(2).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
-
-                        }else if(list.get(2).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img2);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }
-
-                        img3.setVisibility(View.VISIBLE);
-                        img3.setLayoutParams(layoutParams);
-                    }else if(i == 3){
-                        Log.e("배열 3번째: ", list.get(3));
-
-                        if(list.get(3).equals("도")){
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            img4.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(3).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
-
-                        }else if(list.get(3).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-
-                        }else if(list.get(3).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
-
-                        }else if(list.get(3).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }else if(list.get(3).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
-
-                        }else if(list.get(3).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img3);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }
-
-                        img4.setVisibility(View.VISIBLE);
-                        img4.setLayoutParams(layoutParams);
-
-                    }else if(i == 4){
-                        Log.e("배열 4번째: ", list.get(4));
-
-                        if(list.get(4).equals("도")){
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            img5.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(4).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
-
-                        }else if(list.get(4).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-
-                        }else if(list.get(4).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
-
-                        }else if(list.get(4).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }else if(list.get(4).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
-
-                        }else if(list.get(4).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img4);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }
-
-                        img5.setVisibility(View.VISIBLE);
-                        img5.setLayoutParams(layoutParams);
-
-                    }else if(i == 5){
-                        Log.e("배열 5번째: ", list.get(5));
-
-                        if(list.get(5).equals("도")){
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            img6.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(5).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
-
-                        }else if(list.get(5).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-
-                        }else if(list.get(5).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
-
-                        }else if(list.get(5).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }else if(list.get(5).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
-
-                        }else if(list.get(5).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }
-
-                        img6.setVisibility(View.VISIBLE);
-                        img6.setLayoutParams(layoutParams);
-
-                    }else if(i == 6){
-                        Log.e("배열 6번째: ", list.get(6));
-
-                        if(list.get(6).equals("도")){
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            img7.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(6).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
-
-                        }else if(list.get(6).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-
-                        }else if(list.get(6).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
-
-                        }else if(list.get(6).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }else if(list.get(6).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
-
-                        }else if(list.get(6).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img6);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }
-
-                        img7.setVisibility(View.VISIBLE);
-                        img7.setLayoutParams(layoutParams);
-
-                    }else if(i == 7) {
-                        Log.e("배열 7번째: ", list.get(7));
-
-                        if (list.get(7).equals("도")) {
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-                            layoutParams.bottomMargin = (int) (7 * dp);
-                            img8.setImageResource(R.drawable.do_icon);
-
-                        } else if (list.get(7).equals("레")) {
-                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-
-                        } else if (list.get(7).equals("미")) {
-                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-                            layoutParams.bottomMargin = (int) (7 * dp);
-
-
-                        } else if (list.get(7).equals("파")) {
-                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-
-                        } else if (list.get(7).equals("솔")) {
-                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-                            layoutParams.bottomMargin = (int) (7 * dp);
-
-                        } else if (list.get(7).equals("라")) {
-                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-
-                        } else if (list.get(7).equals("시")) {
-                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-                            layoutParams.bottomMargin = (int) (7 * dp);
-
-                        }
-
-                        img8.setVisibility(View.VISIBLE);
-                        img8.setLayoutParams(layoutParams);
-
+        public void makeScore(ArrayList<String> noteArr, float dp){
+            int width = 35;
+            int space = 35;
+
+
+            // 배열에 있는 코드 수만큼 반복문을 돌림
+            for (int i = 0; i < noteArr.size(); i++){
+
+                // 코드에 따라 음표의 위치를 조절
+                Log.i("testLog", i+"번째 계이름 " + noteArr.get(i));
+                if(!noteArr.get(i).equals(" ")){ //공란이 아닐때 == 도~시일
+                    if(noteArr.get(i).equals("C")){
+                        // 이미지 크기 조절
+                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
+                        layoutParams.bottomMargin = (int)(space * dp);
+                        imageViews[i].setImageResource(R.drawable.do_icon);
+
+                    }else if(noteArr.get(i).equals("D")){
+                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
+
+                    }else if(noteArr.get(i).equals("E")){
+                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
+                        layoutParams.bottomMargin = (int)(space * dp);
+
+                    }else if(noteArr.get(i).equals("F")){
+                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
+
+                    }else if(noteArr.get(i).equals("G")){
+                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
+                        layoutParams.bottomMargin = (int)(space * dp);
+
+                    }else if(noteArr.get(i).equals("A")){
+                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
+
+                    }else if(noteArr.get(i).equals("B")){
+                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.bottomMargin = (int)(space * dp);
+                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
                     }
-//                    }else if(i == 8){
-//                        Log.e("배열 8번째: ", list.get(8));
-//
-//                        if(list.get(8).equals("도")){
-//                            // 이미지 크기 조절
-//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-//                            layoutParams.bottomMargin = (int)(7*dp);
-//                            img9.setImageResource(R.drawable.do_icon);
-//
-//                        }else if(list.get(8).equals("레")){
-//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-//
-//                        }else if(list.get(8).equals("미")){
-//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-//                            layoutParams.bottomMargin = (int)(7*dp);
-//
-//
-//                        }else if(list.get(8).equals("파")){
-//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-//
-//                        }else if(list.get(8).equals("솔")){
-//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-//                            layoutParams.bottomMargin = (int)(7*dp);
-//
-//                        }else if(list.get(8).equals("라")){
-//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-//
-//                        }else if(list.get(8).equals("시")){
-//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-//                            layoutParams.bottomMargin = (int)(7*dp);
-//
-//                        }
-//
-//                        img9.setVisibility(View.VISIBLE);
-//                        img9.setLayoutParams(layoutParams);
-//                    }
-
+                    imageViews[i].setVisibility(View.VISIBLE);
+                    imageViews[i].setLayoutParams(layoutParams);
                 }
-
             }
-
         }
+
         void onBind(Music data) {
 
             // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
@@ -619,7 +194,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
 
 
                 // 함수호출
-                M_name(db_value, dp);
+                makeScore(db_value, dp);
                 Log.e("db_value: ", db_value.size() + " ");
 
             }else if (data.getId() == 0){

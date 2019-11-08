@@ -54,7 +54,7 @@ public class Score extends AppCompatActivity {
         imageViewID[7] = R.id.img7;
 
 
-        //DisplayMetrics : 스마트폰의 크기정보를 구할때 사용하는 클래
+        //DisplayMetrics : 스마트폰의 크기 정보를 구할때 사용하는 클래
         //density : mdpi를 기준으로 한 배율. 스케일링 시 곱해지는 값
         //density : 디스플레이의 논리적인 밀, dip단위에 사용되는 곱하기 인자. dip는 xml에서 사용되는 dp를 의미함.
         dp = getResources().getDisplayMetrics().density;
