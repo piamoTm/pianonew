@@ -1,5 +1,6 @@
 package com.example.pianoadroid;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,12 +32,17 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.musicnote = musicnote;
     }
 
+    //아이템 클릭 시 실행 함수 최근 수정사항
+    MusicTest_Adapter.ThreadFinishListener tfliListener;
 
-
-
-    public interface EventHandler {
-        void handle(int position);
+    public interface ThreadFinishListener{
+        void onMusicFinish(String finish, Context context);
     }
+
+    public void ThreadFinishListener(MusicTest_Adapter.ThreadFinishListener threadFinishListener){
+        tfliListener = threadFinishListener;
+    }
+
 
 
     // 이 클래스는 아이템 뷰를 저장하는 뷰홀더 클래스
@@ -135,6 +141,48 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             // 뷰홀더 맨 끝의 음계의 색이 들어올 경우 색을 없애고 원상복귀 시킴
             if (index != 1){
                 myViewHolder.img8_color.setVisibility(View.INVISIBLE);
+            }
+
+            Log.e("hight_pos : ", hight_pos + "");
+
+            // 마지막 음표 색 없앰 , 최근 수정사항
+            if (hight_pos == musicnote.length() + 1){
+                Log.e("마지막 음표", "ㅇ");
+
+                if (lists.length() == 1){
+                    myViewHolder.img1_color.setVisibility(View.INVISIBLE);
+                    myViewHolder.img1.setVisibility(View.VISIBLE);
+                    tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
+                    break;
+                }else if(lists.length() == 2){
+                    myViewHolder.img2_color.setVisibility(View.INVISIBLE);
+                    myViewHolder.img2.setVisibility(View.VISIBLE);
+                    break;
+                }else if(lists.length() == 3){
+                    myViewHolder.img3_color.setVisibility(View.INVISIBLE);
+                    myViewHolder.img3.setVisibility(View.VISIBLE);
+                    break;
+                }else if(lists.length() == 4){
+                    myViewHolder.img4_color.setVisibility(View.INVISIBLE);
+                    myViewHolder.img4.setVisibility(View.VISIBLE);
+                    break;
+                }else if(lists.length() == 5){
+                    myViewHolder.img5_color.setVisibility(View.INVISIBLE);
+                    myViewHolder.img5.setVisibility(View.VISIBLE);
+                    break;
+                }else if(lists.length() == 6){
+                    myViewHolder.img6_color.setVisibility(View.INVISIBLE);
+                    myViewHolder.img6.setVisibility(View.VISIBLE);
+                    break;
+                }else if(lists.length() == 7){
+                    myViewHolder.img7_color.setVisibility(View.INVISIBLE);
+                    myViewHolder.img7.setVisibility(View.VISIBLE);
+                    break;
+                }else if(lists.length() == 8){
+                    myViewHolder.img8_color.setVisibility(View.INVISIBLE);
+                    myViewHolder.img8.setVisibility(View.VISIBLE);
+                    break;
+                }
             }
 
 
