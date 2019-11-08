@@ -38,7 +38,8 @@
 
         <activity android:name=".Score" />
 
-        <activity android:name=".MusicTest"></activity>
+        <activity android:name=".MusicTest"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
