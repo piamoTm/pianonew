@@ -2,16 +2,21 @@ package com.example.pianoadroid;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.Set;
+import java.util.UUID;
 
 
 public class Main_menu extends AppCompatActivity {
@@ -22,6 +27,9 @@ public class Main_menu extends AppCompatActivity {
 
     static boolean isConnectionError = false;
     static BluetoothAdapter mBluetoothAdapter;
+    private String mConnectedDeviceName = null;
+
+    MakeMusic.ConnectedTask mConnectedTask = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +88,8 @@ public class Main_menu extends AppCompatActivity {
         final BluetoothDevice[] pairedDevices = devices.toArray(new BluetoothDevice[0]);
 
         if ( pairedDevices.length == 0 ){
-            showQuitDialog( "페어링 된 기기가 없습니다.\n"
-                    +"다른 기기와 페어링해야합니다.");
+            showQuitDialog( "연결 된 기기가 없습니다.\n"
+                    +"피아노와 연결하세요.");
             return;
         }
 
@@ -98,12 +106,87 @@ public class Main_menu extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-//                //기기 선택후  기기와 CONNECT함
-//                Bluetooth_test.ConnectTask task = new Bluetooth_test.ConnectTask(pairedDevices[which]);
-//                task.execute();
+                //기기 선택후  기기와 CONNECT함
+                ConnectTask task = new ConnectTask(pairedDevices[which]);
+                task.execute();
             }
         });
         builder.create().show();
+    }
+
+    //아두이노와 안드로이드 연결함
+    private class ConnectTask extends AsyncTask<Void, Void, Boolean> {
+
+        private BluetoothSocket mBluetoothSocket = null;
+        private BluetoothDevice mBluetoothDevice = null;
+
+        ConnectTask(BluetoothDevice bluetoothDevice) {
+            mBluetoothDevice = bluetoothDevice;
+            mConnectedDeviceName = bluetoothDevice.getName();
+
+            //SPP
+            UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+
+            try {
+                mBluetoothSocket = mBluetoothDevice.createRfcommSocketToServiceRecord(uuid);
+                Log.d( TAG, "create socket for "+mConnectedDeviceName);
+
+            } catch (IOException e) {
+                Log.e( TAG, "socket create failed " + e.getMessage());
+            }
+
+            Toast.makeText(getApplicationContext(),"connecting...",Toast.LENGTH_LONG).show();
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            // Always cancel discovery because it will slow down a connection
+            mBluetoothAdapter.cancelDiscovery();
+
+            // Make a connection to the BluetoothSocket
+            try {
+                // This is a blocking call and will only return on a
+                // successful connection or an exception
+                mBluetoothSocket.connect();
+            } catch (IOException e) {
+                // Close the socket
+                try {
+                    mBluetoothSocket.close();
+                } catch (IOException e2) {
+                    Log.e(TAG, "닫을 수 없습니다() " +
+                            " 연결 실패 중 소켓", e2);
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean isSucess) {
+
+            if ( isSucess ) {
+                // 연결된후 서로 메세지보낼수 있는 메소드
+                connected(mBluetoothSocket);
+            }
+            else{
+
+                isConnectionError = true;
+                Log.d( TAG,  "장치를 연결할 수 없습니다");
+                showErrorDialog("장치를 연결할 수 없습니다");
+            }
+        }
+    }
+
+
+    //기기와 연결된후 통신하기
+    public void connected( BluetoothSocket socket ) {
+        mConnectedTask = new MakeMusic.ConnectedTask(socket);
+        mConnectedTask.execute();
     }
     public void showErrorDialog(String message)
     {

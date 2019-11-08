@@ -66,7 +66,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
 
 
         RelativeLayout relative;
-        ImageView img0, img1, img2, img3, img4, img5, img6, img7, img8, img9;
+        ImageView img0, img1, img2, img3, img4, img5, img6, img7, img8;
 
 
         //RelativeLayout relative_1;
@@ -87,7 +87,6 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
             img6 = itemView.findViewById(R.id.img6);
             img7 = itemView.findViewById(R.id.img7);
             img8 = itemView.findViewById(R.id.img8);
-            img9 = itemView.findViewById(R.id.img9);
 
 
 
@@ -497,106 +496,107 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
                         img7.setVisibility(View.VISIBLE);
                         img7.setLayoutParams(layoutParams);
 
-                    }else if(i == 7){
+                    }else if(i == 7) {
                         Log.e("배열 7번째: ", list.get(7));
 
-                        if(list.get(7).equals("도")){
+                        if (list.get(7).equals("도")) {
                             // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-                            layoutParams.bottomMargin = (int)(7*dp);
+                            layoutParams.bottomMargin = (int) (7 * dp);
                             img8.setImageResource(R.drawable.do_icon);
 
-                        }else if(list.get(7).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+                        } else if (list.get(7).equals("레")) {
+                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
 
-                        }else if(list.get(7).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+                        } else if (list.get(7).equals("미")) {
+                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-                            layoutParams.bottomMargin = (int)(7*dp);
+                            layoutParams.bottomMargin = (int) (7 * dp);
 
 
-                        }else if(list.get(7).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+                        } else if (list.get(7).equals("파")) {
+                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
 
-                        }else if(list.get(7).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+                        } else if (list.get(7).equals("솔")) {
+                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-                            layoutParams.bottomMargin = (int)(7*dp);
+                            layoutParams.bottomMargin = (int) (7 * dp);
 
-                        }else if(list.get(7).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+                        } else if (list.get(7).equals("라")) {
+                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
 
-                        }else if(list.get(7).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+                        } else if (list.get(7).equals("시")) {
+                            layoutParams = new RelativeLayout.LayoutParams((int) (35 * dp), (int) (35 * dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img7);
-                            layoutParams.bottomMargin = (int)(7*dp);
+                            layoutParams.bottomMargin = (int) (7 * dp);
 
                         }
 
                         img8.setVisibility(View.VISIBLE);
                         img8.setLayoutParams(layoutParams);
 
-                    }else if(i == 8){
-                        Log.e("배열 8번째: ", list.get(8));
-
-                        if(list.get(8).equals("도")){
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            img9.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(8).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-
-                        }else if(list.get(8).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-
-                        }else if(list.get(8).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-
-                        }else if(list.get(8).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }else if(list.get(8).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-
-                        }else if(list.get(8).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }
-
-                        img9.setVisibility(View.VISIBLE);
-                        img9.setLayoutParams(layoutParams);
                     }
+//                    }else if(i == 8){
+//                        Log.e("배열 8번째: ", list.get(8));
+//
+//                        if(list.get(8).equals("도")){
+//                            // 이미지 크기 조절
+//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
+//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
+//                            layoutParams.bottomMargin = (int)(7*dp);
+//                            img9.setImageResource(R.drawable.do_icon);
+//
+//                        }else if(list.get(8).equals("레")){
+//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
+//
+//                        }else if(list.get(8).equals("미")){
+//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
+//                            layoutParams.bottomMargin = (int)(7*dp);
+//
+//
+//                        }else if(list.get(8).equals("파")){
+//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
+//
+//                        }else if(list.get(8).equals("솔")){
+//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
+//                            layoutParams.bottomMargin = (int)(7*dp);
+//
+//                        }else if(list.get(8).equals("라")){
+//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
+//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
+//
+//                        }else if(list.get(8).equals("시")){
+//                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+//                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+//                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
+//                            layoutParams.bottomMargin = (int)(7*dp);
+//
+//                        }
+//
+//                        img9.setVisibility(View.VISIBLE);
+//                        img9.setLayoutParams(layoutParams);
+//                    }
 
                 }
 
