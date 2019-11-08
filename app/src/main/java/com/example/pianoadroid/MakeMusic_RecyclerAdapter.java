@@ -86,8 +86,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
         float dp;
 
         //음표png를 넣을 이미지뷰 8개
-        ImageView[] imageViews;
-        int[] imageViewID; //이미지뷰 아이디 8개
+        ImageView[] imageViews  = new ImageView[8];
+        int[] imageViewID = new int[8]; //이미지뷰 아이디 8개
 
 
         ItemViewHolder(View itemView) {
