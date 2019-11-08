@@ -32,7 +32,6 @@
             android:name=".MainActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".Score" />
-        <activity android:name=".MusicPractice" />
     </application>
 
 </manifest>
