@@ -31,9 +31,6 @@
         <activity android:name=".Bluetooth_test">
 
         </activity>
-        <activity android:name=".Bluetooth_test">
-
-        </activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape" />
