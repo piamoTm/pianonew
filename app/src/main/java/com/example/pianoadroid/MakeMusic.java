@@ -27,6 +27,7 @@ public class MakeMusic extends AppCompatActivity {
     private ImageButton mPlayBtn,mUploadBtn;
     private RecyclerView mMakeNoteRecycler;
     Music data = new Music();
+    int count =0, con=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class MakeMusic extends AppCompatActivity {
         //show();// 안내 다이얼로그
 
 
+
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,10 +55,21 @@ public class MakeMusic extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                data.setId(1);
-                data.setTitle("도");
 
+                count++;
+                if(count == 9){
+                    data.setId(0);
+                    adapter.addItem(data);
+                    count =0;
+                    con++;
+                }
+                else {
+
+                    data.setId(con);
+                    data.setTitle("미");
+                }
                 adapter.notifyDataSetChanged();
+                Log.i("uploadbtn after", String.valueOf(count));
             }
         });
 

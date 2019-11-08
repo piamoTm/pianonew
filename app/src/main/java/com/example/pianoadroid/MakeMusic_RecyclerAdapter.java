@@ -89,6 +89,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
             img8 = itemView.findViewById(R.id.img8);
             img9 = itemView.findViewById(R.id.img9);
 
+
+
             dp = itemView.getResources().getDisplayMetrics().density;
 
             // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정

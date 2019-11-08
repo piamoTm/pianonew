@@ -383,9 +383,9 @@ public class Bluetooth_test extends AppCompatActivity { //
     void sendMessage(String msg){
 
         if ( mConnectedTask != null ) {
-            mConnectedTask.write(msg);
+            mConnectedTask.write(msg.trim());
             Log.d(TAG, "메세지 전송 : " + msg);
-            mConversationArrayAdapter.insert("나 :  " + msg, 0);
+            mConversationArrayAdapter.insert("나 :  " + msg.trim(), 0);
         }
     }
 
