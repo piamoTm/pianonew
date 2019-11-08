@@ -20,9 +20,9 @@ import java.util.ArrayList;
 public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_RecyclerAdapter.ItemViewHolder> {
 
     // adapter에 들어갈 list 입니다.
-    private ArrayList<Music> listData = new ArrayList<>();
+    private ArrayList<Write> listData = new ArrayList<>();
     private ArrayList<String> db_value = new ArrayList<>();
-    private Music music; //노래 한곡
+
     //============================================================================================
 //    // EVENT 관련
 //    public interface Playlist_viewClickListener{
@@ -42,10 +42,9 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
     public MakeMusic_RecyclerAdapter() {
     }
 
-    public MakeMusic_RecyclerAdapter(ArrayList<Music> listData, ArrayList<String> db_value, Music music) {
+    public MakeMusic_RecyclerAdapter(ArrayList<Write> listData, ArrayList<String> db_value) {
         this.listData = listData;
         this.db_value = db_value;
-        this.music = music;
     }
 
     @NonNull
@@ -70,7 +69,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
         return listData.size();
     }
 
-    void addItem(Music data) {
+    void addItem(Write data) {
         // 외부에서 item을 추가시킬 함수입니다.
         // 오선지를 추가하는 함수
         listData.add(data);
@@ -89,6 +88,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
         ImageView[] imageViews  = new ImageView[8];
         int[] imageViewID = new int[8]; //이미지뷰 아이디 8개
 
+        // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
+        //layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -112,11 +113,9 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
             imageViewID[6] = R.id.img6;
             imageViewID[7] = R.id.img7;
 
-
             // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
             dp = itemView.getResources().getDisplayMetrics().density;
             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-
 
         }
         // 계이름(도,레,..)을 받아오면 xml에 동적으로 계이름에 맞게 이미지를 설정함
@@ -124,12 +123,19 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
             int width = 35;
             int space = 7;
 
+            dp = itemView.getResources().getDisplayMetrics().density;
+            // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
+            //layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+
+             for (ImageView iv : imageViews) {
+                iv.setVisibility(View.INVISIBLE);
+            }
 
             // 배열에 있는 코드 수만큼 반복문을 돌림
             for (int i = 0; i < noteArr.size(); i++){
 
                 // 코드에 따라 음표의 위치를 조절
-                Log.i("testLog", i+"번째 계이름 " + noteArr.get(i));
+                Log.i("MakeMusic_adpater", i+"번째 계이름 " + noteArr.get(i));
                 if(!noteArr.get(i).equals(" ")){ //공란이 아닐때 == 도~시일
                     if(noteArr.get(i).equals("C")){
                         // 이미지 크기 조절
@@ -168,7 +174,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
 
                     }else if(noteArr.get(i).equals("B")){
                         layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                         layoutParams.bottomMargin = (int)(space * dp);
                         layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
                     }
@@ -178,49 +184,24 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
             }
         }
 
-        void onBind(Music data) {
+        void onBind(Write data) {
 
-            // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
-            if(data.getId() == 1){
-                db_value.add(data.getTitle());
-//            db_value.add("레");
-//            db_value.add("도");
-//            db_value.add("미");
-//            db_value.add("도");
-//            db_value.add("파");
-//            db_value.add("파");
-//            db_value.add("도");
-                // db_value.add("솔");
+            int pos = getAdapterPosition();
+            if(pos != RecyclerView.NO_POSITION) {
+                Write item = listData.get(pos);
 
+                // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
+                if (item.getmNextChek() != 0 && item.getmNextChek() == pos+1) {
+                    db_value.add(data.getmNotes());
+                    Log.e("makemusic_recyclerview", "리사이클러뷰 포커스 체크" + item.getmNextChek()+"    "+pos);
+                    // 함수호출
+                    makeScore(db_value, dp);
+                    Log.e("db_value: ", db_value.size() + " ");
+                } else if (data.getmNextChek() == 0) {
+                    db_value.clear();
 
-                // 함수호출
-                makeScore(db_value, dp);
-                Log.e("db_value: ", db_value.size() + " ");
-
-            }else if (data.getId() == 0){
-
+                }
             }
-
-
-
-//            mTitle.setText(data.getTitle());
-//            mTitle.setText(data.getWriter());
-//            mId = data.getId();
-//
-//
-//
-//
-//            mLay.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                    Intent intent = new Intent(v.getContext(),MainActivity.class);
-////                            intent.putExtra("id", item.getId());
-////                            v.getContext().startActivity(intent);
-//                    Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-
         }
 
     }

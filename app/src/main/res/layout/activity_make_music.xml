@@ -22,22 +22,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
-        <ImageButton
-            android:id="@+id/uploadbtn"
+        <Button
+            android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="저 장 하 기"
             android:layout_margin="30px"
-            android:background="@drawable/btn_rectangle_line"
-            android:padding="20px"
-            android:src="@drawable/upload_yyj"/>
-        <ImageButton
-            android:id="@+id/playbtn"
+            android:paddingVertical="20px"
+            android:paddingHorizontal="70px"
+            android:textStyle="bold"
+            android:background="@drawable/btn_round_line"/>
+        <Button
+            android:id="@+id/palyBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="재 생 하 기"
             android:layout_margin="30px"
-            android:background="@drawable/btn_rectangle_line"
-            android:padding="20px"
-            android:src="@drawable/play_video_button_yyj"/>
+            android:paddingVertical="20px"
+            android:paddingHorizontal="70px"
+            android:textStyle="bold"
+            android:background="@drawable/btn_round_line"/>
+        <!--<ImageButton-->
+            <!--android:id="@+id/uploadbtn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="30px"-->
+            <!--android:background="@drawable/btn_rectangle_line"-->
+            <!--android:padding="20px"-->
+            <!--android:src="@drawable/upload_yyj"/>-->
+        <!--<ImageButton-->
+            <!--android:id="@+id/playbtn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="30px"-->
+            <!--android:background="@drawable/btn_rectangle_line"-->
+            <!--android:padding="20px"-->
+            <!--android:src="@drawable/play_video_button_yyj"/>-->
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
