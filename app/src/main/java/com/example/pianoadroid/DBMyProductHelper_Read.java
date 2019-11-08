@@ -136,7 +136,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
         values.put(KEY_ID, music.getId());
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
-        values.put(KEY_SCORE, music.getCode());
+        values.put(KEY_SCORE, music.getScore());
         values.put(KEY_BEAT,music.getBeatStr());
 
         //새로운 row 추가
@@ -265,7 +265,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
-        values.put(KEY_SCORE, music.getCode());
+        values.put(KEY_SCORE, music.getScore());
         values.put(KEY_BEAT,music.getBeatStr());
 
         //return : update row count

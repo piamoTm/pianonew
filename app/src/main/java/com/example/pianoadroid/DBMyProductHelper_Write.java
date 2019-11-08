@@ -19,7 +19,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /*사용하는 방법//////
@@ -140,7 +139,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         values.put(KEY_ID, music.getId());
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
-        values.put(KEY_SCORE, music.getCode());
+        values.put(KEY_SCORE, music.getScore());
         values.put(KEY_DATE, music.getDateStrForDB());
         values.put(KEY_BEAT,music.getBeatStr());
 
@@ -274,7 +273,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, music.getTitle());
         values.put(KEY_WRITER, music.getWriter());
-        values.put(KEY_SCORE, music.getCode());
+        values.put(KEY_SCORE, music.getScore());
         values.put(KEY_DATE, music.getDateStrForDB());
         values.put(KEY_BEAT,music.getBeatStr());
 

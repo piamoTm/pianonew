@@ -75,8 +75,8 @@ public class Music {
     public void setTitle(String title) { this.title = title; }
     public String getWriter() {return writer;}
     public void setWriter(String writer) {this.writer = writer;}
-    public String getCode() {return score;}
-    public void setCode(String code) {this.score = code;}
+    public String getScore() {return score;}
+    public void setScore(String score) {this.score = score;}
     public Calendar getDate() {return date;}
     public void setDate(Calendar date) {this.date = date;}
     public int[] getBeat() {return beat;}

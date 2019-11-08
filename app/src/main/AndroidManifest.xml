@@ -12,14 +12,7 @@
         android:roundIcon="@drawable/piano_yyj_bk"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MakeMusic"
-            android:screenOrientation="landscape">
-        </activity>
-        <activity android:name=".Play_List"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".Main_menu"
-            android:screenOrientation="landscape">
+        <activity android:name=".TestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,9 +20,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MakeMusic"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".Play_List"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Main_menu"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".Score"></activity>
+        <activity android:name=".Score" />
+
     </application>
 
 </manifest>
