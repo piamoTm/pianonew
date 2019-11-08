@@ -64,13 +64,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-
         RelativeLayout relative;
-        ImageView img0, img1, img2, img3, img4, img5, img6, img7, img8, img9;
-
-
-        //RelativeLayout relative_1;
-
+        ImageView img0, img1, img2, img3, img4, img5, img6, img7, img8;
         RelativeLayout.LayoutParams layoutParams;
         float dp;
 
@@ -87,14 +82,13 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
             img6 = itemView.findViewById(R.id.img6);
             img7 = itemView.findViewById(R.id.img7);
             img8 = itemView.findViewById(R.id.img8);
-            img9 = itemView.findViewById(R.id.img9);
-
-
 
             dp = itemView.getResources().getDisplayMetrics().density;
-
             // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
+
+
+
 //            int pos = getAdapterPosition();
 //            notifyItemChanged(pos) ;
 //            // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
@@ -106,10 +100,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
 //            db_value.add("도");
 //            db_value.add("파");
 //            db_value.add("파");
-//            db_value.add("도");
-//           // db_value.add("솔");
-//
-//
+
+
 //
 //            // 함수호출
 //            M_name(db_value,dp);
@@ -138,6 +130,9 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
         // 계이름(도,레,..)을 받아오면 xml에 동적으로 계이름에 맞게 이미지를 설정함
         public void M_name(ArrayList<String> list, float dp){
 
+            dp = itemView.getResources().getDisplayMetrics().density;
+            // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
+            //layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
 
             // 배열에 있는 계이름 수만큼 반복문을 돌림
             for (int i = 0; i < list.size(); i++){
@@ -145,6 +140,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
                 // 이 if문은 신경쓰지 말것
                 if(list.get(i).equals("도") || list.get(i).equals("레") || list.get(i).equals("미") || list.get(i).equals("파") || list.get(i).equals("솔") || list.get(i).equals("라") || list.get(i).equals("시")){
                     Log.e("list값: ", list.get(i));
+                    //Log.e("list값22: ", list.get(0));
                     Log.e("i: ", i + "");
 
                     // 여기서 부터 배열 첫번째 계이름을 찾음
@@ -157,8 +153,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
                             // 이미지 크기 조절
                             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.bottomMargin = (int)(7*dp);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
+                            layoutParams.bottomMargin = (int)(7*dp);
                             img1.setImageResource(R.drawable.do_icon);
 
                         }else if(list.get(0).equals("레")){
@@ -170,8 +166,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
                         }else if(list.get(0).equals("미")){
                             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.bottomMargin = (int)(7*dp);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
+                            layoutParams.bottomMargin = (int)(7*dp);
 
                         }else if(list.get(0).equals("파")){
                             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -181,8 +177,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
                         }else if(list.get(0).equals("솔")){
                             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.bottomMargin = (int)(7*dp);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
+                            layoutParams.bottomMargin = (int)(7*dp);
 
                         }else if(list.get(0).equals("라")){
                             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
@@ -194,6 +190,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
                             layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
                             layoutParams.bottomMargin = (int)(7*dp);
                             layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img0);
+
                         }
 
                         img1.setVisibility(View.VISIBLE);
@@ -547,55 +544,6 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
                         img8.setVisibility(View.VISIBLE);
                         img8.setLayoutParams(layoutParams);
 
-                    }else if(i == 8){
-                        Log.e("배열 8번째: ", list.get(8));
-
-                        if(list.get(8).equals("도")){
-                            // 이미지 크기 조절
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-                            layoutParams.bottomMargin = (int)(7*dp);
-                            img9.setImageResource(R.drawable.do_icon);
-
-                        }else if(list.get(8).equals("레")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-
-                        }else if(list.get(8).equals("미")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-
-                        }else if(list.get(8).equals("파")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-
-                        }else if(list.get(8).equals("솔")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }else if(list.get(8).equals("라")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-
-                        }else if(list.get(8).equals("시")){
-                            layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-                            layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                            layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img8);
-                            layoutParams.bottomMargin = (int)(7*dp);
-
-                        }
-
-                        img9.setVisibility(View.VISIBLE);
-                        img9.setLayoutParams(layoutParams);
                     }
 
                 }
@@ -604,28 +552,58 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
 
         }
         void onBind(Music data) {
+            int pos = getAdapterPosition();
+            if(pos != RecyclerView.NO_POSITION) {
+                Music item = listData.get(pos);
+                // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
+                if (item.getId() != 0 && item.getId() == pos+1) {
+                    db_value.add(item.getTitle());
 
-            // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
-            if(data.getId() == 1){
-                db_value.add(data.getTitle());
-//            db_value.add("레");
-//            db_value.add("도");
-//            db_value.add("미");
-//            db_value.add("도");
-//            db_value.add("파");
-//            db_value.add("파");
-//            db_value.add("도");
-                // db_value.add("솔");
+                    Log.e("확인 확인 확인 확인 ", "ㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇ" + item.getId()+"    "+pos);
+                    //            db_value.add("레");
+                    //            db_value.add("도");
+                    //            db_value.add("미");
+                    //            db_value.add("도");
+                    //            db_value.add("파");
+                    //            db_value.add("파");
 
 
-                // 함수호출
-                M_name(db_value, dp);
-                Log.e("db_value: ", db_value.size() + " ");
+                    // 함수호출
+                    M_name(db_value, dp);
 
-            }else if (data.getId() == 0){
+
+                    Log.e("db_value: ", db_value.size() + " ");
+
+                } else if (item.getId() == 0) {
+                    db_value.clear();
+                }
+
 
             }
-
+//            // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
+//            if(data.getId() != 0){
+//                db_value.add(data.getTitle());
+//
+//                Log.e("확인 확인 확인 확인 ", "ㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇ"+data.getId());
+////            db_value.add("레");
+////            db_value.add("도");
+////            db_value.add("미");
+////            db_value.add("도");
+////            db_value.add("파");
+////            db_value.add("파");
+//
+//
+//
+//                // 함수호출
+//                M_name(db_value, dp);
+//
+//
+//                Log.e("db_value: ", db_value.size() + " ");
+//
+//            }else if (data.getId() == 0){
+//                db_value.clear();
+//            }
+//
 
 
 //            mTitle.setText(data.getTitle());
