@@ -73,6 +73,7 @@ public class Bluetooth_test extends AppCompatActivity { //
 
         Log.d( TAG, "Initalizing Bluetooth adapter...");
 
+        //////////////////////////////////////////
         //BluetoothAdapter 클래스를 얻는 작업부터 시작
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
@@ -90,6 +91,7 @@ public class Bluetooth_test extends AppCompatActivity { //
             //블루투스 활성화됨
             showPairedDevicesListDialog();
         }
+
     }
 
     @Override
