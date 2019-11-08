@@ -122,7 +122,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
         // 계이름(도,레,..)을 받아오면 xml에 동적으로 계이름에 맞게 이미지를 설정함
         public void makeScore(ArrayList<String> noteArr, float dp){
             int width = 35;
-            int space = 35;
+            int space = 7;
 
 
             // 배열에 있는 코드 수만큼 반복문을 돌림

@@ -171,7 +171,10 @@ public class Main_menu extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean isSucess) {
 
-            if ( isSucess ) {
+            if ( isSucess ) { //연결됨
+                Log.d( TAG, mConnectedDeviceName+"에 연결되었습니다.");
+                Toast.makeText(Main_menu.this,mConnectedDeviceName+"에 연결되었습니다",Toast.LENGTH_LONG).show();
+
                 // 연결된후 서로 메세지보낼수 있는 메소드
                 connected(mBluetoothSocket,mConnectedDeviceName);
             }

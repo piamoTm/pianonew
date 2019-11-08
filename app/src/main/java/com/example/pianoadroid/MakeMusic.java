@@ -179,7 +179,7 @@ public class MakeMusic extends AppCompatActivity {
             }
 
             Log.d( TAG, mConnectedDeviceName+"에 연결");
-            Toast.makeText(MakeMusic.this,mConnectedDeviceName+"에 연결",Toast.LENGTH_LONG).show();
+            //Toast.makeText(MakeMusic.this,mConnectedDeviceName+"에 연결",Toast.LENGTH_LONG).show();
         }
 
 
