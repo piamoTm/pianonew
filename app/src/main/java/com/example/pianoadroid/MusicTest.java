@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,9 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     // 악보의 계이름을 담는 리스트 변수
     ArrayList<String> MusicNoteList = new ArrayList<>();
 
+    // 뒤로가기 버튼
+    ImageView btn_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +50,15 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
         btn_listen = findViewById(R.id.btn_listen);
         btn_stop = findViewById(R.id.btn_stop);
+        btn_back = findViewById(R.id.img_back);
 
+        // 뒤로가기 버튼
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //리사이클러뷰 변수에 위젯 대입
         mRecyclerView = findViewById(R.id.recycler_music_note);
 
