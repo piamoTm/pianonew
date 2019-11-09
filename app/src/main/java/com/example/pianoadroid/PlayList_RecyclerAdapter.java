@@ -78,24 +78,6 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
             mTitle = itemView.findViewById(R.id.title);
             mWriter = itemView.findViewById(R.id.writer);
 
-
-//            mLay.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int pos = getAdapterPosition();
-//                    if(pos != RecyclerView.NO_POSITION){
-//                        if(mListener != null) {
-//                            Music item = listData.get(pos);
-//                            Toast.makeText(v.getContext(),"선택됨 id: "+item.getId(),Toast.LENGTH_SHORT).show();
-////                            Intent intent = new Intent(v.getContext(),MainActivity.class);
-////                            intent.putExtra("id", item.getId());
-////                            v.getContext().startActivity(intent);
-//
-//                            //notifyItemChanged(pos) ;
-//                        }
-//                    }
-//                }
-//            });
         }
 
         void onBind(Music data) {
