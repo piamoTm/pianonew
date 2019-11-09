@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,9 @@ public class MusicTest extends AppCompatActivity {
         Intent receiveIntent = getIntent();
         int mid = receiveIntent.getIntExtra("mId",0);
         Music music = db.getMusic(mid);
+
+        TextView tvTitle = findViewById(R.id.tv_title);
+        tvTitle.setText(music.getTitle());
 
         // 디비에서 계이름 코드를 받는 변수
         //musicnote_eng = "BDEFGABCDEFGAB";
