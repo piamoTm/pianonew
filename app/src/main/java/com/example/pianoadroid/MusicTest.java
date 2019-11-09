@@ -1,6 +1,7 @@
 package com.example.pianoadroid;
 
 import android.content.Intent;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-public class MusicTest extends AppCompatActivity {
+public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.ThreadFinishListener {
 
     //리사이클러뷰
     RecyclerView mRecyclerView;
@@ -42,6 +44,9 @@ public class MusicTest extends AppCompatActivity {
     // 악보의 계이름을 담는 리스트 변수
     ArrayList<String> MusicNoteList = new ArrayList<>();
 
+    // 뒤로가기 버튼
+    ImageView btn_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +54,15 @@ public class MusicTest extends AppCompatActivity {
 
         btn_listen = findViewById(R.id.btn_listen);
         btn_stop = findViewById(R.id.btn_stop);
+        btn_back = findViewById(R.id.img_back);
 
+        // 뒤로가기 버튼
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //리사이클러뷰 변수에 위젯 대입
         mRecyclerView = findViewById(R.id.recycler_music_note);
 
@@ -151,11 +164,17 @@ public class MusicTest extends AppCompatActivity {
             if(i == musicnote.length()){
                 Log.e("남은 array_value값: ", array_value);
 
-                if (!array_value.equals("O")){
-                    // 남은 계이름들을 마지막으로 배열에 넣음
+                // 최근 수정사항
+                if(i % 8 != 0){
                     MusicNoteList.add(array_value);
                     Log.e("배열에 담기는 중인 악보: ", MusicNoteList + "");
                 }
+
+//                if (!array_value.equals("O")){
+//                    // 남은 계이름들을 마지막으로 배열에 넣음
+//                    MusicNoteList.add(array_value);
+//                    Log.e("배열에 담기는 중인 악보: ", MusicNoteList + "");
+//                }
             }
         }
 
@@ -171,6 +190,9 @@ public class MusicTest extends AppCompatActivity {
 
         // 악보전체를 어댑터에 보냄
         mAdapter.setMusicnote(musicnote);
+
+        // 콜백 리스너
+        mAdapter.ThreadFinishListener(MusicTest.this);
 
         // 중지 버튼 클릭 이벤트
         btn_stop.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +228,16 @@ public class MusicTest extends AppCompatActivity {
         music_thread thread = new music_thread();
         thread.start();
 
+    }
+
+    // 노래가 완전 끝났을 시 콜백함수로 finish라는 값이 넘어옴
+    @Override
+    public void onMusicFinish(String finish, Context context) {
+        Log.e("어댑터서 넘어온 값: ", finish);
+        if (finish != null){
+            btn_listen.setVisibility(View.VISIBLE);
+            btn_stop.setVisibility(View.INVISIBLE);
+        }
     }
 
     // 노래를 1초마다 실행시키는 스레드
