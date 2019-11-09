@@ -56,7 +56,7 @@ public class MakeMusic extends AppCompatActivity {
         mUploadBtn = (Button)findViewById(R.id.saveBtn);
         mPlayBtn =(Button)findViewById(R.id.palyBtn);
 
-        //show();// 안내 다이얼로그
+        show();// 안내 다이얼로그
         init();//리사이클러뷰 초기 세팅
 
         // 블루투스 소켓연결

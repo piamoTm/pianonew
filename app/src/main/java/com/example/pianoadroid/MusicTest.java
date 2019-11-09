@@ -1,8 +1,12 @@
 package com.example.pianoadroid;
 
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +16,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
+
 public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.ThreadFinishListener {
+
+
+    private static final String TAG = "MusicTest";
+
+
+
+    //블루투스 통신
+    //BlueTooth
+    private static String mConnectedDeviceName = null;
+    static boolean isConnectionError = false;
+    ConnectedTask mConnectedTask = null;
 
     //리사이클러뷰
     RecyclerView mRecyclerView;
@@ -33,6 +52,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 문자열로 온 악보정보를 split로 나눠서 저장한 배열변수
     String [] array;
+    String musicnote_eng_array[];
+
 
     // 초 를 담는 변수
     int index_value = 0;
@@ -78,37 +99,44 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         // 한글로 바꾸는 변수
         String musicnote_kor = "";
 
-        String musicnote_eng_array[] = musicnote_eng.split("");
+        musicnote_eng_array = musicnote_eng.split("");
         Log.e("musicnote_eng_array크기: ", musicnote_eng_array.length + "");
 
         for (int i = 0; i < musicnote_eng_array.length; i++){
             if (i != 0){
                 if (musicnote_eng_array[i].equals("C")){
-                    musicnote_eng_array[i] = "도";
-                    musicnote_kor += musicnote_eng_array[i];
+                    //musicnote_eng_array[i] = "도";
+                    musicnote_kor += "도";
                 }else if(musicnote_eng_array[i].equals("D")){
-                    musicnote_eng_array[i] = "레";
-                    musicnote_kor += musicnote_eng_array[i];
+                    //musicnote_eng_array[i] = "레";
+                    musicnote_kor += "레";
                 }else if(musicnote_eng_array[i].equals("E")){
-                    musicnote_eng_array[i] = "미";
-                    musicnote_kor += musicnote_eng_array[i];
+                    //musicnote_eng_array[i] = "미";
+                    musicnote_kor += "미";
                 }else if(musicnote_eng_array[i].equals("F")){
-                    musicnote_eng_array[i] = "파";
-                    musicnote_kor += musicnote_eng_array[i];
+                    //musicnote_eng_array[i] = "파";
+                    musicnote_kor += "파";
                 }else if(musicnote_eng_array[i].equals("G")){
-                    musicnote_eng_array[i] = "솔";
-                    musicnote_kor += musicnote_eng_array[i];
+                    //musicnote_eng_array[i] = "솔";
+                    musicnote_kor += "솔";
                 }else if(musicnote_eng_array[i].equals("A")){
-                    musicnote_eng_array[i] = "라";
-                    musicnote_kor += musicnote_eng_array[i];
+                    //musicnote_eng_array[i] = "라";
+                    musicnote_kor += "라";
                 }else if(musicnote_eng_array[i].equals("B")){
-                    musicnote_eng_array[i] = "시";
-                    musicnote_kor += musicnote_eng_array[i];
+                    //musicnote_eng_array[i] = "시";
+                    musicnote_kor += "시";
                 }
             }
         }
 
         Log.e("한글변환계이름: ", musicnote_kor);
+
+        // 블루투스 소켓연결
+        mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
+        mConnectedTask.execute();
+
+
+        sendMessage("P"); //연주모드로
 
 
 
@@ -242,6 +270,9 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                     // 핸들러를 통해 UI를 바꿈
                     handler.sendEmptyMessage(1);
+                    sendMessage(musicnote_eng_array[i]);
+                    //블루투스통신
+                    Log.i("testLog","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i + "rtest "+ musicnote_eng_array[i]);
 
                     // 1초씩 딜레이를 줌
                     Thread.sleep(1000);
@@ -268,6 +299,182 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             }
         }
     };
+
+
+
+
+
+    //=-=-=
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//            if ( mConnectedTask != null ) {
+//                mConnectedTask.cancel(true);
+//            }
+        sendMessage("N");  //노말 모드로
+    }
+
+
+    //아두이노로 데이터 보내기
+    void sendMessage(String msg){
+
+        if ( mConnectedTask != null ) {
+            mConnectedTask.write(msg.trim());
+            Log.d(TAG, "메세지 전송 : " + msg);
+        }
+    }
+
+
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    public  class ConnectedTask extends AsyncTask<Void, String, Boolean> {
+        private InputStream mInputStream = null;
+        private OutputStream mOutputStream = null;
+        private BluetoothSocket mBluetoothSocket = null;
+
+        ConnectedTask(BluetoothSocket socket, String devicename){
+            mConnectedDeviceName = devicename;
+            mBluetoothSocket = socket;
+            try {
+                mInputStream = mBluetoothSocket.getInputStream();
+                mOutputStream = mBluetoothSocket.getOutputStream();
+            } catch (IOException e) {
+                Log.e(TAG, "소켓이 생성되지 않았습니다", e );
+            }
+
+            Log.d( TAG, mConnectedDeviceName+"에 연결");
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            byte [] readBuffer = new byte[1024];
+            int readBufferPosition = 0;
+
+
+            while (true) {
+
+                if ( isCancelled() ) return false;
+
+                try {
+
+                    int bytesAvailable = mInputStream.available();
+
+                    if(bytesAvailable > 0) {
+
+                        byte[] packetBytes = new byte[bytesAvailable];
+
+                        mInputStream.read(packetBytes);
+
+                        for(int i=0;i<bytesAvailable;i++) {
+
+                            byte b = packetBytes[i];
+                            if(b == '\n')
+                            {
+                                byte[] encodedBytes = new byte[readBufferPosition];
+                                System.arraycopy(readBuffer, 0, encodedBytes, 0,
+                                        encodedBytes.length);
+                                String recvMessage = new String(encodedBytes, "UTF-8");
+
+                                readBufferPosition = 0;
+
+                                Log.d(TAG, "recv message: " + recvMessage);
+                                publishProgress(recvMessage);
+
+                            }
+                            else
+                            {
+                                readBuffer[readBufferPosition++] = b;
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+
+                    Log.e(TAG, "disconnected", e);
+                    return false;
+                }
+            }
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... recvMessage) {
+
+            Log.i("MakeMusic : ",mConnectedDeviceName + ": " + recvMessage[0]);
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSucess) {
+            super.onPostExecute(isSucess);
+
+
+            if ( !isSucess ) {
+
+                closeSocket();
+                Log.d(TAG, "장치 연결이 끊어졌습니다");
+                isConnectionError = true;
+                showErrorDialog("장치 연결이 끊어졌습니다");
+            }
+        }
+
+        @Override
+        protected void onCancelled(Boolean aBoolean) {
+            super.onCancelled(aBoolean);
+
+            closeSocket();
+        }
+
+        void closeSocket(){
+
+            try {
+
+                mBluetoothSocket.close();
+                Log.d(TAG, "close socket()");
+
+            } catch (IOException e2) {
+
+                Log.e(TAG, "unable to close() " +
+                        " socket during connection failure", e2);
+            }
+        }
+
+        void write(String msg){
+
+            msg += "\n";
+
+            try {
+                mOutputStream.write(msg.getBytes());
+                mOutputStream.flush();
+            } catch (IOException e) {
+                Log.e(TAG, "Exception during send", e );
+            }
+
+            ///mInputEditText.setText(" ");
+        }
+    }
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+    public void showErrorDialog(String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Quit");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                if ( isConnectionError  ) {
+                    isConnectionError = false;
+                    finish();
+                }
+            }
+        });
+        builder.create().show();
+    }
 
 
 

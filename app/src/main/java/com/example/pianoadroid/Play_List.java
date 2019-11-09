@@ -50,6 +50,12 @@ public class Play_List extends AppCompatActivity {
 //        int beat[] = {1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,21,1,1,1,1,1,2};
 //        Music music = new Music("작은 별", "미상", "CCGGAAG FFEEDDC GGFFEED GGFFEED CCGGAAG FFEEDDC ",beat);
 //        db.addMusic(music);
+
+        //int beat[] = {1,1,1,1,1,1,2,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,2};
+        //Music music = new Music("학교 종", "미상", "GGAAGGE GGEED GGAAGGE GEDEC ",beat);
+        //db.addMusic(music);
+
+
     }
 
     //리사이클러뷰 세팅
