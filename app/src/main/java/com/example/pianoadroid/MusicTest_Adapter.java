@@ -157,30 +157,37 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }else if(lists.length() == 2){
                     myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                     myViewHolder.img2.setVisibility(View.VISIBLE);
+                    tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
                     break;
                 }else if(lists.length() == 3){
                     myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                     myViewHolder.img3.setVisibility(View.VISIBLE);
+                    tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
                     break;
                 }else if(lists.length() == 4){
                     myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                     myViewHolder.img4.setVisibility(View.VISIBLE);
+                    tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
                     break;
                 }else if(lists.length() == 5){
                     myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                     myViewHolder.img5.setVisibility(View.VISIBLE);
+                    tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
                     break;
                 }else if(lists.length() == 6){
                     myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                     myViewHolder.img6.setVisibility(View.VISIBLE);
+                    tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
                     break;
                 }else if(lists.length() == 7){
                     myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                     myViewHolder.img7.setVisibility(View.VISIBLE);
+                    tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
                     break;
                 }else if(lists.length() == 8){
                     myViewHolder.img8_color.setVisibility(View.INVISIBLE);
                     myViewHolder.img8.setVisibility(View.VISIBLE);
+                    tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
                     break;
                 }
             }
