@@ -109,7 +109,7 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
                     Intent intent = new Intent(v.getContext(),MusicTest.class);
                     intent.putExtra("id", mId);
                     v.getContext().startActivity(intent);
-                    //Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
                 }
             });
         }

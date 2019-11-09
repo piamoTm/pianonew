@@ -73,7 +73,7 @@ public class Play_List extends AppCompatActivity {
         ArrayList<Music> musicArrayList = db.getAllMusic();
         for (Music m: musicArrayList
              ) {
-            Log.i("testLog", "music title " +m.getTitle());
+            Log.i("testLog", "music title " +m.getTitle() + m.getId());
         }
         return musicArrayList;
     }

@@ -1,6 +1,7 @@
 package com.example.pianoadroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -28,9 +30,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     // 최종 계이름을 담는 변수
     String musicnote;
 
+
     // 임시로 디비에서 악보의 계이름을 코드상으로 받는 함수
     String musicnote_eng;
-
+    //SQLite db 개체 생성
+    private DBMyProductHelper_Read db;
     // 문자열로 온 악보정보를 split로 나눠서 저장한 배열변수
     String [] array;
 
@@ -72,8 +76,21 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         mRecyclerView.setLayoutManager(layoutManager);
 
 
+        //디비에서 불러오기
+        //SQLite db helper init 초기화
+        db = new DBMyProductHelper_Read(this);
+
+        Intent receiveIntent = getIntent();
+        int mid = receiveIntent.getIntExtra("id",0);
+        Log.i("testLog", "idididiid" + mid);
+        Music music = db.getMusic(mid);
+
+        TextView tvTitle = findViewById(R.id.tv_title);
+        tvTitle.setText(music.getTitle());
+
         // 디비에서 계이름 코드를 받는 변수
-        musicnote_eng = "BDEFGABCDEFGAB";
+        //musicnote_eng = "BDEFGABCDEFGAB";
+        musicnote_eng = music.getScore();
 
         // 한글로 바꾸는 변수
         String musicnote_kor = "";

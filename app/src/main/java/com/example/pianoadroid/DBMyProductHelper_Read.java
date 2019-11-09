@@ -158,7 +158,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
      */
     public Music getMusic(int id){
 
-        Log.i("DBLog", "[DBMyProductHelper_Read] getMusic()");
+        Log.i("DBLog", "[DBMyProductHelper_Read] DBMyProductHelper_Read()");
 
         //getReadableDatabase () :: 읽기전용으로 DB를 불러온다.
         //이 때 생성된 DB가 없으면 onCreate(); DB가 있지만 버전이 바뀌었다면 onUpgrade();를 호출한다.
@@ -189,8 +189,8 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
                 Integer.parseInt(cursor.getString(0)), //id
                 cursor.getString(1),     //title
                 cursor.getString(2),    //writer
-                cursor.getString(3),     //code
-                cursor.getString(4)     //beat
+                cursor.getString(3)     //code
+                 //cursor.getString(4)     //beat
         );
 
         return music;
