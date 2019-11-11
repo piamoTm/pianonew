@@ -263,7 +263,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
         // 연주 중지된 시점의 hight_position값을 담는 변수 / 필요 xx
         // index_value_stop = index_value;
-
+        thread.interrupt();
         btn_stop.setVisibility(View.INVISIBLE);
         btn_listen.setVisibility(View.VISIBLE);
     }
