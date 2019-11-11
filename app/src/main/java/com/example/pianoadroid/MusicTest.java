@@ -386,6 +386,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     };
 
 
+
+
 //TODO 쓰레드 중지
 
 
@@ -398,6 +400,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 //                mConnectedTask.cancel(true);
 //            }
         sendMessage("N");  //노말 모드로
+        thread.interrupt();
     }
 
 
