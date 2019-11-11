@@ -74,6 +74,9 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     // 1초마다 노래를 트는 스레드
     music_thread thread;
 
+    // 연주 순서대로 갈 때 포커싱을 주기 위한 변수
+    int focusing_cnt = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -284,8 +287,14 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     public void onMusicFinish(String finish, Context context) {
         Log.e("어댑터서 넘어온 값: ", finish);
         if (finish != null){
+            // bool_music를 다시 true로 바꾸어 줌
+            bool_music = true;
+
             btn_listen.setVisibility(View.VISIBLE);
             btn_stop.setVisibility(View.INVISIBLE);
+
+            // 악보 포커싱을 초기화 해줌
+            focusing_cnt = 0;
         }
     }
 
@@ -381,6 +390,17 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             if (msg.what == 1){
                 mAdapter.setHight_pos(index_value);
                 mAdapter.notifyDataSetChanged();
+
+                // 포커싱을 맞추기 위한 제어문
+                if(index_value != 1){
+                    // index_value가 8로 나누었을 시 나머지가 1일 때
+                    if (index_value % 8 == 1){
+                        Log.e("8나머지값: ", index_value % 8 + "");
+                        focusing_cnt += 1;
+                    }
+                }
+                // 현재 연주중인 음계를 포커싱을 맞추어 줌
+                mRecyclerView.smoothScrollToPosition(focusing_cnt);
             }
         }
     };
