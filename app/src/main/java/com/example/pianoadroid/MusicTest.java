@@ -155,7 +155,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     musicnote_kor += "시";
                 }else if(musicnote_eng_array[i].equals(" ")){
                     //musicnote_eng_array[i] = "시";
-                    //musicnote_kor += " ";
+                    musicnote_kor += " ";
                 }
             }
         }
