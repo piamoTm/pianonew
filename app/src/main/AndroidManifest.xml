@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TestActivity">
+
         </activity>
         <activity
             android:name=".MakeMusic"
@@ -38,7 +39,10 @@
         <activity android:name=".Score" />
 
         <activity android:name=".MusicTest"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape">
+
+
+        </activity>
     </application>
 
 </manifest>

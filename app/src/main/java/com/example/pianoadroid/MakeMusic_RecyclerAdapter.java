@@ -7,44 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
 
 //작곡 MakeMusic 액티비티에서 사용되는 리사이클러뷰 어댑터
 //아두이노로부터 블루투스 통신으로 'C' 라는 데이터가 오면 악보에 도를 그리는 역할
 
-public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_RecyclerAdapter.ItemViewHolder> {
+public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // adapter에 들어갈 list 입니다.
-    private ArrayList<Write> listData = new ArrayList<>();
-    private ArrayList<String> db_value = new ArrayList<>();
+    private ArrayList<String> listData ;
 
-    //============================================================================================
-//    // EVENT 관련
-//    public interface Playlist_viewClickListener{
-//        void onPlatlistClicked(int position, String id);
-//
-//    }
-//
-//    private PlayList_RecyclerAdapter.Playlist_viewClickListener mListener = null;
-//
-//    // Refri_ViewClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
-//    public void setOnPlaylist_ViewClickListener(PlayList_RecyclerAdapter.Playlist_viewClickListener listener){
-//        this.mListener = listener;
-//    }
-    //============================================================================================
-
-
-    public MakeMusic_RecyclerAdapter() {
-    }
-
-    public MakeMusic_RecyclerAdapter(ArrayList<Write> listData, ArrayList<String> db_value) {
+    public MakeMusic_RecyclerAdapter(ArrayList<String> listData) {
         this.listData = listData;
-        this.db_value = db_value;
     }
 
     @NonNull
@@ -57,43 +34,124 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
-        holder.onBind(listData.get(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
+
+        int width = 35;
+        int space = 7;
+
+        //i는 아이템 악보 한줄,두줄 이거
+        int startNote = i*8;// 0,8,16,24
+        int endNote = startNote + 8; //
+        if(endNote >= listData.size()){
+            endNote = listData.size();
+        }
+        String scorePiece = ""; //0~7 /8~15로 악보자르기
+        for (int j = startNote; j<endNote; j++){
+            scorePiece += listData.get(j);
+        }
+        Log.i("testLog", "악보 조각 " + startNote + scorePiece + endNote);
+
+        //악보 조각(한줄)을 계이름 하나씩 자르기
+        String[] split = scorePiece.split("");
+
+        // 리사이클러뷰 남아있는 view들 제거
+        for (ImageView iv: ((ItemViewHolder)holder).imageViews
+        ) {
+            iv.setVisibility(View.INVISIBLE);
+        }
+
+        //악보조각(한줄) 에 있는 계이름 수만큼 반복문을 돌림.
+        for (int ni = 1; ni < split.length; ni++){
+            int n = ni-1;
+            // 코드에 따라 음표의 위치를 조절
+            Log.i("testLog", n+"번째 계이름 " + split[ni]);
+            if(!split[ni].equals(" ")){ //공란이 아닐때 == 도~시일
+                ((ItemViewHolder)holder).imageViews[n].setImageResource(R.drawable.music_icon);
+                if(split[ni].equals("C")){
+                    // 이미지 크기 조절
+                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+                    ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
+                    ((ItemViewHolder)holder).imageViews[n].setImageResource(R.drawable.do_icon);
+
+                }else if(split[ni].equals("D")){
+                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+
+                }else if(split[ni].equals("E")){
+                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+                    ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
+
+                }else if(split[ni].equals("F")){
+                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+
+                }else if(split[ni].equals("G")){
+                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+                    ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
+
+                }else if(split[ni].equals("A")){
+                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+
+                }else if(split[ni].equals("B")){
+                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
+                    ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+                }
+                ((ItemViewHolder)holder).imageViews[n].setVisibility(View.VISIBLE);
+                ((ItemViewHolder)holder).imageViews[n].setLayoutParams(((ItemViewHolder)holder).layoutParams);
+            }
+            int position = n+(i*8);
+        }
     }
 
     @Override
     public int getItemCount(){
-        // RecyclerView item의 총 개수 입니다.
-        // 오선지의 개수
-        return listData.size();
+        //아이템의 개수
+        //오선지 한줄의 개수
+        //8개로 잘라서 나머지 있으면 +1
+        int len = listData.size();
+        int cnt = len/8;
+        len -= (cnt*8);
+        if(len > 0){
+            cnt++;
+        }
+        return cnt;
     }
 
-    void addItem(Write data) {
-        // 외부에서 item을 추가시킬 함수입니다.
-        // 오선지를 추가하는 함수
-        listData.add(data);
-    }
+//    void addItem(Write data) {
+//        // 외부에서 item을 추가시킬 함수입니다.
+//        // 오선지를 추가하는 함수
+//        listData.add(data);
+//    }
 
     // RecyclerView의 핵심인 ViewHolder 입니다.
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
+        //음표png를 넣을 이미지뷰 8개
+        ImageView[] imageViews;
+        int[] imageViewID ;
 
         //레이아웃 설정용 변수
         RelativeLayout relative;
         RelativeLayout.LayoutParams layoutParams;
         float dp;
 
-        //음표png를 넣을 이미지뷰 8개
-        ImageView[] imageViews  = new ImageView[8];
-        int[] imageViewID = new int[8]; //이미지뷰 아이디 8개
-
-        // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
-        //layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-
-        ItemViewHolder(View itemView) {
+       public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            relative = itemView.findViewById(R.id.relative_1);
+
+            imageViews  = new ImageView[8];
+            imageViewID = new int[8]; //이미지뷰 아이디 8개
 
             imageViews[0] = itemView.findViewById(R.id.img1);
             imageViews[1] = itemView.findViewById(R.id.img2);
@@ -113,98 +171,13 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<MakeMusic_R
             imageViewID[6] = R.id.img6;
             imageViewID[7] = R.id.img7;
 
+            relative = itemView.findViewById(R.id.relative_1);
             // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
             dp = itemView.getResources().getDisplayMetrics().density;
             layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
 
         }
-        // 계이름(도,레,..)을 받아오면 xml에 동적으로 계이름에 맞게 이미지를 설정함
-        public void makeScore(ArrayList<String> noteArr, float dp){
-            int width = 35;
-            int space = 7;
-
-            dp = itemView.getResources().getDisplayMetrics().density;
-            // 이미지뷰의 레이아웃을 가로 35dp, 세로 35dp로 지정
-            //layoutParams = new RelativeLayout.LayoutParams((int)(35*dp), (int)(35*dp));
-
-             for (ImageView iv : imageViews) {
-                iv.setVisibility(View.INVISIBLE);
-            }
-
-            // 배열에 있는 코드 수만큼 반복문을 돌림
-            for (int i = 0; i < noteArr.size(); i++){
-
-                // 코드에 따라 음표의 위치를 조절
-                Log.i("MakeMusic_adpater", i+"번째 계이름 " + noteArr.get(i));
-                if(!noteArr.get(i).equals(" ")){ //공란이 아닐때 == 도~시일
-                    if(noteArr.get(i).equals("C")){
-                        // 이미지 크기 조절
-                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
-                        layoutParams.bottomMargin = (int)(space * dp);
-                        imageViews[i].setImageResource(R.drawable.do_icon);
-
-                    }else if(noteArr.get(i).equals("D")){
-                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
-
-                    }else if(noteArr.get(i).equals("E")){
-                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
-                        layoutParams.bottomMargin = (int)(space * dp);
-
-                    }else if(noteArr.get(i).equals("F")){
-                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
-
-                    }else if(noteArr.get(i).equals("G")){
-                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
-                        layoutParams.bottomMargin = (int)(space * dp);
-
-                    }else if(noteArr.get(i).equals("A")){
-                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
-
-                    }else if(noteArr.get(i).equals("B")){
-                        layoutParams = new RelativeLayout.LayoutParams((int)(width*dp), (int)(width*dp));
-                        layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                        layoutParams.bottomMargin = (int)(space * dp);
-                        layoutParams.addRule(RelativeLayout.RIGHT_OF, imageViewID[i]);
-                    }
-                    imageViews[i].setVisibility(View.VISIBLE);
-                    imageViews[i].setLayoutParams(layoutParams);
-                }
-            }
-        }
-
-        void onBind(Write data) {
-
-            int pos = getAdapterPosition();
-            if(pos != RecyclerView.NO_POSITION) {
-                Write item = listData.get(pos);
-
-                // 임시로 디비에서 넘어온 악보들을 담는 배열 객체 선언
-                if (item.getmNextChek() != 0 && item.getmNextChek() == pos+1) {
-                    db_value.add(data.getmNotes());
-                    Log.e("makemusic_recyclerview", "리사이클러뷰 포커스 체크" + item.getmNextChek()+"    "+pos);
-                    // 함수호출
-                    makeScore(db_value, dp);
-                    Log.e("db_value: ", db_value.size() + " ");
-                } else if (data.getmNextChek() == 0) {
-                    db_value.clear();
-
-                }
-            }
-        }
 
     }
-
 
 }

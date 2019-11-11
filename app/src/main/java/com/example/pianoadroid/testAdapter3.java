@@ -52,9 +52,9 @@ public class testAdapter3 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         //악보 조각(한줄)을 계이름 하나씩 자르기
         String[] split = scorePiece.split("");
 
-
         // 리사이클러뷰 남아있는 view들 제거
-        for (ImageView iv: ((ItemViewHolder)viewHolder).imageViews) {
+        for (ImageView iv: ((ItemViewHolder)viewHolder).imageViews
+             ) {
             iv.setVisibility(View.INVISIBLE);
         }
 

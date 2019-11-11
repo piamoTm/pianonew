@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,7 +18,7 @@ public class TestActivity extends AppCompatActivity {
 
     testAdapter3 testAdapter3;
     ArrayList<String> noteArr;
-
+    private RecyclerView recyclerView;
     int i;
     String[] str;
 
@@ -40,21 +41,25 @@ public class TestActivity extends AppCompatActivity {
         str[5] = "A";
         str[6] = "B";
 
+        //리사이클러뷰 세팅
+        recyclerView = findViewById(R.id.recycler);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 noteArr.add(str[(i++)%7]);
+               // Log.i("TESTLOG_YYJ","postion : "+testAdapter3.getItemCount());
+                recyclerView.getLayoutManager().scrollToPosition(testAdapter3.getItemCount()-1);
                 testAdapter3.notifyDataSetChanged();
+
             }
         });
 
-        //리사이클러뷰 세팅
-        RecyclerView recyclerView = findViewById(R.id.recycler);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
 
         //testAdapter = new TestAdapter(music);
         //recyclerView.setAdapter(testAdapter);
@@ -76,15 +81,13 @@ public class TestActivity extends AppCompatActivity {
         recyclerView.setAdapter(testAdapter3);
 
 
-
-
-
-
-
     }
     //하이라이트 다음으로 넘기
     void highlightNext(){
         highlightPos++;
+        //노래의 Score가 마지막인지 체크하는 if 문 추가 할것
+        //highlightPos++ -11 로 초기화 해서 없앤다.
+        //
         t.setHighlightPos(highlightPos);
         t.notifyDataSetChanged();
     }

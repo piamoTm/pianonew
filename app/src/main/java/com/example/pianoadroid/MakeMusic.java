@@ -33,19 +33,16 @@ public class MakeMusic extends AppCompatActivity {
     private static final String TAG = "MakeMusic";
 
     private ImageView mBackBtn;
-    private Button mPlayBtn,mUploadBtn;
+    private Button mPlayBtn,mSaveBtn;
     private RecyclerView mMakeNoteRecycler;
     private MakeMusic_RecyclerAdapter adapter;
-
+    ArrayList<String> makeNotsArr;
 
     //BlueTooth
     private static String mConnectedDeviceName = null;
     static boolean isConnectionError = false;
-
     ConnectedTask mConnectedTask = null;
-    Write data; //노래 하나.
 
-    int count =0, con=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +50,7 @@ public class MakeMusic extends AppCompatActivity {
         setContentView(R.layout.activity_make_music);
 
         mBackBtn = (ImageView)findViewById(R.id.back_btn);
-        mUploadBtn = (Button)findViewById(R.id.saveBtn);
+        mSaveBtn = (Button)findViewById(R.id.saveBtn);
         mPlayBtn =(Button)findViewById(R.id.palyBtn);
 
         //show();// 안내 다이얼로그
@@ -77,20 +74,34 @@ public class MakeMusic extends AppCompatActivity {
         });
 
 
-
+        // 작곡된 음악 play 버튼
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                sendMessage("G");
+                String[] str;
+                int i = 0;
+                str = new String[7];
+                str[0] = "C";
+                str[1] = "D";
+                str[2] = "E";
+                str[3] = "F";
+                str[4] = "G";
+                str[5] = "A";
+                str[6] = "B";
+                makeNotsArr.add(str[(i++)%7]);
+                // Log.i("TESTLOG_YYJ","postion : "+testAdapter3.getItemCount());
+                mMakeNoteRecycler.getLayoutManager().scrollToPosition(adapter.getItemCount()-1);
+                adapter.notifyDataSetChanged();
+
 
             }
         });
 
-        mUploadBtn.setOnClickListener(new View.OnClickListener() {
+        //작곡된 노래 play list 에 저장
+        mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+            // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
 
             }
         });
@@ -117,20 +128,11 @@ public class MakeMusic extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mMakeNoteRecycler.setLayoutManager(linearLayoutManager);
 
-        adapter = new MakeMusic_RecyclerAdapter();
+        makeNotsArr = new ArrayList<>();
+        adapter = new MakeMusic_RecyclerAdapter(makeNotsArr);
         mMakeNoteRecycler.setAdapter(adapter);
 
-
-        //Music data = new Music();
-        //data.setId(0); <- onCreat()로 옮김
-        // data.setTitle("도");
-
-        //Music 개체 생성
-        data = new Write();
-        data.setmNextChek(0);
-
-        adapter.addItem(data);
-        adapter.notifyDataSetChanged();
+        makeNotsArr.add("");
 
     }
 
@@ -200,26 +202,9 @@ public class MakeMusic extends AppCompatActivity {
                                 Log.d(TAG, "recv message: " + recvMessage);
                                 publishProgress(recvMessage);
 
-                                //=-=-=-
-
-                                count++; //0~>9
-                                if(count == 9){
-                                    data.setmNextChek(0);
-                                    adapter.addItem(data);
-                                    count =0;
-                                    con++;
-                                    Log.i("uploadbtn after", String.valueOf(count));
-                                }
-                                else {
-                                    data.setmNextChek(con);
-                                    data.setmNotes(recvMessage.trim());
-                                    //여기서 setTitle은 계이름이 아니라 노래제목임..."나비야"같은..
-                                    //data.addNote("E");를 사용해야 할듯.
-                                    Log.i("uploadbtn after", String.valueOf(count));
-                                }
-                                //리사이클러뷰 갱신
-
-                                //==-=-
+                                //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                                makeNotsArr.add(recvMessage.trim());
+                                //==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
                             }
                             else
                             {
@@ -238,7 +223,8 @@ public class MakeMusic extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... recvMessage) {
-
+            //포커스 잡는중
+            mMakeNoteRecycler.getLayoutManager().scrollToPosition(adapter.getItemCount()-1);
             adapter.notifyDataSetChanged();
             Log.i("MakeMusic : ",mConnectedDeviceName + ": " + recvMessage[0]);
 
@@ -251,7 +237,6 @@ public class MakeMusic extends AppCompatActivity {
 
 
             if ( !isSucess ) {
-
                 closeSocket();
                 Log.d(TAG, "장치 연결이 끊어졌습니다");
                 isConnectionError = true;
@@ -291,7 +276,8 @@ public class MakeMusic extends AppCompatActivity {
                 Log.e(TAG, "Exception during send", e );
             }
 
-            ///mInputEditText.setText(" ");
+
+
         }
     }
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
