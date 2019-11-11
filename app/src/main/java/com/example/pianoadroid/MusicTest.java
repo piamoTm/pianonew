@@ -344,8 +344,9 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             // bool_music가 true일 때. 연주가 처음부터 연주될 때
 
                             // 초랑 hight_position값
-                            // 노래중지 시 다시 연주할때는 다음 position값으로 이동이 되야 되므로
-                            index_value = i+1;
+
+                            //index_value = i+1;   // 노래중지 시 다시 연주할때 다음 position값으로 이동
+                            index_value = i;      //노래중지 시 다시 연주할때 현재 position값으로 이동
                             Log.e("index_value: ", index_value + "");
 
                             // 핸들러를 통해 UI를 바꿈
@@ -422,7 +423,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 //                mConnectedTask.cancel(true);
 //            }
         sendMessage("N");  //노말 모드로
-        thread.interrupt();
+
+        if (thread != null){
+            thread.interrupt();
+        }
+
     }
 
 
