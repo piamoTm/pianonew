@@ -95,12 +95,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         //리사이클러뷰에 위에서 지정한 layoutManager인 LinearLayout을 대입.
         mRecyclerView.setLayoutManager(layoutManager);
 
+        //인텐트로 뭐 눌렀는지 아이디 받기
+        Intent receiveIntent = getIntent();
+        int mid = receiveIntent.getIntExtra("id",0);
+
         //디비에서 불러오기
         //SQLite db helper init 초기화
         db = new DBMyProductHelper_Read(this);
-
-        Intent receiveIntent = getIntent();
-        int mid = receiveIntent.getIntExtra("id",0);
         Music music = db.getMusic(mid);
 
         TextView tvTitle = findViewById(R.id.tv_title);

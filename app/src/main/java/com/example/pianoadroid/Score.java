@@ -32,8 +32,8 @@ public class Score extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_score);
 
-        imageViews = new ImageView[8];
-        imageViewID = new int[8];
+        imageViews = new ImageView[8]; //이미지 뷰 8개
+        imageViewID = new int[8]; //이미뷰 아이디 8개
 
         imageViews[0] = findViewById(R.id.img1);
         imageViews[1] = findViewById(R.id.img2);
