@@ -60,12 +60,19 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 초 를 담는 변수
     int index_value = 0;
+    // 노래 연주 중 중지버튼 클릭 시 중지된 시점의 index_value값을 담을 변수
+    // int index_value_stop = 0;
+
+    boolean bool_music = true;
 
     // 악보의 계이름을 담는 리스트 변수
     ArrayList<String> MusicNoteList = new ArrayList<>();
 
     // 뒤로가기 버튼
     ImageView btn_back;
+
+    // 1초마다 노래를 트는 스레드
+    music_thread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,6 +258,12 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     }
     // 원곡중지 버튼 클릭 시 발생 메서드
     public void btn_listen_func_stop(){
+        Log.e("노래중지", "중지중지");
+        Log.e("현재 index_value값: ", index_value + "");
+
+        // 연주 중지된 시점의 hight_position값을 담는 변수 / 필요 xx
+        // index_value_stop = index_value;
+
         btn_stop.setVisibility(View.INVISIBLE);
         btn_listen.setVisibility(View.VISIBLE);
     }
@@ -261,7 +274,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         btn_stop.setVisibility(View.VISIBLE);
         Log.e("원곡재생 클릭", "~~~");
 
-        music_thread thread = new music_thread();
+        thread = new music_thread();
         thread.start();
 
     }
@@ -284,29 +297,76 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             super.run();
             Log.e("MusicNoteList사이즈: ", MusicNoteList.size() + "");
 
-            for (int i = 1; i < array.length+1; i++){
+
                 try {
-                    // 초
-                    index_value = i;
 
-                    // 핸들러를 통해 UI를 바꿈
-                    handler.sendEmptyMessage(1);
-                    if(!musicnote_eng_array[i].equals(" ")){
+                    if (bool_music){
+                        Log.e("bool_music값: ", bool_music + "");
+                        for (int i = 1; i < array.length+1; i++){
+                            // bool_music가 true일 때. 연주가 처음부터 연주될 때
 
-                        sendMessage(musicnote_eng_array[i]);
+                            // 초랑 hight_position값
+                            index_value = i;
+                            Log.e("index_value: ", index_value + "");
+
+                            // 핸들러를 통해 UI를 바꿈
+                            handler.sendEmptyMessage(1);
+
+                            if (i == array.length + 1){
+                                break;
+                            }
+
+                            if (!musicnote_eng_array[i].equals(" ")) {
+                                // 아두이노로 블루투스 통신으로 음계를 보냄
+                                sendMessage(musicnote_eng_array[i]);
+                            }
+
+                            //블루투스통신
+                            Log.i("testLog", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i + "rtest " + musicnote_eng_array[i]);
+
+                            // 1초씩 딜레이를 줌
+                            Thread.sleep(800);
+                        }
+
+                    }else{
+                        for (int i = index_value; i < array.length+1; i++){
+                            // bool_music가 true일 때. 연주가 처음부터 연주될 때
+
+                            // 초랑 hight_position값
+                            // 노래중지 시 다시 연주할때는 다음 position값으로 이동이 되야 되므로
+                            index_value = i+1;
+                            Log.e("index_value: ", index_value + "");
+
+                            // 핸들러를 통해 UI를 바꿈
+                            handler.sendEmptyMessage(1);
+
+                            if (i == array.length + 1){
+                                break;
+                            }
+
+                            if (!musicnote_eng_array[i].equals(" ")) {
+                                // 아두이노로 블루투스 통신으로 음계를 보냄
+                                sendMessage(musicnote_eng_array[i]);
+                            }
+
+                            //블루투스통신
+                            Log.i("testLog", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i + "rtest " + musicnote_eng_array[i]);
+
+                            // 1초씩 딜레이를 줌
+                            Thread.sleep(800);
+                        }
                     }
 
-                    //블루투스통신
-                    Log.i("testLog","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i + "rtest "+ musicnote_eng_array[i]);
 
-                    // 1초씩 딜레이를 줌
-                    Thread.sleep(800);
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    Log.e("연주 스레드 중지", "중지");
+                    bool_music = false;
                     e.printStackTrace();
                 }
 
 
-            }
+
 
         }
     }
