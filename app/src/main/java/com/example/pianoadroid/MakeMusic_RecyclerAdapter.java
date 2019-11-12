@@ -116,6 +116,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
                     ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
                     ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
                     ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+                    //((ItemViewHolder)holder).imageViews[n].setImageResource(0);
 
                 }else if(split[ni].equals("E")){
                     ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
