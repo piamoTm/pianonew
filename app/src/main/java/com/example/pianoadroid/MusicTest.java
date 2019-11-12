@@ -328,7 +328,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                             Log.e("index_value == i: ", index_value + "");
                             Log.e("array.length + 1: ", array.length + 1+ "");
-                            Log.e("musicnote_eng_array[i]: ",musicnote_eng_array[i] + "");
+                            //Log.e("musicnote_eng_array[i]: ",musicnote_eng_array[i] + "");
 
                             if (i == array.length){
                                 break;
