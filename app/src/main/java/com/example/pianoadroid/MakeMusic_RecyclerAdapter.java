@@ -1,5 +1,6 @@
 package com.example.pianoadroid;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,14 +15,30 @@ import java.util.ArrayList;
 
 //작곡 MakeMusic 액티비티에서 사용되는 리사이클러뷰 어댑터
 //아두이노로부터 블루투스 통신으로 'C' 라는 데이터가 오면 악보에 도를 그리는 역할
-
+/*
+* 작곡완료 된 곡을 재생시에
+* 원곡재생, 연습모드를 위해 악보를 그리는 리사이클러뷰
+* 음악 클래스를 받고 String score를 getScore()로 받아서.
+* 글자씩 잘라서 아이템 생성하고
+* 아이템 하나에 한글자씩 위치를 지정해주면 됨.
+* */
 public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // adapter에 들어갈 list 입니다.
-    private ArrayList<String> listData ;
+    private ArrayList<String> listData ;  //작곡된 노래 전체 list
+    Music music;   //노래
+    int highlightPos;  //하이라이트 포지션
+    int adparter_size; //아이템의 개수
 
     public MakeMusic_RecyclerAdapter(ArrayList<String> listData) {
         this.listData = listData;
+    }
+    public MakeMusic_RecyclerAdapter(Music music,int highlightPos){
+        this.music = music; this.highlightPos =highlightPos;
+    }
+
+    public void setHighlightPos(int highlightPos) {
+        this.highlightPos = highlightPos;
     }
 
     @NonNull
@@ -38,26 +55,46 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
         int width = 35;
         int space = 7;
+        Log.i("listSize 확인확인222" ,"번호:"+adparter_size);
+        Log.i("testLog", "악보 확인 확인 확인 " );
 
         //i는 아이템 악보 한줄,두줄 이거
         int startNote = i*8;// 0,8,16,24
         int endNote = startNote + 8; //
-        if(endNote >= listData.size()){
-            endNote = listData.size();
-        }
+
+
+       // Log.i("testLog", "악보 확인 확인 확인 " + score);
         String scorePiece = ""; //0~7 /8~15로 악보자르기
-        for (int j = startNote; j<endNote; j++){
-            scorePiece += listData.get(j);
+
+        if(music != null) {
+            String score = music.getScore();
+            // 작곡된 곡 play시 하이라이트 적용
+            if(endNote >= music.getScoreLen()){
+                endNote = music.getScoreLen();
+            }
+              scorePiece = score.substring(startNote, endNote); //0~7 /8~15로 악보자르기
+        }else{
+            //작곡
+            if (endNote >= listData.size()) {
+                endNote = listData.size();
+            }
+            for (int j = startNote; j<endNote; j++){
+                scorePiece += listData.get(j);
+            }
+
+            highlightPos = -11;
         }
+
+
         Log.i("testLog", "악보 조각 " + startNote + scorePiece + endNote);
 
         //악보 조각(한줄)을 계이름 하나씩 자르기
         String[] split = scorePiece.split("");
 
-        // 리사이클러뷰 남아있는 view들 제거
-        for (ImageView iv: ((ItemViewHolder)holder).imageViews
-        ) {
+        // 리사이클러뷰 남아있는 view 찌꺼기들 제거
+        for (ImageView iv: ((ItemViewHolder)holder).imageViews) {
             iv.setVisibility(View.INVISIBLE);
+            iv.setImageResource(R.drawable.music_icon);
         }
 
         //악보조각(한줄) 에 있는 계이름 수만큼 반복문을 돌림.
@@ -66,7 +103,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
             // 코드에 따라 음표의 위치를 조절
             Log.i("testLog", n+"번째 계이름 " + split[ni]);
             if(!split[ni].equals(" ")){ //공란이 아닐때 == 도~시일
-                ((ItemViewHolder)holder).imageViews[n].setImageResource(R.drawable.music_icon);
+//                ((ItemViewHolder)holder).imageViews[n].setImageResource(R.drawable.music_icon);
                 if(split[ni].equals("C")){
                     // 이미지 크기 조절
                     ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
@@ -108,10 +145,22 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
                     ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
                     ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
                 }
+                else if(split[ni].equals("H")){
+                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view5);
+                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+                }
                 ((ItemViewHolder)holder).imageViews[n].setVisibility(View.VISIBLE);
                 ((ItemViewHolder)holder).imageViews[n].setLayoutParams(((ItemViewHolder)holder).layoutParams);
             }
             int position = n+(i*8);
+            if(highlightPos != -11){
+                if((position == highlightPos) && (highlightPos != -11) ){
+                    //argb 투명색까지 포함   , rgb는 그냥  색상만  //헥사 코드로 넣을것
+                    Log.i("dfsdf","sdfsdfsd      "+highlightPos);
+                    ((ItemViewHolder)holder).imageViews[n].setBackgroundColor(Color.argb(0xA0,0xeb,0xbc,0xbb));
+                }
+            }
         }
     }
 
@@ -120,7 +169,14 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         //아이템의 개수
         //오선지 한줄의 개수
         //8개로 잘라서 나머지 있으면 +1
-        int len = listData.size();
+        if( music == null){
+            adparter_size  = listData.size();
+        }else{
+            adparter_size =  music.getScoreLen();
+        }
+        Log.i("listSize 확인확인 adpater" ,"번호:"+adparter_size);
+
+        int len = adparter_size;
         int cnt = len/8;
         len -= (cnt*8);
         if(len > 0){

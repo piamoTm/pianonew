@@ -321,12 +321,16 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                             // 초랑 hight_position값
                             index_value = i;
-                            Log.e("index_value: ", index_value + "");
+
 
                             // 핸들러를 통해 UI를 바꿈
                             handler.sendEmptyMessage(1);
 
-                            if (i == array.length + 1){
+                            Log.e("index_value == i: ", index_value + "");
+                            Log.e("array.length + 1: ", array.length + 1+ "");
+                            Log.e("musicnote_eng_array[i]: ",musicnote_eng_array[i] + "");
+
+                            if (i == array.length){
                                 break;
                             }
 
@@ -358,7 +362,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             // 핸들러를 통해 UI를 바꿈
                             handler.sendEmptyMessage(1);
 
-                            if (i == array.length + 1){
+                            if (i == array.length){
                                 break;
                             }
 

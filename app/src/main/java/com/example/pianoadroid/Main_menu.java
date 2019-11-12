@@ -170,6 +170,9 @@ public class Main_menu extends AppCompatActivity {
         }
 
 
+
+
+
         @Override
         protected void onPostExecute(Boolean isSucess) {
 
@@ -187,6 +190,20 @@ public class Main_menu extends AppCompatActivity {
                 showErrorDialog("장치를 연결할 수 없습니다");
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.i("Main_Menu","Backpressed");
+        //종료 됩니다 dilog  띄우기
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+            //통신 끊기
+        Log.i("Maind_Menu","onDestroey");
     }
 
 

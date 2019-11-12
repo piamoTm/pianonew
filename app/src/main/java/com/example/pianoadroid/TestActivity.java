@@ -29,7 +29,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         Music music = new Music();
-        music.setScore("");
+        music.setScore("ABC");
         highlightPos = -11;
 
         str = new String[7];
@@ -78,7 +78,7 @@ public class TestActivity extends AppCompatActivity {
         noteArr.add("D");
         testAdapter3 = new testAdapter3(noteArr);
 
-        recyclerView.setAdapter(testAdapter3);
+        recyclerView.setAdapter(t);
 
 
     }

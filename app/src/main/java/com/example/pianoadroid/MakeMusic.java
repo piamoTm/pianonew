@@ -56,12 +56,12 @@ public class MakeMusic extends AppCompatActivity {
         //show();// 안내 다이얼로그
         init();//리사이클러뷰 초기 세팅
 
-        // 블루투스 소켓연결
-        mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
-        mConnectedTask.execute();
-
-
-        sendMessage("W"); //작곡모드로
+//        // 블루투스 소켓연결
+//        mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
+//        mConnectedTask.execute();
+//
+//
+//        sendMessage("W"); //작곡모드로
 
 
 
@@ -80,7 +80,7 @@ public class MakeMusic extends AppCompatActivity {
             public void onClick(View v) {
                 String[] str;
                 int i = 0;
-                str = new String[7];
+                str = new String[8];
                 str[0] = "C";
                 str[1] = "D";
                 str[2] = "E";
@@ -88,7 +88,8 @@ public class MakeMusic extends AppCompatActivity {
                 str[4] = "G";
                 str[5] = "A";
                 str[6] = "B";
-                makeNotsArr.add(str[(i++)%7]);
+                str[7] = "H";
+                makeNotsArr.add(str[7]);
                 // Log.i("TESTLOG_YYJ","postion : "+testAdapter3.getItemCount());
                 mMakeNoteRecycler.getLayoutManager().scrollToPosition(adapter.getItemCount()-1);
                 adapter.notifyDataSetChanged();
@@ -131,7 +132,6 @@ public class MakeMusic extends AppCompatActivity {
         makeNotsArr = new ArrayList<>();
         adapter = new MakeMusic_RecyclerAdapter(makeNotsArr);
         mMakeNoteRecycler.setAdapter(adapter);
-
         makeNotsArr.add("");
 
     }

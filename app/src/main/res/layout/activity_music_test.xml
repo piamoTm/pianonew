@@ -35,13 +35,17 @@
 
 
         <Button
+
             android:id="@+id/btn_listen"
             android:layout_toLeftOf="@+id/btn_practice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="원곡듣기"
-
-            />
+            android:text="원 곡 듣 기"
+            android:layout_margin="30px"
+            android:paddingVertical="20px"
+            android:paddingHorizontal="70px"
+            android:textStyle="bold"
+            android:background="@drawable/btn_round_line"/>
 
         <Button
             android:visibility="invisible"
@@ -49,19 +53,26 @@
             android:layout_toLeftOf="@+id/btn_practice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="중지"
+            android:text="중      지"
+            android:layout_margin="30px"
+            android:paddingVertical="20px"
+            android:paddingHorizontal="70px"
+            android:textStyle="bold"
+            android:background="@drawable/btn_round_line"/>
 
-            />
 
         <Button
             android:layout_alignParentRight="true"
             android:id="@+id/btn_practice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="연습하기"
-            android:layout_marginRight="20dp"
+            android:text="연 습 하 기"
+            android:layout_margin="30px"
+            android:paddingVertical="20px"
+            android:paddingHorizontal="70px"
+            android:textStyle="bold"
+            android:background="@drawable/btn_round_line"
             />
-
 
     </RelativeLayout>
 
