@@ -234,7 +234,4 @@
         android:layout_marginRight="22dp"
         android:src="@drawable/music_icon" />
 
-
-
-
 </RelativeLayout>
