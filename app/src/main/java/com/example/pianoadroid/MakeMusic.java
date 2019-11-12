@@ -56,12 +56,12 @@ public class MakeMusic extends AppCompatActivity {
         //show();// 안내 다이얼로그
         init();//리사이클러뷰 초기 세팅
 
-//        // 블루투스 소켓연결
-//        mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
-//        mConnectedTask.execute();
-//
-//
-//        sendMessage("W"); //작곡모드로
+        // 블루투스 소켓연결
+        mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
+        mConnectedTask.execute();
+
+
+        sendMessage("W"); //작곡모드로
 
 
 
@@ -203,7 +203,9 @@ public class MakeMusic extends AppCompatActivity {
                                 publishProgress(recvMessage);
 
                                 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                                makeNotsArr.add(recvMessage.trim());
+                                String[] note_split = recvMessage.trim().split(",");
+                                Log.d(TAG, "make splite recv message: " + note_split[0]);
+                                makeNotsArr.add(note_split[0]);
                                 //==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
                             }
                             else
