@@ -104,10 +104,18 @@ public class MakeMusic extends AppCompatActivity {
             public void onClick(View v) {
             // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
 
+                //SAVE//
+                //SQLite db 개체 생성
+                //DBMyProductHelper_Write db;
+
+                //SQLite db helper init 초기화
+                //db = new DBMyProductHelper_Write(this);
+
+                //새로운 노래를(Music 개체를) db에 추가
+                //db.addMusic(Music);
+
             }
         });
-
-
     }
 
 

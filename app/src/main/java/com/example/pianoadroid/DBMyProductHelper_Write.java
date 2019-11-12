@@ -24,13 +24,10 @@ import java.util.ArrayList;
 /*사용하는 방법//////
 
 //SQLite db 개체 생성
-private DBMyProductHelper db;
+private DBMyProductHelper_Write db;
 
 //SQLite db helper init 초기화
-db = new DBMyProductHelper(this);
-
-//새로운 노래 추가
-db.addMusic(music);
+db = new DBMyProductHelper_Write(this);
 
 //새로운 노래를(Music 개체를) db에 추가
 db.addMusic(Music);
@@ -49,6 +46,9 @@ db.updateMusic(music);
 
 //매개변수로 넘어온 Music 개체를 삭제한다.
 db.deleteMusic(music);
+
+//music id로 Music 삭제하기
+db.deleteMusic(int mid);
 
 */
 
@@ -295,6 +295,26 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
 
         int deletedRowCount = db.delete(TABLE_NAME_MY_PRODUCTS, KEY_ID+ " = ?",
                 new String[]{String.valueOf(music.getId())});
+        db.close();
+
+        Log.i("DBLog","[DBMyProductHelper_Read] 삭제된 row 개수 :"+deletedRowCount);
+
+        return deletedRowCount;// 삭제된 row갯수.
+    }
+
+    /* music id로 Music 삭제하기 *
+     * 매개변수로 넘어온 Music 객체의 id로 해당하는 개체을 삭제한다.
+     * 직접 쿼리를 작성해 삭제하고자 한다면 rawQuery()를 사용하면 된다.
+     * 삭제한 row갯수를 반환한다.
+     */
+    public int deleteMusic (int mid){
+        Log.i("DBLog", "[DBMyProductHelper_Read] deleteMusic()");
+
+        //getWritableDatabase(): 읽고 쓰기 위해 DB 연다. 권한이 없거나 디스크가 가득 차면 실패
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int deletedRowCount = db.delete(TABLE_NAME_MY_PRODUCTS, KEY_ID+ " = ?",
+                new String[]{String.valueOf(mid)});
         db.close();
 
         Log.i("DBLog","[DBMyProductHelper_Read] 삭제된 row 개수 :"+deletedRowCount);
