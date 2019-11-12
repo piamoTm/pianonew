@@ -79,6 +79,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     // 연주 순서대로 갈 때 포커싱을 주기 위한 변수
     int focusing_cnt = 0;
 
+    int musicnote_bit[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,11 +121,20 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         TextView tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText(music.getTitle());
 
+
+
+
         // 디비에서 계이름 코드를 받는 변수
         //musicnote_eng = "BDEFGABCDEFGAB";
         musicnote_eng = music.getScore();
         //Log.i("testLog", music.getBeatStr());
+        Log.e("musicnote_eng.length(): ", musicnote_eng.length() + "");
 
+        musicnote_bit = new int[musicnote_eng.length()];
+        musicnote_bit = music.getBeat();
+        Log.e("musicnote_bit.length: ", musicnote_bit.length + "");
+        Log.e("musicnote_bit[0]: ", musicnote_bit[0] + "");
+        Log.e("musicnote_bit[47]: ", musicnote_bit[47] + "");
         // 디비에서 계이름 코드를 받는 변수
         //musicnote_eng = "BDEFGABCDEFGAB";
 
@@ -190,7 +201,6 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         Log.e("배열에 담긴 악보 채우기 전: ", MusicNoteList + "");
 
         for (int i = 0; i < array.length; i++){
-
 
             // array_value라는 문자열에다가 계이름들을 계속 담음
             array_value += array[i];
@@ -284,7 +294,6 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
         thread = new music_thread();
         thread.start();
-
     }
 
     // 노래가 완전 끝났을 시 콜백함수로 finish라는 값이 넘어옴
