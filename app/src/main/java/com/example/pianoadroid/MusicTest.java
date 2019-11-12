@@ -327,17 +327,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             Log.e("array.length + 1: ", array.length + 1+ "");
                             Log.e("musicnote_eng_array[i]: ",musicnote_eng_array[i] + "");
 
-                            if (i == array.length + 1){
+                            if (i == array.length){
                                 break;
                             }
 
                             if (!musicnote_eng_array[i].equals(" ")) {
-                                if (musicnote_eng_array[i] != null){
-                                    // 아두이노로 블루투스 통신으로 음계를 보냄
-                                    sendMessage(musicnote_eng_array[i]);
-                                }
                                 // 아두이노로 블루투스 통신으로 음계를 보냄
-                                //sendMessage(musicnote_eng_array[i]);
+                                sendMessage(musicnote_eng_array[i]);
                             }
 
                             //블루투스통신
@@ -360,7 +356,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             // 핸들러를 통해 UI를 바꿈
                             handler.sendEmptyMessage(1);
 
-                            if (i == array.length + 1){
+                            if (i == array.length){
                                 break;
                             }
 
