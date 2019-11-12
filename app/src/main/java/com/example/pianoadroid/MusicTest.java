@@ -337,7 +337,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                             Log.e("index_value == i: ", index_value + "");
                             Log.e("array.length + 1: ", array.length + 1+ "");
-                            Log.e("musicnote_eng_array[i]: ",musicnote_eng_array[i] + "");
+                            //Log.e("musicnote_eng_array[i]: ",musicnote_eng_array[i] + "");
 
                             if (i == array.length){
                                 break;
@@ -356,7 +356,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             Log.i("testLog", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i + "rtest " + musicnote_eng_array[i]);
 
                             // 1초씩 딜레이를 줌
-                            Thread.sleep(800);
+                            Thread.sleep(1200);
                         }
                     }else{
                         for (int i = index_value; i < array.length+1; i++){
@@ -377,14 +377,17 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                             if (!musicnote_eng_array[i].equals(" ")) {
                                 // 아두이노로 블루투스 통신으로 음계를 보냄
-                                sendMessage(musicnote_eng_array[i]);
+                                String sendMsg = musicnote_eng_array[i] + music.getBeat()[i-1];
+                                Log.i("testLog", "sendMsg "+sendMsg);
+                                //sendMessage(musicnote_eng_array[i]);
+                                sendMessage(sendMsg);
                             }
 
                             //블루투스통신
                             Log.i("testLog", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i + "rtest " + musicnote_eng_array[i]);
 
                             // 1초씩 딜레이를 줌
-                            Thread.sleep(800);
+                            Thread.sleep(1200);
                         }
                     }
 
