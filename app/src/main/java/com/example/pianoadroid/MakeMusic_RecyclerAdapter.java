@@ -16,7 +16,7 @@ import java.util.ArrayList;
 //작곡 MakeMusic 액티비티에서 사용되는 리사이클러뷰 어댑터
 //아두이노로부터 블루투스 통신으로 'C' 라는 데이터가 오면 악보에 도를 그리는 역할
 /*
-* 작곡완료 된 곡을 재생시에
+****작곡완료 된 곡을 재생시에
 * 원곡재생, 연습모드를 위해 악보를 그리는 리사이클러뷰
 * 음악 클래스를 받고 String score를 getScore()로 받아서.
 * 글자씩 잘라서 아이템 생성하고
@@ -82,7 +82,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
                 scorePiece += listData.get(j);
             }
 
-            highlightPos = -11;
+            highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
         }
 
 
@@ -157,7 +157,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
             if(highlightPos != -11){
                 if((position == highlightPos) && (highlightPos != -11) ){
                     //argb 투명색까지 포함   , rgb는 그냥  색상만  //헥사 코드로 넣을것
-                    Log.i("dfsdf","sdfsdfsd      "+highlightPos);
+                    Log.i("MakeMusic:  ","하이라이트 포지션 값 :    "+highlightPos);
                     ((ItemViewHolder)holder).imageViews[n].setBackgroundColor(Color.argb(0xA0,0xeb,0xbc,0xbb));
                 }
             }
