@@ -171,7 +171,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
         // php에서 select하고 한줄씩 rows에 담아 사용하듯이 여기는 cursor에서 한줄씩 사용하나보네
         //
         Cursor cursor = db.query(TABLE_NAME_MY_PRODUCTS,
-                new String[]{KEY_ID, KEY_TITLE, KEY_WRITER, KEY_SCORE},
+                new String[]{KEY_ID, KEY_TITLE, KEY_WRITER, KEY_SCORE, KEY_BEAT},
                 KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null) {
@@ -181,7 +181,7 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
         //KEY_ID + INTEGER  //0
         //KEY_TITLE + " TEXT, " //1
         //KEY_WRITER + " TEXT, " //2
-        //KEY_CODE + "  TEXT " //3
+        //KEY_SCORE + "  TEXT " //3
         //KEY_BEAT /TEXT / 4
 
         //Music(int id, String title, String writer, String code, String beatStr) <-생성자
@@ -189,8 +189,8 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
                 Integer.parseInt(cursor.getString(0)), //id
                 cursor.getString(1),     //title
                 cursor.getString(2),    //writer
-                cursor.getString(3)     //code
-                 //cursor.getString(4)     //beat
+                cursor.getString(3),     //code
+                cursor.getString(4)     //beat
         );
 
         return music;
@@ -282,6 +282,27 @@ public class DBMyProductHelper_Read extends SQLiteOpenHelper {
 
         int deletedRowCount = db.delete(TABLE_NAME_MY_PRODUCTS, KEY_ID+ " = ?",
                 new String[]{String.valueOf(music.getId())});
+        db.close();
+
+        Log.i("DBLog","[DBMyProductHelper_Read] 삭제된 row 개수 :"+deletedRowCount);
+
+        return deletedRowCount;// 삭제된 row갯수.
+    }
+
+    /* Music 삭제하기
+     * prams : 삭제하고자 하는 music개체 아이디
+     * 매개변수로 넘어온 Music 객체 아이에 해당하는 값을 삭제한다.
+     * 직접 쿼리를 작성해 삭제하고자 한다면 rawQuery()를 사용하면 된다.
+     * 삭제한 row갯수를 반환한다.
+     */
+    public int deleteMusic (int mid){
+        Log.i("DBLog", "[DBMyProductHelper_Read] deleteMusic()");
+
+        //getWritableDatabase(): 읽고 쓰기 위해 DB 연다. 권한이 없거나 디스크가 가득 차면 실패
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int deletedRowCount = db.delete(TABLE_NAME_MY_PRODUCTS, KEY_ID+ " = ?",
+                new String[]{String.valueOf(mid)});
         db.close();
 
         Log.i("DBLog","[DBMyProductHelper_Read] 삭제된 row 개수 :"+deletedRowCount);

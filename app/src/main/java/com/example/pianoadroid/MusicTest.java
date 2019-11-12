@@ -43,6 +43,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     MusicTest_Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
 
+    //플레이할 음악
+    Music music;
 
     // 원곡듣기 버튼
     Button btn_listen, btn_stop;
@@ -112,7 +114,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         //디비에서 불러오기
         //SQLite db helper init 초기화
         db = new DBMyProductHelper_Read(this);
-        Music music = db.getMusic(mid);
+        music = db.getMusic(mid);
 
         TextView tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText(music.getTitle());
@@ -120,6 +122,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         // 디비에서 계이름 코드를 받는 변수
         //musicnote_eng = "BDEFGABCDEFGAB";
         musicnote_eng = music.getScore();
+        //Log.i("testLog", music.getBeatStr());
 
         // 디비에서 계이름 코드를 받는 변수
         //musicnote_eng = "BDEFGABCDEFGAB";
@@ -327,9 +330,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                                 break;
                             }
 
-                            if (!musicnote_eng_array[i].equals(" ")) {
+                            if (!musicnote_eng_array[i].equals(" ")) { //빈칸이 아닐때
                                 // 아두이노로 블루투스 통신으로 음계를 보냄
-                                sendMessage(musicnote_eng_array[i]);
+                                //String sendMsg = musicnote_eng_array[i] + music.getBeat()[i-1];
+                                String sendMsg = musicnote_eng_array[i] + music.getBeat()[i-1];
+                                Log.i("testLog", "sendMsg "+sendMsg);
+                                //Log.i("testLog", "music.getBeat()[i-1] :"+music.getBeat()[i-1] );
+                                sendMessage(sendMsg);
                             }
 
                             //블루투스통신
@@ -338,7 +345,6 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             // 1초씩 딜레이를 줌
                             Thread.sleep(800);
                         }
-
                     }else{
                         for (int i = index_value; i < array.length+1; i++){
                             // bool_music가 true일 때. 연주가 처음부터 연주될 때

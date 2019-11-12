@@ -8,6 +8,8 @@ package com.example.pianoadroid;
 //SQLite DB에 노래를 넣고 뺄때 사용될것.
 
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -119,6 +121,7 @@ public class Music {
     }
     //db Helper에서 사용하는 함수. 다른곳에서 사용할때는 매개변수 beatStr 형식에 유의
     public void setBeat(String beatStr){
+        //Log.i("testLog", "setBeat() :" + beatStr);
         //String 형식으로 들어온 beatStr을 하나씩띄어서 int형 배열로 바꿔서 반환.
         //  "11111120111111201111112111111201111112011111120" -> 1,1,1,1,1,1,2,0,1,1,1,1,1,1,2,0,1,1,1,1...1,2,0
 
@@ -126,16 +129,11 @@ public class Music {
 
         String[] beatSplit = beatStr.split(""); //beatStr을 한글자씩 자름.
 
-        int i = 0;
-        for (String b : beatSplit
-             ) {
-            //한글자씩 자른 beatStr을(String type) -> beatArr배열에 숫자로 바꿔 넣는다.
-            if(!b.equals("")){
-                beatArr[i++] = Integer.parseInt(b);
-            }
+        for(int i=1; i<beatSplit.length; i++){
+            //한글자씩 자른 beatStr을(String type) -> beatArr배열에 Int로 바꿔 넣는다.
+            beatArr[i-1] = Integer.parseInt(beatSplit[i]);
+            //Log.i("testLog", "["+(i-1)+"] " + beatArr[i-1]);
         }
-
-
         this.beat = beatArr;
     }
 

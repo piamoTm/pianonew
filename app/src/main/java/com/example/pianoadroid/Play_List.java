@@ -47,11 +47,13 @@ public class Play_List extends AppCompatActivity {
             }
         });
 
-//        int beat[] = {1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,21,1,1,1,1,1,2};
+//        db.deleteMusic(1);
+//
+//        int beat[] = {1,1,1,1,1,1,2,0,1,1,1,1,1,1,2,0,1,1,1,1,1,1,2,0,1,1,1,1,1,1,2,0,1,1,1,1,1,1,2,0,1,1,1,1,1,1,2,0};
 //        Music music = new Music("작은 별", "미상", "CCGGAAG FFEEDDC GGFFEED GGFFEED CCGGAAG FFEEDDC ",beat);
 //        db.addMusic(music);
 
-        //db.deleteMusic(2);
+
     }
 
     //리사이클러뷰 세팅

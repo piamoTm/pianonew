@@ -178,7 +178,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         // php에서 select하고 한줄씩 rows에 담아 사용하듯이 여기는 cursor에서 한줄씩 사용하나보네
         //
         Cursor cursor = db.query(TABLE_NAME_MY_PRODUCTS,
-                new String[]{KEY_ID, KEY_TITLE, KEY_WRITER, KEY_SCORE},
+                new String[]{KEY_ID, KEY_TITLE, KEY_WRITER, KEY_SCORE ,KEY_DATE, KEY_BEAT},
                 KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null) {
