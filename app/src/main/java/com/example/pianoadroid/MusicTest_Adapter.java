@@ -109,6 +109,43 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Log.e("onBindViewHolder", "musicNoteList값: " + musicNoteList.get(position) + "" + position);
         Log.e("musicNoteList크기: ", musicNoteList.size() + " ");
 
+        myViewHolder.img1.setVisibility(View.INVISIBLE);
+        myViewHolder.img2.setVisibility(View.INVISIBLE);
+        myViewHolder.img3.setVisibility(View.INVISIBLE);
+        myViewHolder.img4.setVisibility(View.INVISIBLE);
+        myViewHolder.img5.setVisibility(View.INVISIBLE);
+        myViewHolder.img6.setVisibility(View.INVISIBLE);
+        myViewHolder.img7.setVisibility(View.INVISIBLE);
+        myViewHolder.img8.setVisibility(View.INVISIBLE);
+
+        myViewHolder.img1_color.setVisibility(View.INVISIBLE);
+        myViewHolder.img2_color.setVisibility(View.INVISIBLE);
+        myViewHolder.img3_color.setVisibility(View.INVISIBLE);
+        myViewHolder.img4_color.setVisibility(View.INVISIBLE);
+        myViewHolder.img5_color.setVisibility(View.INVISIBLE);
+        myViewHolder.img6_color.setVisibility(View.INVISIBLE);
+        myViewHolder.img7_color.setVisibility(View.INVISIBLE);
+        myViewHolder.img8_color.setVisibility(View.INVISIBLE);
+
+        myViewHolder.img1_color.setImageResource(R.drawable.music_icon);
+        myViewHolder.img2_color.setImageResource(R.drawable.music_icon);
+        myViewHolder.img3_color.setImageResource(R.drawable.music_icon);
+        myViewHolder.img4_color.setImageResource(R.drawable.music_icon);
+        myViewHolder.img5_color.setImageResource(R.drawable.music_icon);
+        myViewHolder.img6_color.setImageResource(R.drawable.music_icon);
+        myViewHolder.img7_color.setImageResource(R.drawable.music_icon);
+        myViewHolder.img8_color.setImageResource(R.drawable.music_icon);
+
+        myViewHolder.img1.setImageResource(R.drawable.music_icon);
+        myViewHolder.img2.setImageResource(R.drawable.music_icon);
+        myViewHolder.img3.setImageResource(R.drawable.music_icon);
+        myViewHolder.img4.setImageResource(R.drawable.music_icon);
+        myViewHolder.img5.setImageResource(R.drawable.music_icon);
+        myViewHolder.img6.setImageResource(R.drawable.music_icon);
+        myViewHolder.img7.setImageResource(R.drawable.music_icon);
+        myViewHolder.img8.setImageResource(R.drawable.music_icon);
+
+
         // 넘어온 배열의 포지션에 있는 값을 악보에 세팅해줌
         M_names(musicNoteList.get(position) , myViewHolder, position);
 
@@ -220,11 +257,10 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         myViewHolder.img8_color.setVisibility(View.INVISIBLE);
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                     }
-
                 }
 
                 tfliListener.onMusicFinish("finish", myViewHolder.itemView.getContext());
-                break;
+               // break;
             }
 
 
@@ -418,7 +454,8 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     }
 
                 }else if(list[1].equals(" ")){
-
+                    myViewHolder.img1.setVisibility(View.INVISIBLE);
+                    myViewHolder.img1_color.setVisibility(View.INVISIBLE);
                 }
 
 
@@ -685,6 +722,9 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.e("음계 빈칸 2번째 배열값: ", "["+list[1] + "]");
                             myViewHolder.img1_color.setVisibility(View.INVISIBLE);
                         }
+                    }else{
+                        myViewHolder.img2.setVisibility(View.INVISIBLE);
+                        myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -945,6 +985,9 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.e("음계 빈칸 2번째 배열값: ", "["+list[2] + "]");
                             myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                         }
+                    }else{
+                        myViewHolder.img3.setVisibility(View.INVISIBLE);
+                        myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -1212,6 +1255,9 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.e("음계 빈칸 2번째 배열값: ", "["+list[3] + "]");
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
+                    }else{
+                        myViewHolder.img4.setVisibility(View.INVISIBLE);
+                        myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -1468,6 +1514,9 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.e("음계 빈칸 4번째 배열값: ", "["+list[4] + "]");
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
+                    }else{
+                        myViewHolder.img5.setVisibility(View.INVISIBLE);
+                        myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -1723,6 +1772,9 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.e("음계 빈칸 5번째 배열값: ", "["+list[5] + "]");
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
+                    }else{
+                        myViewHolder.img6.setVisibility(View.INVISIBLE);
+                        myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -1979,6 +2031,9 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.e("음계 빈칸 6번째 배열값: ", "["+list[6] + "]");
                             myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                         }
+                    }else{
+                        myViewHolder.img7.setVisibility(View.INVISIBLE);
+                        myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -2232,6 +2287,9 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.e("음계 빈칸 7번째 배열값: ", "["+list[7] + "]");
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
+                    }else{
+                        myViewHolder.img8.setVisibility(View.INVISIBLE);
+                        myViewHolder.img8_color.setVisibility(View.INVISIBLE);
                     }
                 }
 
