@@ -47,6 +47,9 @@ db.updateMusic(music);
 //매개변수로 넘어온 Music 개체를 삭제한다.
 db.deleteMusic(music);
 
+//music id로 Music 삭제하기
+db.deleteMusic(int mid);
+
 */
 
 
