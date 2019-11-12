@@ -57,6 +57,9 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 문자열로 온 악보정보를 split로 나눠서 저장한 배열변수
     String [] array;
+    // 문자열로 온 악보 박자정보를 split로 나눠서 저장한 배열변수
+    String [] bit_array;
+
     String musicnote_eng_array[];
 
 
@@ -69,6 +72,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 악보의 계이름을 담는 리스트 변수
     ArrayList<String> MusicNoteList = new ArrayList<>();
+    // 악보의 계이름의 박자를 담는 리스트 변수
+    ArrayList<String> MusicNoteBitList = new ArrayList<>();
 
     // 뒤로가기 버튼
     ImageView btn_back;
@@ -79,7 +84,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     // 연주 순서대로 갈 때 포커싱을 주기 위한 변수
     int focusing_cnt = 0;
 
-    int musicnote_bit[];
+    // SQLite에서 받아온 노래 비트를 담는 배열 변수
+    int db_musicnote_bit[];
+
+    String musicnote_bit = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,11 +139,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         //Log.i("testLog", music.getBeatStr());
         Log.e("musicnote_eng.length(): ", musicnote_eng.length() + "");
 
-        musicnote_bit = new int[musicnote_eng.length()];
-        musicnote_bit = music.getBeat();
-        Log.e("musicnote_bit.length: ", musicnote_bit.length + "");
-        Log.e("musicnote_bit[0]: ", musicnote_bit[0] + "");
-        Log.e("musicnote_bit[47]: ", musicnote_bit[47] + "");
+        db_musicnote_bit = new int[musicnote_eng.length()];
+        db_musicnote_bit = music.getBeat();
+        Log.e("musicnote_bit.length: ", db_musicnote_bit.length + "");
+        Log.e("musicnote_bit[0]: ", db_musicnote_bit[0] + "");
+        Log.e("musicnote_bit[47]: ", db_musicnote_bit[47] + "");
         // 디비에서 계이름 코드를 받는 변수
         //musicnote_eng = "BDEFGABCDEFGAB";
 
@@ -147,36 +156,70 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         for (int i = 0; i < musicnote_eng_array.length; i++){
             if (i != 0){
                 if (musicnote_eng_array[i].equals("C")){
-                    //musicnote_eng_array[i] = "도";
+
                     musicnote_kor += "도";
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    //musicnote_bit += db_musicnote_bit[i-1];
+                    musicnote_bit += db_musicnote_bit[i-1];
+
                 }else if(musicnote_eng_array[i].equals("D")){
-                    //musicnote_eng_array[i] = "레";
+
                     musicnote_kor += "레";
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    musicnote_bit += db_musicnote_bit[i-1];
                 }else if(musicnote_eng_array[i].equals("E")){
-                    //musicnote_eng_array[i] = "미";
+
                     musicnote_kor += "미";
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    musicnote_bit += db_musicnote_bit[i-1];
                 }else if(musicnote_eng_array[i].equals("F")){
-                    //musicnote_eng_array[i] = "파";
+
                     musicnote_kor += "파";
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    musicnote_bit += db_musicnote_bit[i-1];
+
                 }else if(musicnote_eng_array[i].equals("G")){
-                    //musicnote_eng_array[i] = "솔";
+
                     musicnote_kor += "솔";
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    musicnote_bit += db_musicnote_bit[i-1];
+
                 }else if(musicnote_eng_array[i].equals("A")){
-                    //musicnote_eng_array[i] = "라";
+
                     musicnote_kor += "라";
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    musicnote_bit += db_musicnote_bit[i-1];
+
                 }else if(musicnote_eng_array[i].equals("B")){
-                    //musicnote_eng_array[i] = "시";
+
                     musicnote_kor += "시";
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    musicnote_bit += db_musicnote_bit[i-1];
+
                 }else if(musicnote_eng_array[i].equals("H")){
+
                     musicnote_kor += "두";                       // 높은 도 임
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    musicnote_bit += db_musicnote_bit[i-1];
+
                 }else if(musicnote_eng_array[i].equals(" ")){
-                    //musicnote_eng_array[i] = "시";
+
                     musicnote_kor += " ";
+                    // 해당 음계에 해당하는 박자수를 담는 변수
+                    musicnote_bit += db_musicnote_bit[i-1];
                 }
+
+                // index0부터 시작함. bit는
+            }else {
+
             }
+
+
         }
 
+
         Log.e("한글변환계이름: ", musicnote_kor);
+        Log.e("해당노래의박자: ", musicnote_bit);
 
         // 블루투스 소켓연결
         mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
@@ -193,9 +236,14 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
         // 8개씩 악보를 담아서 배열로 보낸 뒤 초기화 하는 변수
         String array_value = "";
+        // 8개씩 악보의 박자를 담아서 배열로 보낸 뒤 초기화 하는 변수
+        String array_bit_value = "";
 
         // 문자열로 온 악보정보를 split로 나눠서 저장한 배열변수
         array = musicnote.split("");
+        bit_array = musicnote_bit.split("");
+
+
 
 
         Log.e("배열에 담긴 악보 채우기 전: ", MusicNoteList + "");
@@ -206,6 +254,10 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             array_value += array[i];
             Log.e("array_value값: " , i+"번째: "+array[i]);
 
+            // array_bit_value라는 문자열에다가 계이름의 박자를 계속 담음
+            array_bit_value += bit_array[i];
+            Log.e("array_bit_value값: " , i+"번째: "+bit_array[i]);
+
             // 8개가 되었을 때
             if(i % 8 == 0){
 
@@ -215,20 +267,28 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     Log.e(i+"번째까지의 계이름 목록: ", array_value);
                     // 악보의 계이름을 담는 리스트 변수에 9번째까지의 계이름을 담음
                     MusicNoteList.add(array_value);
+                    MusicNoteBitList.add(array_bit_value);
 
                     Log.e("배열에 담기는 중인 악보: ", MusicNoteList + "");
+                    Log.e("배열에 담기는 중인 악보박자: ", MusicNoteBitList + "");
+
                     // 계이름담는 문자열 초기화
                     array_value = "";
+                    array_bit_value = "";
                 }
             }
 
             if(i == musicnote.length()){
                 Log.e("남은 array_value값: ", array_value);
+                Log.e("남은 array_bit_value값: ", array_bit_value);
 
                 // 최근 수정사항
                 if(i % 8 != 0){
                     MusicNoteList.add(array_value);
                     Log.e("배열에 담기는 중인 악보: ", MusicNoteList + "");
+
+                    MusicNoteBitList.add(array_bit_value);
+                    Log.e("배열에 담기는 중인 악보박자: ", MusicNoteBitList + "");
                 }
 
 //                if (!array_value.equals("O")){
@@ -239,12 +299,15 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             }
         }
 
-        Log.e("계이름 수: ", musicnote.length() + " ");
-        Log.e("최종 배열에 담긴 악보: ", MusicNoteList + "");
 
+        Log.e("계이름 수: ", musicnote.length() + " ");
+        Log.e("계이름 박자 수: ", musicnote_bit.length() + " ");
+
+        Log.e("최종 배열에 담긴 악보: ", MusicNoteList + "");
+        Log.e("최종 배열에 담긴 악보 박자: ", MusicNoteBitList + "");
 
         // 어댑터 생성자에 악보리스트를 넣음
-        mAdapter = new MusicTest_Adapter(MusicNoteList);
+        mAdapter = new MusicTest_Adapter(MusicNoteList, MusicNoteBitList);
 
         //
         mRecyclerView.setAdapter(mAdapter);
@@ -356,7 +419,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             Log.i("testLog", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i + "rtest " + musicnote_eng_array[i]);
 
                             // 1초씩 딜레이를 줌
-                            Thread.sleep(1200);
+                            Thread.sleep(800);
                         }
                     }else{
                         for (int i = index_value; i < array.length+1; i++){
@@ -387,7 +450,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             Log.i("testLog", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i + "rtest " + musicnote_eng_array[i]);
 
                             // 1초씩 딜레이를 줌
-                            Thread.sleep(1200);
+                            Thread.sleep(800);
                         }
                     }
 

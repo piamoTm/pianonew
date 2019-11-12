@@ -83,12 +83,15 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     ArrayList<String> musicNoteList;
+    ArrayList<String> musicNoteBitList;
 
 
-    public MusicTest_Adapter(ArrayList<String> musicNoteList) {
+    public MusicTest_Adapter(ArrayList<String> musicNoteList, ArrayList<String> musicNoteBitList) {
         this.musicNoteList = musicNoteList;
+        this.musicNoteBitList = musicNoteBitList;
 
-        Log.e("생성자 안 어댑터 값: ", musicNoteList + "");
+        Log.e("어댑터 안 musicNoteList 값: ", musicNoteList + "");
+        Log.e("어댑터 안 musicNoteBitList 값: ", musicNoteBitList + "");
     }
 
     // 새로운 뷰홀더 생성
