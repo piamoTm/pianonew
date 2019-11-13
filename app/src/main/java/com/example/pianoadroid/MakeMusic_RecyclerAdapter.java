@@ -88,7 +88,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
             for (int j = startNote; j<endNote; j++){
                 scorePiece += listData.get(j);
                 Log.i("testLog", "listData.get("+j+") " + listData.get(j)  );
-//                beatPiece += beatData.get(j);
+                beatPiece += beatData.get(j);
             }
 
             highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
@@ -99,11 +99,14 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         //악보 조각(한줄)을 계이름 하나씩 자르기
         String[] split = scorePiece.split("");
 
-        Log.i("testLog", "scorePiece을 자른 split");
-        for (int h = 0; h < split.length; h++){
-            Log.i("testLog", "split["+h+"] "+split[h] );
-        }
-
+//        Log.i("testLog", "scorePiece을 자른 split");
+//        for (int h = 0; h < split.length; h++){
+//            Log.i("testLog", "split["+h+"] "+split[h] );
+////        }
+//        Log.i("testLog", "Beat 확인 ");  //yyj
+//        for (int h = 0; h < beatData.size(); h++){//yyj
+//            Log.i("testLog", "Beet["+h+"] "+beatData.get(h) );//yyj
+//        }
 
         // 리사이클러뷰 남아있는 view 찌꺼기들 제거
         for (ImageView iv: ((ItemViewHolder)holder).imageViews) {
