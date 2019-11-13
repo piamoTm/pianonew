@@ -183,7 +183,6 @@ public class Main_menu extends AppCompatActivity {
 
 
 
-
         @Override
         protected void onPostExecute(Boolean isSucess) {
 
@@ -215,10 +214,11 @@ public class Main_menu extends AppCompatActivity {
         super.onDestroy();
             //통신 끊기
         Log.i("Maind_Menu","onDestroey");
+
     }
 
 
-    //기기와 연결된후 통신하기
+    //기기와 연결된 후 통신하기
     public void connected( BluetoothSocket socket , String mDevicename) {
         socketdata.setmBluetoothsocket(socket);
         socketdata.setmDeviceName(mDevicename);

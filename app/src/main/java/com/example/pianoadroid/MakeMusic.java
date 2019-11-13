@@ -123,9 +123,9 @@ public class MakeMusic extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//            if ( mConnectedTask != null ) {
-//                mConnectedTask.cancel(true);
-//            }
+            if ( mConnectedTask != null ) {
+                mConnectedTask.cancel(true);
+            }
         sendMessage("N");  //노말 모드로
     }
 
@@ -266,12 +266,7 @@ public class MakeMusic extends AppCompatActivity {
             }
         }
 
-        @Override
-        protected void onCancelled(Boolean aBoolean) {
-            super.onCancelled(aBoolean);
 
-            closeSocket();
-        }
 
         void closeSocket(){
 

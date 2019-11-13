@@ -622,10 +622,12 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 //                mConnectedTask.cancel(true);
 //            }
         sendMessage("N");  //노말 모드로
-        sendMessage("R");  //노말 모드로
+        //sendMessage("R");  //노말 모드로<-무슨짓?
         if (thread != null){
             thread.interrupt();
         }
+
+        mConnectedTask.cancel(true); //쓰레드종료
 
     }
 
@@ -743,12 +745,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             }
         }
 
-        @Override
-        protected void onCancelled(Boolean aBoolean) {
-            super.onCancelled(aBoolean);
 
-            closeSocket();
-        }
 
         void closeSocket(){
 

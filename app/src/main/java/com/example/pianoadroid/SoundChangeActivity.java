@@ -59,10 +59,9 @@ public class SoundChangeActivity extends AppCompatActivity {
         soundID[HDO] = soundPool.load(this, R.raw.yattong_hdo,1);
 
 
-
         // 블루투스 소켓연결
         mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
-        mConnectedTask.execute();
+        mConnectedTask.execute(); //쓰레드실
 
         sendMessage("W"); //아두이노를 작곡모드로
 
@@ -71,6 +70,8 @@ public class SoundChangeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        mConnectedTask.cancel(true); //쓰레드종료
 
         sendMessage("N"); //아두이노를 기본모드로
     }
@@ -118,7 +119,7 @@ public class SoundChangeActivity extends AppCompatActivity {
     }
     //아두이노가 블루투스로 보내는 데이터를 받는 부분//
     //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    public  class ConnectedTask extends AsyncTask<Void, String, Boolean> {
+    public class ConnectedTask extends AsyncTask<Void, String, Boolean> {
         private InputStream mInputStream = null;
         private OutputStream mOutputStream = null;
         private BluetoothSocket mBluetoothSocket = null;
@@ -226,12 +227,6 @@ public class SoundChangeActivity extends AppCompatActivity {
             //여기서 처리할려면 doInBackground에서 return 시켜야하는데 그럼 쓰레드가 끝나서 여기서 처리안하고
             //onProgressUpdate 여기에서 받아서 처리해보려
 
-        }
-
-        @Override
-        protected void onCancelled(Boolean aBoolean) {
-            super.onCancelled(aBoolean);
-            closeSocket();
         }
 
         void closeSocket(){
