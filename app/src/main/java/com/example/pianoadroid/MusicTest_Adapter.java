@@ -805,7 +805,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         }else {
                             myViewHolder.img3_color.setImageResource(R.drawable.note2_do);
                         }
-                        myViewHolder.img3_color.setImageResource(R.drawable.do_icon);
+
                         myViewHolder.img3_color.setLayoutParams(layoutParams);
                         myViewHolder.img3.setVisibility(View.INVISIBLE);
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
@@ -816,7 +816,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         }else {
                             myViewHolder.img3.setImageResource(R.drawable.note2_do);
                         }
-                        myViewHolder.img3.setImageResource(R.drawable.do_icon);
+
                         myViewHolder.img3.setVisibility(View.VISIBLE);
                         myViewHolder.img3.setLayoutParams(layoutParams);
                     }
@@ -835,10 +835,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img2.setVisibility(View.VISIBLE);
                             myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                         }
+
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3_color.setLayoutParams(layoutParams);
                         myViewHolder.img3.setVisibility(View.INVISIBLE);
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3.setVisibility(View.VISIBLE);
                         myViewHolder.img3.setLayoutParams(layoutParams);
                     }
@@ -858,11 +869,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img2.setVisibility(View.VISIBLE);
                             myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img3_color.setLayoutParams(layoutParams);
                         myViewHolder.img3.setVisibility(View.INVISIBLE);
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3.setVisibility(View.VISIBLE);
                         myViewHolder.img3.setLayoutParams(layoutParams);
                     }
@@ -883,11 +904,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img2.setVisibility(View.VISIBLE);
                             myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img3_color.setLayoutParams(layoutParams);
                         myViewHolder.img3.setVisibility(View.INVISIBLE);
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3.setVisibility(View.VISIBLE);
                         myViewHolder.img3.setLayoutParams(layoutParams);
                     }
@@ -907,11 +938,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img2.setVisibility(View.VISIBLE);
                             myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img3_color.setLayoutParams(layoutParams);
                         myViewHolder.img3.setVisibility(View.INVISIBLE);
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3.setVisibility(View.VISIBLE);
                         myViewHolder.img3.setLayoutParams(layoutParams);
                     }
@@ -931,10 +972,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img2.setVisibility(View.VISIBLE);
                             myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3_color.setLayoutParams(layoutParams);
                         myViewHolder.img3.setVisibility(View.INVISIBLE);
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3.setVisibility(View.VISIBLE);
                         myViewHolder.img3.setLayoutParams(layoutParams);
                     }
@@ -955,10 +1006,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img2.setVisibility(View.VISIBLE);
                             myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3_color.setLayoutParams(layoutParams);
                         myViewHolder.img3.setVisibility(View.INVISIBLE);
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3.setVisibility(View.VISIBLE);
                         myViewHolder.img3.setLayoutParams(layoutParams);
                     }
@@ -977,10 +1038,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img2.setVisibility(View.VISIBLE);
                             myViewHolder.img2_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3_color.setLayoutParams(layoutParams);
                         myViewHolder.img3.setVisibility(View.INVISIBLE);
                         myViewHolder.img3_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[3].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img3.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img3.setVisibility(View.VISIBLE);
                         myViewHolder.img3.setLayoutParams(layoutParams);
                     }
@@ -1028,13 +1099,24 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img3.setVisibility(View.VISIBLE);
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[4].equals("1")){
+                            myViewHolder.img4_color.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img4_color.setImageResource(R.drawable.note2_do);
+                        }
 
-                        myViewHolder.img4_color.setImageResource(R.drawable.do_icon);
                         myViewHolder.img4_color.setLayoutParams(layoutParams);
                         myViewHolder.img4.setVisibility(View.INVISIBLE);
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
-                        myViewHolder.img4.setImageResource(R.drawable.do_icon);
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[4].equals("1")){
+                            myViewHolder.img4.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img4.setImageResource(R.drawable.note2_do);
+                        }
+
                         myViewHolder.img4.setVisibility(View.VISIBLE);
                         myViewHolder.img4.setLayoutParams(layoutParams);
                     }
@@ -1054,11 +1136,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img3.setVisibility(View.VISIBLE);
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
-
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4_color.setLayoutParams(layoutParams);
                         myViewHolder.img4.setVisibility(View.INVISIBLE);
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4.setVisibility(View.VISIBLE);
                         myViewHolder.img4.setLayoutParams(layoutParams);
                     }
@@ -1079,10 +1170,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img3.setVisibility(View.VISIBLE);
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4_color.setLayoutParams(layoutParams);
                         myViewHolder.img4.setVisibility(View.INVISIBLE);
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4.setVisibility(View.VISIBLE);
                         myViewHolder.img4.setLayoutParams(layoutParams);
                     }
@@ -1102,10 +1203,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img3.setVisibility(View.VISIBLE);
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4_color.setLayoutParams(layoutParams);
                         myViewHolder.img4.setVisibility(View.INVISIBLE);
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4.setVisibility(View.VISIBLE);
                         myViewHolder.img4.setLayoutParams(layoutParams);
                     }
@@ -1126,11 +1237,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img3.setVisibility(View.VISIBLE);
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img4_color.setLayoutParams(layoutParams);
                         myViewHolder.img4.setVisibility(View.INVISIBLE);
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4.setVisibility(View.VISIBLE);
                         myViewHolder.img4.setLayoutParams(layoutParams);
                     }
@@ -1150,11 +1271,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img3.setVisibility(View.VISIBLE);
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img4_color.setLayoutParams(layoutParams);
                         myViewHolder.img4.setVisibility(View.INVISIBLE);
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4.setVisibility(View.VISIBLE);
                         myViewHolder.img4.setLayoutParams(layoutParams);
                     }
@@ -1175,12 +1306,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img3.setVisibility(View.VISIBLE);
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img4_color.setLayoutParams(layoutParams);
                         myViewHolder.img4.setVisibility(View.INVISIBLE);
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
-
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4.setVisibility(View.VISIBLE);
                         myViewHolder.img4.setLayoutParams(layoutParams);
                     }
@@ -1198,11 +1338,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img3.setVisibility(View.VISIBLE);
                             myViewHolder.img3_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img4_color.setLayoutParams(layoutParams);
                         myViewHolder.img4.setVisibility(View.INVISIBLE);
                         myViewHolder.img4_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[4].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img4.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img4.setVisibility(View.VISIBLE);
                         myViewHolder.img4.setLayoutParams(layoutParams);
                     }
@@ -1243,12 +1393,23 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img4.setVisibility(View.VISIBLE);
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[5].equals("1")){
+                            myViewHolder.img5_color.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img5_color.setImageResource(R.drawable.note2_do);
+                        }
 
-                        myViewHolder.img5_color.setImageResource(R.drawable.do_icon);
                         myViewHolder.img5_color.setLayoutParams(layoutParams);
                         myViewHolder.img5.setVisibility(View.INVISIBLE);
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[5].equals("1")){
+                            myViewHolder.img5.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img5.setImageResource(R.drawable.note2_do);
+                        }
                         myViewHolder.img5.setImageResource(R.drawable.do_icon);
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
@@ -1269,11 +1430,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img4.setVisibility(View.VISIBLE);
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img5_color.setLayoutParams(layoutParams);
                         myViewHolder.img5.setVisibility(View.INVISIBLE);
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
                     }
@@ -1294,10 +1465,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img4.setVisibility(View.VISIBLE);
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5_color.setLayoutParams(layoutParams);
                         myViewHolder.img5.setVisibility(View.INVISIBLE);
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
                     }
@@ -1316,11 +1497,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img4.setVisibility(View.VISIBLE);
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
-
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5_color.setLayoutParams(layoutParams);
                         myViewHolder.img5.setVisibility(View.INVISIBLE);
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
                     }
@@ -1341,11 +1531,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img4.setVisibility(View.VISIBLE);
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img5_color.setLayoutParams(layoutParams);
                         myViewHolder.img5.setVisibility(View.INVISIBLE);
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
                     }
@@ -1365,11 +1565,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img4.setVisibility(View.VISIBLE);
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img5_color.setLayoutParams(layoutParams);
                         myViewHolder.img5.setVisibility(View.INVISIBLE);
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
                     }
@@ -1390,11 +1600,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img4.setVisibility(View.VISIBLE);
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img5_color.setLayoutParams(layoutParams);
                         myViewHolder.img5.setVisibility(View.INVISIBLE);
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
                     }
@@ -1412,11 +1632,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img4.setVisibility(View.VISIBLE);
                             myViewHolder.img4_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img5_color.setLayoutParams(layoutParams);
                         myViewHolder.img5.setVisibility(View.INVISIBLE);
                         myViewHolder.img5_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[5].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img5.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
                     }
@@ -1455,11 +1685,24 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
 
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[6].equals("1")){
+                            myViewHolder.img6_color.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img6_color.setImageResource(R.drawable.note2_do);
+                        }
+
                         myViewHolder.img6_color.setImageResource(R.drawable.do_icon);
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[6].equals("1")){
+                            myViewHolder.img6.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img6.setImageResource(R.drawable.note2_do);
+                        }
                         myViewHolder.img6.setImageResource(R.drawable.do_icon);
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
@@ -1479,11 +1722,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img5.setVisibility(View.VISIBLE);
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
                     }
@@ -1494,8 +1747,6 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     layoutParams.addRule(RelativeLayout.RIGHT_OF, R.id.img5);
                     layoutParams.rightMargin = (int)(22*dp);
                     layoutParams.bottomMargin = (int)(7*dp);
-
-
                     if (index == hight_pos){
                         // 전 음계가 " "빈칸일 때,
                         if(list[5].equals(" ")){
@@ -1505,11 +1756,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img5.setVisibility(View.VISIBLE);
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
                     }
@@ -1529,12 +1790,22 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img5.setVisibility(View.VISIBLE);
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
 
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
                     }
@@ -1555,10 +1826,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img5.setVisibility(View.VISIBLE);
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
                     }
@@ -1570,7 +1851,6 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     layoutParams.rightMargin = (int)(22*dp);
 
                     if (index == hight_pos){
-
                         // 전 음계가 " "빈칸일 때,
                         if(list[5].equals(" ")){
                             Log.e("음계 빈칸 5번째 배열값: ", "["+list[5] + "]");
@@ -1579,10 +1859,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img5.setVisibility(View.VISIBLE);
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
                     }
@@ -1603,11 +1893,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img5.setVisibility(View.VISIBLE);
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
                     }
@@ -1625,11 +1925,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img5.setVisibility(View.VISIBLE);
                             myViewHolder.img5_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[6].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img6.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
                     }
@@ -1668,12 +1978,24 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                         }
 
-                        myViewHolder.img7_color.setImageResource(R.drawable.do_icon);
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[7].equals("1")){
+                            myViewHolder.img7_color.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img7_color.setImageResource(R.drawable.note2_do);
+                        }
+
                         myViewHolder.img7_color.setLayoutParams(layoutParams);
                         myViewHolder.img7.setVisibility(View.INVISIBLE);
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
                     }else{
-                        myViewHolder.img7.setImageResource(R.drawable.do_icon);
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[7].equals("1")){
+                            myViewHolder.img7.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img7.setImageResource(R.drawable.note2_do);
+                        }
+
                         myViewHolder.img7.setVisibility(View.VISIBLE);
                         myViewHolder.img7.setLayoutParams(layoutParams);
                     }
@@ -1693,10 +2015,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img6.setVisibility(View.VISIBLE);
                             myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7_color.setImageResource(R.drawable.note2);
+                        }
+
                         myViewHolder.img7_color.setLayoutParams(layoutParams);
                         myViewHolder.img7.setVisibility(View.INVISIBLE);
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7.setVisibility(View.VISIBLE);
                         myViewHolder.img7.setLayoutParams(layoutParams);
                     }
@@ -1717,11 +2050,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img6.setVisibility(View.VISIBLE);
                             myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                         }
-
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7_color.setLayoutParams(layoutParams);
                         myViewHolder.img7.setVisibility(View.INVISIBLE);
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7.setVisibility(View.VISIBLE);
                         myViewHolder.img7.setLayoutParams(layoutParams);
                     }
@@ -1741,11 +2083,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img6.setVisibility(View.VISIBLE);
                             myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                         }
-
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7_color.setLayoutParams(layoutParams);
                         myViewHolder.img7.setVisibility(View.INVISIBLE);
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7.setVisibility(View.VISIBLE);
                         myViewHolder.img7.setLayoutParams(layoutParams);
                     }
@@ -1771,7 +2122,16 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.e("Adapter", "박자는 2");
                             myViewHolder.img7_color.setImageResource(R.drawable.note2);
                         }
-
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7_color.setImageResource(R.drawable.note2);
+                        }
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7_color.setLayoutParams(layoutParams);
                         myViewHolder.img7.setVisibility(View.INVISIBLE);
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
@@ -1801,11 +2161,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img6.setVisibility(View.VISIBLE);
                             myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                         }
-
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7_color.setLayoutParams(layoutParams);
                         myViewHolder.img7.setVisibility(View.INVISIBLE);
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7.setVisibility(View.VISIBLE);
                         myViewHolder.img7.setLayoutParams(layoutParams);
                     }
@@ -1826,11 +2195,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img6.setVisibility(View.VISIBLE);
                             myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                         }
-
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7_color.setLayoutParams(layoutParams);
                         myViewHolder.img7.setVisibility(View.INVISIBLE);
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7.setVisibility(View.VISIBLE);
                         myViewHolder.img7.setLayoutParams(layoutParams);
                     }
@@ -1848,11 +2226,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img6.setVisibility(View.VISIBLE);
                             myViewHolder.img6_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img7_color.setLayoutParams(layoutParams);
                         myViewHolder.img7.setVisibility(View.INVISIBLE);
                         myViewHolder.img7_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[7].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img7.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img7.setVisibility(View.VISIBLE);
                         myViewHolder.img7.setLayoutParams(layoutParams);
                     }
@@ -1891,12 +2279,24 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img7.setVisibility(View.VISIBLE);
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
-                        myViewHolder.img8_color.setImageResource(R.drawable.do_icon);
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[8].equals("1")){
+                            myViewHolder.img8_color.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2_do);
+                        }
+
                         myViewHolder.img8_color.setLayoutParams(layoutParams);
                         myViewHolder.img8.setVisibility(View.INVISIBLE);
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
-                        myViewHolder.img8.setImageResource(R.drawable.do_icon);
+                        // 박자에 따라 음표 이미지 변환
+                        if (bit_list[8].equals("1")){
+                            myViewHolder.img8_color.setImageResource(R.drawable.do_icon);
+                        }else {
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2_do);
+                        }
+
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                         myViewHolder.img8.setLayoutParams(layoutParams);
                     }
@@ -1917,11 +2317,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img7.setVisibility(View.VISIBLE);
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img8_color.setLayoutParams(layoutParams);
                         myViewHolder.img8.setVisibility(View.INVISIBLE);
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                         myViewHolder.img8.setLayoutParams(layoutParams);
                     }
@@ -1942,11 +2352,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img7.setVisibility(View.VISIBLE);
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img8_color.setLayoutParams(layoutParams);
                         myViewHolder.img8.setVisibility(View.INVISIBLE);
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                         myViewHolder.img8.setLayoutParams(layoutParams);
                     }
@@ -1967,11 +2387,21 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img7.setVisibility(View.VISIBLE);
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2);
+                        }
 
                         myViewHolder.img8_color.setLayoutParams(layoutParams);
                         myViewHolder.img8.setVisibility(View.INVISIBLE);
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                         myViewHolder.img8.setLayoutParams(layoutParams);
                     }
@@ -1992,10 +2422,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img7.setVisibility(View.VISIBLE);
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8_color.setLayoutParams(layoutParams);
                         myViewHolder.img8.setVisibility(View.INVISIBLE);
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                         myViewHolder.img8.setLayoutParams(layoutParams);
                     }
@@ -2015,10 +2455,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img7.setVisibility(View.VISIBLE);
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8_color.setLayoutParams(layoutParams);
                         myViewHolder.img8.setVisibility(View.INVISIBLE);
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                         myViewHolder.img8.setLayoutParams(layoutParams);
                     }
@@ -2039,10 +2489,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img7.setVisibility(View.VISIBLE);
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8_color.setLayoutParams(layoutParams);
                         myViewHolder.img8.setVisibility(View.INVISIBLE);
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                         myViewHolder.img8.setLayoutParams(layoutParams);
                     }
@@ -2060,11 +2520,20 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img7.setVisibility(View.VISIBLE);
                             myViewHolder.img7_color.setVisibility(View.INVISIBLE);
                         }
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8_color.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8_color.setLayoutParams(layoutParams);
                         myViewHolder.img8.setVisibility(View.INVISIBLE);
                         myViewHolder.img8_color.setVisibility(View.VISIBLE);
                     }else{
-
+                        // 박자가 2박이면
+                        if (bit_list[8].equals("2")){
+                            Log.e("Adapter", "박자는 2");
+                            myViewHolder.img8.setImageResource(R.drawable.note2);
+                        }
                         myViewHolder.img8.setVisibility(View.VISIBLE);
                         myViewHolder.img8.setLayoutParams(layoutParams);
                     }

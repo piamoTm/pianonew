@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +48,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     Music music;
 
     // 원곡듣기 버튼
-    Button btn_listen, btn_stop;
+    Button btn_listen, btn_stop, btn_practice;
 
     // 최종 계이름을 담는 변수
     String musicnote;
@@ -65,10 +66,19 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 초 를 담는 변수
     int index_value = 0;
+
+    // 연습하기 모드일 시 처음 포커싱 위치를 1로 잡은 변수
+    int index_value_practice = 1;
+
+
+
     // 노래 연주 중 중지버튼 클릭 시 중지된 시점의 index_value값을 담을 변수
     // int index_value_stop = 0;
 
+    // 원곡재생 bool
     boolean bool_music = true;
+    // 연습모드 bool
+    boolean bool_practice = true;
 
     // 악보의 계이름을 담는 리스트 변수
     ArrayList<String> MusicNoteList = new ArrayList<>();
@@ -98,6 +108,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         btn_listen = findViewById(R.id.btn_listen);
         btn_stop = findViewById(R.id.btn_stop);
         btn_back = findViewById(R.id.img_back);
+
+        btn_practice = findViewById(R.id.btn_practice);
 
         // 뒤로가기 버튼
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -129,8 +141,6 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
         TextView tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText(music.getTitle());
-
-
 
 
         // 디비에서 계이름 코드를 받는 변수
@@ -210,13 +220,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                 }
 
                 // index0부터 시작함. bit는
-            }else {
-
             }
-
-
         }
-
 
         Log.e("한글변환계이름: ", musicnote_kor);
         Log.e("해당노래의박자: ", musicnote_bit);
@@ -226,7 +231,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         mConnectedTask.execute();
 
 
-        sendMessage("P"); //연주모드로
+        // sendMessage("P"); //연주모드로
 
 
 
@@ -331,12 +336,118 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         btn_listen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendMessage("P"); //연주모드로
                 // 원곡듣기 버튼 클릭 시 발생 메서드
                 btn_listen_func();
             }
         });
 
+        // 연습모드 클릭 이벤트
+        btn_practice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage("R"); //연주모드로
+                btn_practice_func();
+            }
+        });
+
     }
+
+    // 연습모드 버튼 클릭 시 발생 이벤트
+    public void btn_practice_func(){
+        AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
+        alertbuilder.setTitle("연습모드");
+
+        alertbuilder.setMessage("연습모드를 시작하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        //MusicTest.this.finish();
+                    }
+                })
+                .setNegativeButton("시작", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //bool_practice = false;
+                        // 연습모드 시작 함수
+                        start_practice_mode();
+                    }
+                });
+
+        AlertDialog alertDialog = alertbuilder.create();
+        alertDialog.show();
+
+    }
+
+    // 연습모드 시작
+    public void start_practice_mode(){
+        // 음계 포커싱 위치
+        // index_value_practice++;
+
+        mAdapter.setHight_pos(1);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    // 아두이누에서 음계를 받아와서 처리하는 함수
+    public void receive_music_note(String value){
+        // 아두이누에서 받아온 영어코드를 한글로 변환해서 넣는 변수
+        String value_kor = "";
+
+        if (value.equals("C")){
+            value_kor = "도";
+        }else if(value.equals("D")){
+            value_kor = "레";
+        }else if(value.equals("E")){
+            value_kor = "미";
+        }else if(value.equals("F")){
+            value_kor = "파";
+        }else if(value.equals("G")){
+            value_kor = "솔";
+        }else if(value.equals("A")){
+            value_kor = "라";
+        }else if(value.equals("B")){
+            value_kor = "시";
+        }else if(value.equals("H")){
+            value_kor = "두";                       // 높은 도 임
+        }
+
+        Log.e("아두이누에서 받아온 음계: ", value_kor);
+
+        // index_value_practice값은 처음 시작시 1임
+        // array[]배열 위치의 음계와 아두이누에서 받아온 음계랑 비교
+        // 엑티비티에서 UI를 바꾸니 Handler를 써서 바꾸어주어야 됨.
+
+        if (array[index_value_practice].equals(value_kor)){
+            // 같으면 어댑터에 다음 포커싱이 될 음계위치를 hight_position으로 보냄
+
+            // 만약 해당 음계가 2박이면 hight_position을 +2로 보냄
+            if (bit_array[index_value_practice].equals("2")){
+                index_value_practice = index_value_practice + 2;
+
+                // handler롤 통해 포커싱 UI를 바꿈
+                handler.sendEmptyMessage(2);
+
+
+            }else{
+                // 1늘려줌
+                index_value_practice ++;
+
+                // handler롤 통해 포커싱 UI를 바꿈
+                handler.sendEmptyMessage(2);
+
+                // 다음 포지션의 계이름을 포커싱을 맞춤
+                //mAdapter.setHight_pos(index_value_practice);
+                //mAdapter.notifyDataSetChanged();
+            }
+        }else{
+           // Toast.makeText(this, "틀렸습니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show(); // Can't toast on a thread that has not called Looper.prepare()
+            Log.e("틀림틀림", "틀림틀림");
+        }
+    }
+
     // 원곡중지 버튼 클릭 시 발생 메서드
     public void btn_listen_func_stop(){
         Log.e("노래중지", "중지중지");
@@ -383,9 +494,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             super.run();
             Log.e("MusicNoteList사이즈: ", MusicNoteList.size() + "");
 
-
                 try {
-
                     if (bool_music){
                         Log.e("bool_music값: ", bool_music + "");
                         for (int i = 1; i < array.length+1; i++){
@@ -393,7 +502,6 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                             // 초랑 hight_position값
                             index_value = i;
-
 
                             // 핸들러를 통해 UI를 바꿈
                             handler.sendEmptyMessage(1);
@@ -453,8 +561,6 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                             Thread.sleep(800);
                         }
                     }
-
-
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     Log.e("연주 스레드 중지", "중지");
@@ -475,6 +581,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
+            // 자동연주 시 UI가 바뀜
             if (msg.what == 1){
                 mAdapter.setHight_pos(index_value);
                 mAdapter.notifyDataSetChanged();
@@ -489,7 +596,14 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                 }
                 // 현재 연주중인 음계를 포커싱을 맞추어 줌
                 mRecyclerView.smoothScrollToPosition(focusing_cnt);
+
+                // 연습하기 모두일 시 포커싱 UI를 바꿈
+            }else if (msg.what == 2){
+                mAdapter.setHight_pos(index_value_practice);
+                mAdapter.notifyDataSetChanged();
             }
+
+
         }
     };
 
@@ -508,7 +622,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 //                mConnectedTask.cancel(true);
 //            }
         sendMessage("N");  //노말 모드로
-
+        sendMessage("R");  //노말 모드로
         if (thread != null){
             thread.interrupt();
         }
@@ -581,6 +695,15 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                                 Log.d(TAG, "recv message: " + recvMessage);
                                 publishProgress(recvMessage);
+
+                                //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                                String[] note_split = recvMessage.trim().split(",");
+                                Log.d(TAG, "make splite recv message: " + note_split[0]);
+
+                                // 아두이노로 부터 받은 음계를 해당 메소드의 인자값으로 넘김
+                                receive_music_note(note_split[0]);
+                               // makeNotsArr.add(note_split[0]);
+                                //==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
                             }
                             else
