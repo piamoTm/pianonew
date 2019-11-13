@@ -496,7 +496,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                 index_value_practice = index_value_practice + 2;
 
-                Log.e("2박자 index_value_practice: ", index_value_practice + "");
+                Log.e("2박자index_value: ", index_value_practice + "");
                 //Log.e("2박자 musicnote_eng_array[index_value_practice]: ", musicnote_eng_array[index_value_practice] + "");
 
 
@@ -758,9 +758,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 //            }
         sendMessage("N");  //노말 모드로
 
+        //sendMessage("R");  //노말 모드로<-무슨짓?
+
         if (thread != null){
             thread.interrupt();
         }
+
+        mConnectedTask.cancel(true); //쓰레드종료
 
     }
 
@@ -882,12 +886,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             }
         }
 
-        @Override
-        protected void onCancelled(Boolean aBoolean) {
-            super.onCancelled(aBoolean);
 
-            closeSocket();
-        }
 
         void closeSocket(){
 

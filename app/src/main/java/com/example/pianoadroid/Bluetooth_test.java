@@ -280,12 +280,10 @@ public class Bluetooth_test extends AppCompatActivity { //
         void closeSocket(){
 
             try {
-
                 mBluetoothSocket.close();
                 Log.d(TAG, "close socket()");
 
             } catch (IOException e2) {
-
                 Log.e(TAG, "unable to close() " +
                         " socket during connection failure", e2);
             }
