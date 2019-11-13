@@ -154,7 +154,7 @@ public class MakeMusic extends AppCompatActivity {
     }
 
 
-    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
     public  class ConnectedTask extends AsyncTask<Void, String, Boolean> {
         private InputStream mInputStream = null;
         private OutputStream mOutputStream = null;
@@ -211,7 +211,7 @@ public class MakeMusic extends AppCompatActivity {
                                 Log.d(TAG, "recv message: " + recvMessage);
                                 publishProgress(recvMessage);
 
-                                //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                                //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
                                 String[] note_split = recvMessage.trim().split(",");
                                 Log.d(TAG, "make splite recv message: " + note_split[0]);//계이름
                                 Log.d(TAG, "make splite recv message Beat: " + convertBeat(note_split[1])+"박//");//박자
@@ -220,7 +220,7 @@ public class MakeMusic extends AppCompatActivity {
                                 makeNotsArr.add(note_split[0]); //CC  A
                                 makeBeatArr.add(chBeat);        //13001
 
-                                //==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                                //==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
                             }
                             else
                             {
@@ -297,7 +297,7 @@ public class MakeMusic extends AppCompatActivity {
 
         }
     }
-    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
 
     public void showErrorDialog(String message)
     {
@@ -317,7 +317,7 @@ public class MakeMusic extends AppCompatActivity {
         });
         builder.create().show();
     }
-    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
     //처음 안내 dialog
     void infoshow(String posiviceMsg, String okFinish, String title)
     {
@@ -389,7 +389,7 @@ public class MakeMusic extends AppCompatActivity {
 
 
     }
-    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
     //작곡된 전체 계이름 악보 가져오기
     public StringBuilder readNots(){
         //노래전체 악보 가져오기

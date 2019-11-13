@@ -44,8 +44,6 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
     private final int piano = 1;
     private final int xylophone = 2;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +83,6 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         xylophoneSoundID[SI] = soundPool.load(this, R.raw.xylophone7,1);
         xylophoneSoundID[HDO] = soundPool.load(this, R.raw.xylophone8,1);
 
-
         // 블루투스 소켓연결
         mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
         mConnectedTask.execute(); //쓰레드실행
@@ -106,7 +103,6 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         for (boolean b: isClicked) {
             b = false;
         }
-
     }
 
     @Override
@@ -171,10 +167,6 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
                     setAllCancelWithoutN(xylophone); //피아노 말고 다른건 모두 해제
                 }
                 break;
-
-
-
-
         }
     }
 
@@ -219,13 +211,10 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
             case "H" :
                 soundPool.play(soundID[HDO],1,1,0,0,1);
                 break;
-
         }
-
     }
 
-
-    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-//
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
     //아두이노로 데이터 보내기
     void sendMessage(String msg){
 
@@ -234,8 +223,8 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
             Log.d(TAG, "메세지 전송 : " + msg);
         }
     }
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
     //아두이노가 블루투스로 보내는 데이터를 받는 부분//
-    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     public class ConnectedTask extends AsyncTask<Void, String, Boolean> {
         private InputStream mInputStream = null;
         private OutputStream mOutputStream = null;
@@ -388,5 +377,5 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         });
         builder.create().show();
     }
-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
 }

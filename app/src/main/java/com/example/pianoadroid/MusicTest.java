@@ -27,8 +27,6 @@ import java.util.ArrayList;
 
 
 public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.ThreadFinishListener {
-
-
     private static final String TAG = "MusicTest";
 
     //SQLite db 개체 생성
