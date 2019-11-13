@@ -53,7 +53,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
 
-        int width = 35;
+        int width = 35;//음표의 크기였음
         int space = 7;
         Log.i("listSize 확인확인222" ,"번호:"+adparter_size);
         Log.i("testLog", "악보 확인 확인 확인 " );

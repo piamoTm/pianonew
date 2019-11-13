@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class Main_menu extends AppCompatActivity {
 
-     SocketHandler socketdata = new SocketHandler();
+    SocketHandler socketdata = new SocketHandler();
     private Button mPlayBtn, mWriteBtn;
     private static final String TAG = "Main_BluetoothC";
     private final int REQUEST_BLUETOOTH_ENABLE = 100;
@@ -40,6 +40,7 @@ public class Main_menu extends AppCompatActivity {
 
         mPlayBtn = (Button)findViewById(R.id.play_btn);  //연주하기
         mWriteBtn = (Button)findViewById(R.id.write_btn);  // 작곡하기
+        Button btn_change = (Button)findViewById(R.id.btn_change);
 
 
         //연주하기
@@ -60,6 +61,16 @@ public class Main_menu extends AppCompatActivity {
                 //intent.putExtra("imageUri", uri);
                 startActivity(intent);
 
+            }
+        });
+        //사운드변경 버튼 클릭이벤트 연결
+        btn_change.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SoundChangeActivity.class);
+                startActivity(intent);
+                startActivity(intent);
             }
         });
         Log.d( TAG, "Initalizing Bluetooth adapter...");
