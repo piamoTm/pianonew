@@ -22,21 +22,14 @@ import java.io.OutputStream;
 //그래서 [고양이] 버튼을 눌러 버튼이 활성화상태일때 아두이노 피아노를 누르면
 //안드로이드에서 고양이 소리가 나는거지 (아두이노에서는 빛만)
 
-
 public class SoundChangeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SoundPool soundPool;
     private int[] soundID;
     private int[] catSoundID;
+    private int[] pianoSoundId;
 
-    final int DO = 0;
-    final int RE = 1;
-    final int MI = 2;
-    final int FA = 3;
-    final int SOL = 4;
-    final int RA = 5;
-    final int SI = 6;
-    final int HDO = 7;
+    final int DO = 0, RE = 1, MI = 2,FA = 3,SOL = 4,RA = 5, SI = 6,HDO = 7;
 
     //BlueTooth
     private static String mConnectedDeviceName = null;
@@ -45,7 +38,11 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
     private static final String TAG = "soundChange";
 
     private Button btn_cat;
-    private boolean isCat;
+    private Button btn_piano;
+
+    private boolean[] isClicked;// 버튼 활성화
+    final int cat = 0; //버튼활성화 배열 인덱스로 사용할거야
+    final int piano = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +52,9 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC,0);
         soundID = new int[8];
         catSoundID = new int[8];
+        pianoSoundId = new int[8];
 
+        //고양이소리
         catSoundID[DO] = soundPool.load(this, R.raw.yattong_do,1);
         catSoundID[RE] = soundPool.load(this, R.raw.yattong_re,1);
         catSoundID[MI] = soundPool.load(this, R.raw.yattong,1);
@@ -64,17 +63,31 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         catSoundID[RA] = soundPool.load(this, R.raw.yattong_ra,1);
         catSoundID[SI] = soundPool.load(this, R.raw.yattong_si,1);
         catSoundID[HDO] = soundPool.load(this, R.raw.yattong_hdo,1);
-
+        //피아노소리
+        pianoSoundId[DO] = soundPool.load(this, R.raw.sound1,1);
+        pianoSoundId[RE] = soundPool.load(this, R.raw.sound2,1);
+        pianoSoundId[MI] = soundPool.load(this, R.raw.sound3,1);
+        pianoSoundId[FA] = soundPool.load(this, R.raw.sound4,1);
+        pianoSoundId[SOL] = soundPool.load(this, R.raw.sound5,1);
+        pianoSoundId[RA] = soundPool.load(this, R.raw.sound6,1);
+        pianoSoundId[SI] = soundPool.load(this, R.raw.sound7,1);
+        pianoSoundId[HDO] = soundPool.load(this, R.raw.sound8,1);
 
         // 블루투스 소켓연결
         mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
         mConnectedTask.execute(); //쓰레드실행
 
-
-
+        //버튼 연결
         btn_cat = (Button) findViewById(R.id.btn_cat);
+        btn_piano = (Button)findViewById(R.id.btn_piano);
         btn_cat.setOnClickListener(this);
-        isCat = false;
+        btn_piano.setOnClickListener(this);
+
+        //버튼 비활성화 init
+        isClicked = new boolean[2];
+        for (boolean b: isClicked) {
+            b = false;
+        }
 
     }
 
@@ -92,25 +105,43 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         switch (view.getId()){
             case R.id.btn_cat : //고양이버튼 누름
                 Log.i("testLog", "고양이");
-                if(isCat){ //활성화 -> 비활성화
+                if(isClicked[cat]){ //활성화 -> 비활성화
                     soundID = null;
                     btn_cat.setTextColor(Color.BLACK);
                     sendMessage("N"); //아두이노를 작곡모드로
-                    isCat = false;
+                    isClicked[cat] = false;
 
                 }else{ //비활성화->활성화
                     soundID = catSoundID;
                     btn_cat.setTextColor(Color.BLUE);
                     sendMessage("S"); //아두이노를 작곡모드로
-                    isCat = true;
+                    isClicked[cat] = true;
                 }
+                break;
+
+            case R.id.btn_piano :
+                Log.i("testLog", "클래식피아노");
+                if(isClicked[piano]){ //활성화 -> 비활성화
+                    soundID = null;
+                    btn_piano.setTextColor(Color.BLACK);
+                    sendMessage("N"); //아두이노를 작곡모드로
+                    isClicked[piano] = false;
+
+                }else{ //비활성화->활성화
+                    soundID = pianoSoundId;
+                    btn_piano.setTextColor(Color.BLUE);
+                    sendMessage("S"); //아두이노를 작곡모드로
+                    isClicked[piano] = true;
+                }
+                break;
+
 
 
         }
     }
 
 
-
+    //소리내기
     void sound(String code){
         switch (code){
             case "C" :

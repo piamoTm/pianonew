@@ -149,7 +149,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         //musicnote_eng = "BDEFGABCDEFGAB";
         musicnote_eng = music.getScore();
         //Log.i("testLog", music.getBeatStr());
-        Log.e("musicnote_eng.length(): ", musicnote_eng.length() + "");
+        Log.e("musicnote_eng.length :", musicnote_eng.length() + "");
 
         db_musicnote_bit = new int[musicnote_eng.length()];
         db_musicnote_bit = music.getBeat();
@@ -452,13 +452,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         // 0을 넣어서 이떄까지 포커싱 된 것들을 초기화 시킴
         mAdapter.setHight_pos(index_value_practice);
         mAdapter.notifyDataSetChanged();
-
     }
 
     // 아두이누에서 음계를 받아와서 처리하는 함수
     public void receive_music_note(String value){
+        Log.i("testLog","receive_music_note :" + value);
         Log.e("receive_music_note", "함수 시작");
-        // 아두이누에서 받아온 영어코드를 한글로 변환해서 넣는 변수
+        // 아두이노에서 받아온 영어코드를 한글로 변환해서 넣는 변수
         String value_kor = "";
 
         if (value.equals("C")){
@@ -476,7 +476,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         }else if(value.equals("B")){
             value_kor = "시";
         }else if(value.equals("H")){
-            value_kor = "두";                       // 높은 도 임
+            value_kor = "두";// 높은 도 임
         }
 
         Log.e("아두이누에서 받아온 음계: ", value_kor);
@@ -836,12 +836,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                                 publishProgress(recvMessage);
 
                                 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                                String[] note_split = recvMessage.trim().split(",");
-                                Log.d(TAG, "make splite recv message: " + note_split[0]);
+                                //String[] note_split = recvMessage.trim().split(",");
+                                //Log.d(TAG, "make splite recv message: " + note_split[0]);
 
                                 if (bool_practice){
                                     // 아두이노로 부터 받은 음계를 해당 메소드의 인자값으로 넘김
-                                    receive_music_note(note_split[0]);
+                                    //receive_music_note(note_split[0]);
+                                    receive_music_note(recvMessage.trim());
                                 }
 
 

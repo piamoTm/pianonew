@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/piano_yyj_bk"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SoundChangeActivity"></activity>
+        <activity android:name=".SoundChangeActivity"
+            android:screenOrientation="landscape"></activity>
         <activity android:name=".Bluetooth_test"></activity>
         <activity
             android:name=".TestActivity"
