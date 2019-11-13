@@ -63,13 +63,14 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         int rspace = 30;
 
         //i는 아이템 악보 한줄,두줄 이거
-        int startNote = i*8;// 0,8,16,24
+        int startNote = i*8 +1;// 0,8,16,24
         int endNote = startNote + 8; //
 
 
        // Log.i("testLog", "악보 확인 확인 확인 " + score);
+
         String scorePiece = ""; //0~7 /8~15로 악보자르기
-        int beatPiece =0;
+        int beatPiece = 0;
 
         if(music != null) {
             //String score = music.getScore();
@@ -78,36 +79,31 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
                 endNote = music.getScoreLen();
             }
               scorePiece =  music.getScore().substring(startNote, endNote); //0~7 /8~15로 악보자르기
-        }else{
-            //작곡
+
+        }else{//작곡
+
             if (endNote >= listData.size()) {
                 endNote = listData.size();
             }
             for (int j = startNote; j<endNote; j++){
                 scorePiece += listData.get(j);
+                Log.i("testLog", "listData.get("+j+") " + listData.get(j)  );
 //                beatPiece += beatData.get(j);
             }
 
             highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
-
-
         }
 
-
-
-        Log.i("testLog", "악보 조각 " + startNote + scorePiece + endNote);
+        Log.i("testLog", "" + startNote + "~" + endNote + "의 악보조각 : "+scorePiece);
 
         //악보 조각(한줄)을 계이름 하나씩 자르기
         String[] split = scorePiece.split("");
 
-        for(i=0; i < listData.size();i++){
-            Log.i("확인               ","              /"+listData.get(i)+"/");
+        Log.i("testLog", "scorePiece을 자른 split");
+        for (int h = 0; h < split.length; h++){
+            Log.i("testLog", "split["+h+"] "+split[h] );
         }
 
-//
-//        for(i=0; i < split.length;i++){
-//            Log.i("확인               ","              /"+split[i]+"/");
-//        }
 
         // 리사이클러뷰 남아있는 view 찌꺼기들 제거
         for (ImageView iv: ((ItemViewHolder)holder).imageViews) {
@@ -120,7 +116,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         for (int ni = 1; ni < split.length; ni++){
             int n = ni-1;
             // 코드에 따라 음표의 위치를 조절
-            Log.i("testLog", n+"번째 계이름 /" + ni+"/"+split.length+"/"+n+"/"+split[ni]);
+//            Log.i("testLog", n+"번째 계이름 /" + ni+"/"+split.length+"/"+n+"/"+split[ni]);
+            Log.i("testLog", n+"번째 계이름 " + split[ni]);
             //Log.i("testLog", n+"번째 계이름 " + split[ni]);
             if(!split[ni].equals(" ")) { //공란이 아닐때 == 도~시일
 //                ((ItemViewHolder)holder).imageViews[n].setImageResource(R.drawable.music_icon);
