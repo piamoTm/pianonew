@@ -2,6 +2,7 @@ package com.example.pianoadroid;
 
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.AsyncTask;
@@ -9,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,10 +23,11 @@ import java.io.OutputStream;
 //안드로이드에서 고양이 소리가 나는거지 (아두이노에서는 빛만)
 
 
-public class SoundChangeActivity extends AppCompatActivity {
+public class SoundChangeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SoundPool soundPool;
     private int[] soundID;
+    private int[] catSoundID;
 
     final int DO = 0;
     final int RE = 1;
@@ -34,12 +38,14 @@ public class SoundChangeActivity extends AppCompatActivity {
     final int SI = 6;
     final int HDO = 7;
 
-
     //BlueTooth
     private static String mConnectedDeviceName = null;
     static boolean isConnectionError = false;
-    ConnectedTask mConnectedTask = null;
+    private ConnectedTask mConnectedTask = null;
     private static final String TAG = "soundChange";
+
+    private Button btn_cat;
+    private boolean isCat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +54,27 @@ public class SoundChangeActivity extends AppCompatActivity {
 
         soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC,0);
         soundID = new int[8];
+        catSoundID = new int[8];
 
-        soundID[DO] = soundPool.load(this, R.raw.yattong_do,1);
-        soundID[RE] = soundPool.load(this, R.raw.yattong_re,1);
-        soundID[MI] = soundPool.load(this, R.raw.yattong,1);
-        soundID[FA] = soundPool.load(this, R.raw.yattong_fa,1);
-        soundID[SOL] = soundPool.load(this, R.raw.yattong_sol,1);
-        soundID[RA] = soundPool.load(this, R.raw.yattong_ra,1);
-        soundID[SI] = soundPool.load(this, R.raw.yattong_si,1);
-        soundID[HDO] = soundPool.load(this, R.raw.yattong_hdo,1);
+        catSoundID[DO] = soundPool.load(this, R.raw.yattong_do,1);
+        catSoundID[RE] = soundPool.load(this, R.raw.yattong_re,1);
+        catSoundID[MI] = soundPool.load(this, R.raw.yattong,1);
+        catSoundID[FA] = soundPool.load(this, R.raw.yattong_fa,1);
+        catSoundID[SOL] = soundPool.load(this, R.raw.yattong_sol,1);
+        catSoundID[RA] = soundPool.load(this, R.raw.yattong_ra,1);
+        catSoundID[SI] = soundPool.load(this, R.raw.yattong_si,1);
+        catSoundID[HDO] = soundPool.load(this, R.raw.yattong_hdo,1);
 
 
         // 블루투스 소켓연결
         mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
-        mConnectedTask.execute(); //쓰레드실
+        mConnectedTask.execute(); //쓰레드실행
 
-        sendMessage("W"); //아두이노를 작곡모드로
+
+
+        btn_cat = (Button) findViewById(R.id.btn_cat);
+        btn_cat.setOnClickListener(this);
+        isCat = false;
 
     }
 
@@ -75,6 +86,30 @@ public class SoundChangeActivity extends AppCompatActivity {
 
         sendMessage("N"); //아두이노를 기본모드로
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_cat : //고양이버튼 누름
+                Log.i("testLog", "고양이");
+                if(isCat){ //활성화 -> 비활성화
+                    soundID = null;
+                    btn_cat.setTextColor(Color.BLACK);
+                    sendMessage("N"); //아두이노를 작곡모드로
+                    isCat = false;
+
+                }else{ //비활성화->활성화
+                    soundID = catSoundID;
+                    btn_cat.setTextColor(Color.BLUE);
+                    sendMessage("S"); //아두이노를 작곡모드로
+                    isCat = true;
+                }
+
+
+        }
+    }
+
+
 
     void sound(String code){
         switch (code){
