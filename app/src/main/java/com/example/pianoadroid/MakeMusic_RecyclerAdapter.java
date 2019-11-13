@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 //작곡 MakeMusic 액티비티에서 사용되는 리사이클러뷰 어댑터
 //아두이노로부터 블루투스 통신으로 'C' 라는 데이터가 오면 악보에 도를 그리는 역할
@@ -25,16 +26,20 @@ import java.util.ArrayList;
 public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // adapter에 들어갈 list 입니다.
-    private ArrayList<String> listData ;  //작곡된 노래 전체 list
+    private ArrayList<String> listData ;  // 계이름 list
+    private ArrayList<Integer> beatData ;  //박자 list
+
     Music music;   //노래
     int highlightPos;  //하이라이트 포지션
-    int adparter_size; //아이템의 개수
+    int adparter_size; //ArrayList 아이템의 개수
 
-    public MakeMusic_RecyclerAdapter(ArrayList<String> listData) {
+    public MakeMusic_RecyclerAdapter(ArrayList<String> listData, ArrayList<Integer> beetData) {
+        this.beatData = beetData;
         this.listData = listData;
     }
     public MakeMusic_RecyclerAdapter(Music music,int highlightPos){
-        this.music = music; this.highlightPos =highlightPos;
+        this.music = music;
+        this.highlightPos =highlightPos;
     }
 
     public void setHighlightPos(int highlightPos) {
@@ -55,8 +60,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
         int width = 35;
         int space = 7;
-        Log.i("listSize 확인확인222" ,"번호:"+adparter_size);
-        Log.i("testLog", "악보 확인 확인 확인 " );
+        int rspace = 30;
 
         //i는 아이템 악보 한줄,두줄 이거
         int startNote = i*8;// 0,8,16,24
@@ -65,14 +69,15 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
        // Log.i("testLog", "악보 확인 확인 확인 " + score);
         String scorePiece = ""; //0~7 /8~15로 악보자르기
+        int beatPiece =0;
 
         if(music != null) {
-            String score = music.getScore();
+            //String score = music.getScore();
             // 작곡된 곡 play시 하이라이트 적용
             if(endNote >= music.getScoreLen()){
                 endNote = music.getScoreLen();
             }
-              scorePiece = score.substring(startNote, endNote); //0~7 /8~15로 악보자르기
+              scorePiece =  music.getScore().substring(startNote, endNote); //0~7 /8~15로 악보자르기
         }else{
             //작곡
             if (endNote >= listData.size()) {
@@ -80,10 +85,14 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
             }
             for (int j = startNote; j<endNote; j++){
                 scorePiece += listData.get(j);
+//                beatPiece += beatData.get(j);
             }
 
             highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
+
+
         }
+
 
 
         Log.i("testLog", "악보 조각 " + startNote + scorePiece + endNote);
@@ -91,74 +100,96 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         //악보 조각(한줄)을 계이름 하나씩 자르기
         String[] split = scorePiece.split("");
 
+        for(i=0; i < listData.size();i++){
+            Log.i("확인               ","              /"+listData.get(i)+"/");
+        }
+
+//
+//        for(i=0; i < split.length;i++){
+//            Log.i("확인               ","              /"+split[i]+"/");
+//        }
+
         // 리사이클러뷰 남아있는 view 찌꺼기들 제거
         for (ImageView iv: ((ItemViewHolder)holder).imageViews) {
             iv.setVisibility(View.INVISIBLE);
             iv.setImageResource(R.drawable.music_icon);
         }
 
+        Log.i("testLog", "/"+split.length+"/");
         //악보조각(한줄) 에 있는 계이름 수만큼 반복문을 돌림.
         for (int ni = 1; ni < split.length; ni++){
             int n = ni-1;
             // 코드에 따라 음표의 위치를 조절
-            Log.i("testLog", n+"번째 계이름 " + split[ni]);
-            if(!split[ni].equals(" ")){ //공란이 아닐때 == 도~시일
+            Log.i("testLog", n+"번째 계이름 /" + ni+"/"+split.length+"/"+n+"/"+split[ni]);
+            //Log.i("testLog", n+"번째 계이름 " + split[ni]);
+            if(!split[ni].equals(" ")) { //공란이 아닐때 == 도~시일
 //                ((ItemViewHolder)holder).imageViews[n].setImageResource(R.drawable.music_icon);
-                if(split[ni].equals("C")){
+                if (split[ni].equals("C")) {
                     // 이미지 크기 조절
-                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
-                    ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
-                    ((ItemViewHolder)holder).imageViews[n].setImageResource(R.drawable.do_icon);
+                    ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view1);
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
+                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(R.drawable.do_icon);
 
-                }else if(split[ni].equals("D")){
-                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
-                    //((ItemViewHolder)holder).imageViews[n].setImageResource(0);
-
-                }else if(split[ni].equals("E")){
-                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
-                    ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
-
-                }else if(split[ni].equals("F")){
-                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
-
-                }else if(split[ni].equals("G")){
-                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
-                    ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
-
-                }else if(split[ni].equals("A")){
-                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
-
-                }else if(split[ni].equals("B")){
-                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                    ((ItemViewHolder)holder).layoutParams.bottomMargin = (int)(space * ((ItemViewHolder)holder).dp);
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+                } else if (split[ni].equals("D")) {
+                    ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
+                    ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                } else if (split[ni].equals("E")) {
+                    ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
+                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                } else if (split[ni].equals("F")) {
+                    ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
+                    ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                } else if (split[ni].equals("G")) {
+                    ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
+                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                } else if (split[ni].equals("A")) {
+                    ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
+                    ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                } else if (split[ni].equals("B")) {
+                    ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
+                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
+                    ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                } else if (split[ni].equals("H")) {
+                    ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view5);
+                    ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
+                    ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
                 }
-                else if(split[ni].equals("H")){
-                    ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view5);
-                    ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
-                }
-                ((ItemViewHolder)holder).imageViews[n].setVisibility(View.VISIBLE);
-                ((ItemViewHolder)holder).imageViews[n].setLayoutParams(((ItemViewHolder)holder).layoutParams);
+                ((ItemViewHolder) holder).imageViews[n].setVisibility(View.VISIBLE);
+                ((ItemViewHolder) holder).imageViews[n].setLayoutParams(((ItemViewHolder) holder).layoutParams);
+            }else{
+                ((ItemViewHolder)holder).layoutParams = new RelativeLayout.LayoutParams((int)(width*((ItemViewHolder)holder).dp), (int)(width*((ItemViewHolder)holder).dp));
+                ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view5);
+                ((ItemViewHolder)holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder)holder).imageViewID[n]);
+                ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                ((ItemViewHolder)holder).imageViews[n].setImageResource(0);
+
+                ((ItemViewHolder) holder).imageViews[n].setVisibility(View.VISIBLE);
+                ((ItemViewHolder) holder).imageViews[n].setLayoutParams(((ItemViewHolder) holder).layoutParams);
             }
+
             int position = n+(i*8);
             if(highlightPos != -11){
                 if((position == highlightPos) && (highlightPos != -11) ){
                     //argb 투명색까지 포함   , rgb는 그냥  색상만  //헥사 코드로 넣을것
-                    Log.i("MakeMusic:  ","하이라이트 포지션 값 :    "+highlightPos);
+                   // Log.i("MakeMusic:  ","하이라이트 포지션 값 :    "+highlightPos);
                     ((ItemViewHolder)holder).imageViews[n].setBackgroundColor(Color.argb(0xA0,0xeb,0xbc,0xbb));
                 }
             }
@@ -171,11 +202,11 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         //오선지 한줄의 개수
         //8개로 잘라서 나머지 있으면 +1
         if( music == null){
-            adparter_size  = listData.size();
+            adparter_size  = listData.size();  // 작곡 중
         }else{
-            adparter_size =  music.getScoreLen();
+            adparter_size =  music.getScoreLen(); // 작곡완료 연주중
         }
-        Log.i("listSize 확인확인 adpater" ,"번호:"+adparter_size);
+        //Log.i("listSize 확인확인 adpater" ,"번호:"+adparter_size);
 
         int len = adparter_size;
         int cnt = len/8;
