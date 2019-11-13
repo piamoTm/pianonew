@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">PlayPiano</string>
+
+    <string-array name="notesImage">
+        <item>@drawable/note1</item>
+        <item>@drawable/note2</item>
+        <item>@drawable/note3</item>
+        <item>@drawable/note4</item>
+    </string-array>
+    <string-array name="notesImageDo">
+        <item>@drawable/note1_do</item>
+        <item>@drawable/note2_do</item>
+        <item>@drawable/note3_do</item>
+        <item>@drawable/note4_do</item>
+    </string-array>
 </resources>

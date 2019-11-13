@@ -23,7 +23,7 @@ import java.util.UUID;
 public class Main_menu extends AppCompatActivity {
 
     SocketHandler socketdata = new SocketHandler();
-    private Button mPlayBtn, mWriteBtn;
+    private Button mPlayBtn, mWriteBtn , btn_change;
     private static final String TAG = "Main_BluetoothC";
     private final int REQUEST_BLUETOOTH_ENABLE = 100;
 
@@ -40,9 +40,11 @@ public class Main_menu extends AppCompatActivity {
 
         mPlayBtn = (Button)findViewById(R.id.play_btn);  //연주하기
         mWriteBtn = (Button)findViewById(R.id.write_btn);  // 작곡하기
-        Button btn_change = (Button)findViewById(R.id.btn_change);
+        btn_change = (Button)findViewById(R.id.btn_change); // 소리변환하기
 
-
+        mPlayBtn.setEnabled(false);
+        mWriteBtn.setEnabled(false);
+        btn_change.setEnabled(false);
         //연주하기
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +193,9 @@ public class Main_menu extends AppCompatActivity {
                 Log.d( TAG, mConnectedDeviceName+"에 연결되었습니다.");
                 Toast.makeText(Main_menu.this,mConnectedDeviceName+"에 연결되었습니다",Toast.LENGTH_LONG).show();
 
+                mPlayBtn.setEnabled(true);
+                mWriteBtn.setEnabled(true);
+                btn_change.setEnabled(true);
                 // 연결된후 서로 메세지보낼수 있는 메소드
                 connected(mBluetoothSocket,mConnectedDeviceName);
             }

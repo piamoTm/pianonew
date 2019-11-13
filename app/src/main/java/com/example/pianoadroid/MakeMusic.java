@@ -108,7 +108,17 @@ public class MakeMusic extends AppCompatActivity {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show();  // 제목 , 작곡자 입력  dialog
+                // 빈오선지 여부 체크  함정은 음표 하나일때도 된다는거.. ㅠ
+
+                if(adapter.adparter_size != 0){
+                    //제목 , 작곡자 입력 dialog
+                    show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
+                }else{
+                    // 빈오선지 일경우 저장이 안됨
+                    Toast.makeText(MakeMusic.this,"작곡된 음표가 없습니다 작곡 후 저장하세요!",Toast.LENGTH_LONG).show();
+
+                }
+
             }
         });
     }
@@ -140,8 +150,7 @@ public class MakeMusic extends AppCompatActivity {
         makeBeatArr = new ArrayList<>();
         adapter = new MakeMusic_RecyclerAdapter(makeNotsArr,makeBeatArr);
         mMakeNoteRecycler.setAdapter(adapter);
-        makeNotsArr.add("");
-        makeBeatArr.add(0);
+
     }
 
     //아두이노로 데이터 보내기
@@ -155,11 +164,12 @@ public class MakeMusic extends AppCompatActivity {
 
 
     //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    //블루투스가 연결된후 실행되는 쓰레드
     public  class ConnectedTask extends AsyncTask<Void, String, Boolean> {
         private InputStream mInputStream = null;
         private OutputStream mOutputStream = null;
         private BluetoothSocket mBluetoothSocket = null;
-        int chBeat ;
+        int chBeat ; // 아두이노에서 받아온 millise 컨버터하여 int형 박자로 바꿈
 
         ConnectedTask(BluetoothSocket socket, String devicename){
             mConnectedDeviceName = devicename;
@@ -174,7 +184,7 @@ public class MakeMusic extends AppCompatActivity {
             Log.d( TAG, mConnectedDeviceName+"에 연결");
         }
 
-
+        //doInBackground :  정의한 AsyncTask를 execute 할 때 전해줄 값의 종류
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -211,11 +221,15 @@ public class MakeMusic extends AppCompatActivity {
                                 Log.d(TAG, "recv message: " + recvMessage);
                                 publishProgress(recvMessage);
 
-                                //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-                                String[] note_split = recvMessage.trim().split(",");
-                                Log.d(TAG, "make splite recv message: " + note_split[0]);//계이름
-                                Log.d(TAG, "make splite recv message Beat: " + convertBeat(note_split[1])+"박//");//박자
 
+                                //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                                // 리사이클러뷰의 아답타에 데이터 보내기
+                                // 받아온 계이름과 milllis를 String 배열로 나눔 (ex..C,134로 들어옴)
+                                String[] note_split = recvMessage.trim().split(",");
+//                                Log.d(TAG, "make splite recv message: " + note_split[0]);//계이름
+//                                Log.d(TAG, "make splite recv message Beat: " + convertBeat(note_split[1])+"박//");//박자
+
+                                // 박자 컨버터 메소드에서 millis에서 1로 반환
                                 chBeat  = convertBeat(note_split[1]); // 박자 컨버터 1박이면 1보냄
                                 makeNotsArr.add(note_split[0]); //CC  A
                                 makeBeatArr.add(chBeat);        //13001
@@ -237,6 +251,7 @@ public class MakeMusic extends AppCompatActivity {
 
         }
 
+        //onProgressUpdate : 진행상황을 업데이트할 때 전달할 값의 종류
         @Override
         protected void onProgressUpdate(String... recvMessage) {
            // Log.d(TAG, "make splite recv message chchchBeat: " + chBeat+"박//");//박자
@@ -253,6 +268,7 @@ public class MakeMusic extends AppCompatActivity {
 
         }
 
+        //onPostExecute :  AsyncTask 가 끝난 뒤  결과값의 종류
         @Override
         protected void onPostExecute(Boolean isSucess) {
             super.onPostExecute(isSucess);
@@ -354,25 +370,20 @@ public class MakeMusic extends AppCompatActivity {
         final AlertDialog dialog = builder.create();
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String strEmail = title_make.getText().toString();
-                String strPassword = name_make.getText().toString();
-                Toast.makeText(getApplicationContext(), strEmail+"/"+strPassword,Toast.LENGTH_LONG).show();
+                String strTitle = title_make.getText().toString();
+                String strName = name_make.getText().toString();
+                Toast.makeText(getApplicationContext(), strTitle+"/"+strName,Toast.LENGTH_LONG).show();
 
-                //빈오선지 체크 할것// 당일러고ㅡ로
+                    // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
+                    //SAVE//
+                    //SQLite db 개체 생성
+                    DBMyProductHelper_Write db;
+                    //SQLite db helper init 초기화
+                    db = new DBMyProductHelper_Write(MakeMusic.this);
+                    //새로운 노래를(Music 개체를) db에 추가
 
-                // Toast.makeText(getApplicationContext(),,Toast.LENGTH_LONG).show();
-
-                // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
-                //SAVE//
-                //SQLite db 개체 생성
-                //DBMyProductHelper_Write db;
-
-                //SQLite db helper init 초기화
-                //db = new DBMyProductHelper_Write(this);
-
-                //새로운 노래를(Music 개체를) db에 추가
-                //db.addMusic(Music);
-
+                     Music music = new Music(1,strTitle, strName, readNots(),readBeat());
+                     db.addMusic(music);
 
                 dialog.dismiss();
             }
@@ -391,14 +402,23 @@ public class MakeMusic extends AppCompatActivity {
     }
     //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     //작곡된 전체 계이름 악보 가져오기
-    public StringBuilder readNots(){
+    public String readNots(){
         //노래전체 악보 가져오기
-        StringBuilder sb = new StringBuilder();
-        for(Object object : makeNotsArr) {
-            sb.append(object);
+        String sb = "";
+        for (int i = 0; i < makeNotsArr.size(); i++) {
+                sb += makeNotsArr.get(i);
         }
        // Log.i("MakeMusic_wholeNotes","wholeNotes_확인 :"+sb);
         return sb;
+    }
+    // 작곡된 전체 계이름 악보 비트 가져오기
+    private int[] readBeat(){
+        int[] dbBeat = new int[makeBeatArr.size()];
+        for(int i=0; i< makeBeatArr.size(); i++){
+            dbBeat[i] = makeBeatArr.get(i);
+            //Log.i("MakeMusic_전체 비트 확인","전체적인 비트_확인 :"+dbBeat[i]);
+        }
+        return dbBeat;
     }
 
     // 아두이노 millis 컨버터

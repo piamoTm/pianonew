@@ -7,15 +7,20 @@
 
     <LinearLayout
         android:id="@+id/lay_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="450px"
+        android:layout_height="450px"
         android:orientation="vertical"
         android:padding="100px"
         android:background="@drawable/btn_rectangle_line">
-
+        <ImageView
+            android:id="@+id/addimg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@android:drawable/ic_input_add"/>
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="작은별"
             android:textStyle="bold"

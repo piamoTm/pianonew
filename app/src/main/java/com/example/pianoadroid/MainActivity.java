@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mTipsView9.setOnTouchListener(this);
 
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.dd);
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.dd);
 
        // imgs.setImageBitmap(bitmap);
 

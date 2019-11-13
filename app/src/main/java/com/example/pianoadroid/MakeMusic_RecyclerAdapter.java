@@ -1,7 +1,12 @@
 package com.example.pianoadroid;
 
+import android.app.Application;
+import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +18,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 //작곡 MakeMusic 액티비티에서 사용되는 리사이클러뷰 어댑터
 //아두이노로부터 블루투스 통신으로 'C' 라는 데이터가 오면 악보에 도를 그리는 역할
@@ -55,6 +61,9 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         return new ItemViewHolder(view);
     }
 
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
 
@@ -63,14 +72,14 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         int rspace = 30;
 
         //i는 아이템 악보 한줄,두줄 이거
-        int startNote = i*8 +1;// 0,8,16,24
+        int startNote = i*8;// 0,8,16,24
         int endNote = startNote + 8; //
 
 
        // Log.i("testLog", "악보 확인 확인 확인 " + score);
 
         String scorePiece = ""; //0~7 /8~15로 악보자르기
-        int beatPiece = 0;
+        String beatPiece = ""; //박자도 자르기
 
         if(music != null) {
             //String score = music.getScore();
@@ -87,8 +96,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
             }
             for (int j = startNote; j<endNote; j++){
                 scorePiece += listData.get(j);
-                Log.i("testLog", "listData.get("+j+") " + listData.get(j)  );
-                beatPiece += beatData.get(j);
+                //Log.i("testLog", "listData.get("+j+") " + listData.get(j)  );
+                beatPiece += beatData.get(j); //박자
             }
 
             highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
@@ -98,6 +107,19 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
         //악보 조각(한줄)을 계이름 하나씩 자르기
         String[] split = scorePiece.split("");
+        String[] bbsplit = beatPiece.split("");
+        // 비트도 index 별로 자르기
+
+        Log.i("testLog", "beatpiece 비트 조각덜: "+beatPiece);
+        int[] bsplit =  new int[bbsplit.length];
+        // 스트링 비트 배열을 int 배열로 바꿔주기
+        for(int p=1; p< bbsplit.length; p++){
+                bsplit[p] = Integer.parseInt(bbsplit[p]);
+            Log.i("testLog", "beatpiece 비트 조각덜int형 : "+bsplit[p]);
+        }
+
+        //bsplit 배열에 temp(String)을 하나하나 잘라서 넣어주기
+       // for(int p =0;p<beatPiece.length();i++) bsplit[i] = beatPiece.charAt(i);
 
 //        Log.i("testLog", "scorePiece을 자른 split");
 //        for (int h = 0; h < split.length; h++){
@@ -119,9 +141,12 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         for (int ni = 1; ni < split.length; ni++){
             int n = ni-1;
             // 코드에 따라 음표의 위치를 조절
-//            Log.i("testLog", n+"번째 계이름 /" + ni+"/"+split.length+"/"+n+"/"+split[ni]);
             Log.i("testLog", n+"번째 계이름 " + split[ni]);
-            //Log.i("testLog", n+"번째 계이름 " + split[ni]);
+
+            //박자별 이미지 배열 저장
+            int[]  notes  = {R.drawable.note1,R.drawable.note2,R.drawable.note3,R.drawable.note4};
+            int[]  notes_do  ={R.drawable.note1_do,R.drawable.note2_do,R.drawable.note3_do,R.drawable.note4_do};
+
             if(!split[ni].equals(" ")) { //공란이 아닐때 == 도~시일
 //                ((ItemViewHolder)holder).imageViews[n].setImageResource(R.drawable.music_icon);
                 if (split[ni].equals("C")) {
@@ -131,46 +156,53 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
                     ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space * ((ItemViewHolder) holder).dp);
                     ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
-                    ((ItemViewHolder) holder).imageViews[n].setImageResource(R.drawable.do_icon);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(notes_do[bsplit[ni]-1]);
 
                 } else if (split[ni].equals("D")) {
                     ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
                     ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(notes[bsplit[ni]-1]);
                 } else if (split[ni].equals("E")) {
                     ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view2);
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
-                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space+3 * ((ItemViewHolder) holder).dp);
                     ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(notes[bsplit[ni]-1]);
                 } else if (split[ni].equals("F")) {
                     ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
                     ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(notes[bsplit[ni]-1]);
                 } else if (split[ni].equals("G")) {
                     ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view3);
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
-                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space+3 * ((ItemViewHolder) holder).dp);
                     ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(notes[bsplit[ni]-1]);
                 } else if (split[ni].equals("A")) {
                     ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
                     ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(notes[bsplit[ni]-1]);
                 } else if (split[ni].equals("B")) {
                     ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view4);
-                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).layoutParams.bottomMargin = (int) (space+3 * ((ItemViewHolder) holder).dp);
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
                     ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(notes[bsplit[ni]-1]);
                 } else if (split[ni].equals("H")) {
                     ((ItemViewHolder) holder).layoutParams = new RelativeLayout.LayoutParams((int) (width * ((ItemViewHolder) holder).dp), (int) (width * ((ItemViewHolder) holder).dp));
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.ABOVE, R.id.view5);
                     ((ItemViewHolder) holder).layoutParams.addRule(RelativeLayout.RIGHT_OF, ((ItemViewHolder) holder).imageViewID[n]);
                     ((ItemViewHolder) holder).layoutParams.rightMargin = (int) (rspace * ((ItemViewHolder) holder).dp);
+                    ((ItemViewHolder) holder).imageViews[n].setImageResource(notes[bsplit[ni]-1]);
                 }
                 ((ItemViewHolder) holder).imageViews[n].setVisibility(View.VISIBLE);
                 ((ItemViewHolder) holder).imageViews[n].setLayoutParams(((ItemViewHolder) holder).layoutParams);
@@ -213,6 +245,9 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         len -= (cnt*8);
         if(len > 0){
             cnt++;
+        }
+        if(cnt == 0){
+            cnt =1;
         }
         return cnt;
     }
