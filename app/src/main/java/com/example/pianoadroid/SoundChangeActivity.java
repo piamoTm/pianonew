@@ -28,21 +28,23 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
     private int[] soundID;
     private int[] catSoundID;
     private int[] pianoSoundId;
+    private int[] xylophoneSoundID;
 
-    final int DO = 0, RE = 1, MI = 2,FA = 3,SOL = 4,RA = 5, SI = 6,HDO = 7;
+    private final int DO = 0, RE = 1, MI = 2,FA = 3,SOL = 4,RA = 5, SI = 6,HDO = 7;
 
     //BlueTooth
     private static String mConnectedDeviceName = null;
-    static boolean isConnectionError = false;
+    private static boolean isConnectionError = false;
     private ConnectedTask mConnectedTask = null;
     private static final String TAG = "soundChange";
 
-    private Button btn_cat;
-    private Button btn_piano;
-
+    private Button[] buttons; //버튼들
     private boolean[] isClicked;// 버튼 활성화
-    final int cat = 0; //버튼활성화 배열 인덱스로 사용할거야
-    final int piano = 1;
+    private final int cat = 0; //버튼활성화 배열,버튼배열 인덱스로 사용할거야
+    private final int piano = 1;
+    private final int xylophone = 2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         soundID = new int[8];
         catSoundID = new int[8];
         pianoSoundId = new int[8];
+        xylophoneSoundID = new int[8];
 
         //고양이소리
         catSoundID[DO] = soundPool.load(this, R.raw.yattong_do,1);
@@ -72,19 +75,34 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         pianoSoundId[RA] = soundPool.load(this, R.raw.sound6,1);
         pianoSoundId[SI] = soundPool.load(this, R.raw.sound7,1);
         pianoSoundId[HDO] = soundPool.load(this, R.raw.sound8,1);
+        //실로폰소리
+        xylophoneSoundID[DO] = soundPool.load(this, R.raw.xylophone1,1);
+        xylophoneSoundID[RE] = soundPool.load(this, R.raw.xylophone2,1);
+        xylophoneSoundID[MI] = soundPool.load(this, R.raw.xylophone3,1);
+        xylophoneSoundID[FA] = soundPool.load(this, R.raw.xylophone4,1);
+        xylophoneSoundID[SOL] = soundPool.load(this, R.raw.xylophone5,1);
+        xylophoneSoundID[RA] = soundPool.load(this, R.raw.xylophone6,1);
+        xylophoneSoundID[SI] = soundPool.load(this, R.raw.xylophone7,1);
+        xylophoneSoundID[HDO] = soundPool.load(this, R.raw.xylophone8,1);
+
 
         // 블루투스 소켓연결
         mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
         mConnectedTask.execute(); //쓰레드실행
 
+        int size = 3;
+
         //버튼 연결
-        btn_cat = (Button) findViewById(R.id.btn_cat);
-        btn_piano = (Button)findViewById(R.id.btn_piano);
-        btn_cat.setOnClickListener(this);
-        btn_piano.setOnClickListener(this);
+        buttons = new Button[size];
+        buttons[cat] = (Button) findViewById(R.id.btn_cat);
+        buttons[piano] = (Button)findViewById(R.id.btn_piano);
+        buttons[xylophone] = (Button)findViewById(R.id.btn_xylophone);
+        buttons[cat].setOnClickListener(this);
+        buttons[piano].setOnClickListener(this);
+        buttons[xylophone].setOnClickListener(this);
 
         //버튼 비활성화 init
-        isClicked = new boolean[2];
+        isClicked = new boolean[size];
         for (boolean b: isClicked) {
             b = false;
         }
@@ -107,15 +125,16 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
                 Log.i("testLog", "고양이");
                 if(isClicked[cat]){ //활성화 -> 비활성화
                     soundID = null;
-                    btn_cat.setTextColor(Color.BLACK);
                     sendMessage("N"); //아두이노를 작곡모드로
+                    buttons[cat].setTextColor(Color.BLACK);
                     isClicked[cat] = false;
 
                 }else{ //비활성화->활성화
                     soundID = catSoundID;
-                    btn_cat.setTextColor(Color.BLUE);
                     sendMessage("S"); //아두이노를 작곡모드로
+                    buttons[cat].setTextColor(Color.BLUE);
                     isClicked[cat] = true;
+                    setAllCancelWithoutN(cat); //고양이 말고 다른건 모두 해제
                 }
                 break;
 
@@ -123,26 +142,58 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
                 Log.i("testLog", "클래식피아노");
                 if(isClicked[piano]){ //활성화 -> 비활성화
                     soundID = null;
-                    btn_piano.setTextColor(Color.BLACK);
                     sendMessage("N"); //아두이노를 작곡모드로
+                    buttons[piano].setTextColor(Color.BLACK);
                     isClicked[piano] = false;
 
                 }else{ //비활성화->활성화
                     soundID = pianoSoundId;
-                    btn_piano.setTextColor(Color.BLUE);
                     sendMessage("S"); //아두이노를 작곡모드로
+                    buttons[piano].setTextColor(Color.BLUE);
                     isClicked[piano] = true;
+                    setAllCancelWithoutN(piano); //피아노 말고 다른건 모두 해제
                 }
                 break;
+
+            case R.id.btn_xylophone :
+                Log.i("testLog", "실로폰");
+                if(isClicked[xylophone]){ //활성화 -> 비활성화
+                    soundID = null;
+                    sendMessage("N"); //아두이노를 작곡모드로
+                    buttons[xylophone].setTextColor(Color.BLACK);
+                    isClicked[piano] = false;
+
+                }else{ //비활성화->활성화
+                    soundID = xylophoneSoundID;
+                    sendMessage("S"); //아두이노를 작곡모드로
+                    buttons[xylophone].setTextColor(Color.BLUE);
+                    isClicked[xylophone] = true;
+                    setAllCancelWithoutN(xylophone); //피아노 말고 다른건 모두 해제
+                }
+                break;
+
 
 
 
         }
     }
 
+    //한꺼번에 비활성화 시키는 버튼 n으로 들어온거만 빼고
+    void setAllCancelWithoutN(int n){
+        for (int i = 0; i<isClicked.length; i++){
+            if(i != n){
+                isClicked[i]=false;
+                buttons[i].setTextColor(Color.BLACK);
+            }
+        }
+    }
+
 
     //소리내기
     void sound(String code){
+        if(soundID == null){
+            return;
+        }
         switch (code){
             case "C" :
                 soundPool.play(soundID[DO],1,1,0,0,1);
