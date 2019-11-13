@@ -74,6 +74,20 @@
             android:background="@drawable/btn_round_line"
             />
 
+        <Button
+            android:visibility="invisible"
+            android:layout_alignParentRight="true"
+            android:id="@+id/btn_practice_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연 습 중 지"
+            android:layout_margin="30px"
+            android:paddingVertical="20px"
+            android:paddingHorizontal="70px"
+            android:textStyle="bold"
+            android:background="@drawable/btn_round_line"
+            />
+
     </RelativeLayout>
 
 
