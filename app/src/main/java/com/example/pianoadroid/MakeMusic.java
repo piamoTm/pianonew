@@ -141,7 +141,7 @@ public class MakeMusic extends AppCompatActivity {
         adapter = new MakeMusic_RecyclerAdapter(makeNotsArr,makeBeatArr);
         mMakeNoteRecycler.setAdapter(adapter);
         makeNotsArr.add("");
-
+        makeBeatArr.add(0);
     }
 
     //아두이노로 데이터 보내기

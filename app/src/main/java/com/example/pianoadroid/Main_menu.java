@@ -68,9 +68,10 @@ public class Main_menu extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(getApplicationContext(), SoundChangeActivity.class);
                 startActivity(intent);
-                startActivity(intent);
+
             }
         });
         Log.d( TAG, "Initalizing Bluetooth adapter...");
