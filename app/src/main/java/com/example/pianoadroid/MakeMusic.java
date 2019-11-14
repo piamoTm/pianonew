@@ -95,20 +95,23 @@ public class MakeMusic extends AppCompatActivity {
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isThread = true;
-                thread = new Thread() {
-                    public void run(){
-                        while (isThread){
-                            try {
-                                sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            handler.sendEmptyMessage(0);
-                        }
-                    }
-                };
-                thread.start();
+
+                adapter.setHighlightPos(1);
+                adapter.notifyDataSetChanged();
+//                isThread = true;
+//                thread = new Thread() {
+//                    public void run(){
+//                        while (isThread){
+//                            try {
+//                                sleep(1000);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                            handler.sendEmptyMessage(0);
+//                        }
+//                    }
+//                };
+//                thread.start();
 
 //                String[] str;
 //                int i = 0;
@@ -135,8 +138,11 @@ public class MakeMusic extends AppCompatActivity {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isThread = false;
-                thread.interrupt();
+
+
+
+//                isThread = false;
+//                thread.interrupt();
                // Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
 
 
@@ -184,7 +190,7 @@ public class MakeMusic extends AppCompatActivity {
 
         makeNotsArr = new ArrayList<>();
         makeBeatArr = new ArrayList<>();
-        adapter = new MakeMusic_RecyclerAdapter(makeNotsArr,makeBeatArr);
+        adapter = new MakeMusic_RecyclerAdapter(makeNotsArr,makeBeatArr,-11);
         mMakeNoteRecycler.setAdapter(adapter);
     }
 

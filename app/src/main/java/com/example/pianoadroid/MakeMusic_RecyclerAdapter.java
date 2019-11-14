@@ -34,16 +34,17 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
     int highlightPos;  //하이라이트 포지션
 
     //작곡할때 리사이클러뷰 데이터 가져오기
-    public MakeMusic_RecyclerAdapter(ArrayList<String> listData, ArrayList<Integer> beetData) {
-        this.beatData = beetData;
-        this.listData = listData;
-    }
-    // 연주하기 리사이클러뷰 데이터 가져오기
     public MakeMusic_RecyclerAdapter(ArrayList<String> listData, ArrayList<Integer> beetData,int highlightPos) {
         this.beatData = beetData;
         this.listData = listData;
-        this.highlightPos =highlightPos;
+        this.highlightPos = highlightPos;
     }
+//    // 연주하기 리사이클러뷰 데이터 가져오기
+//    public MakeMusic_RecyclerAdapter(ArrayList<String> listData, ArrayList<Integer> beetData,int highlightPos) {
+//        this.beatData = beetData;
+//        this.listData = listData;
+//        this.highlightPos =highlightPos;
+//    }
 
 
     public void setHighlightPos(int highlightPos) {
