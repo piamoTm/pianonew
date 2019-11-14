@@ -42,6 +42,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     RecyclerView mRecyclerView;
     MusicTest_Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
+    int focusPos;
 
     //플레이할 음악
     Music music;
@@ -317,6 +318,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         // 어댑터 생성자에 악보리스트를 넣음
         mAdapter = new MusicTest_Adapter(MusicNoteList, MusicNoteBitList);
 
+        focusPos = 0;
+
         //
         mRecyclerView.setAdapter(mAdapter);
 
@@ -517,12 +520,12 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         Log.e("index_value_practice: ", index_value_practice + "");
         Log.e("현재 포커싱 된 음계: ", array[index_value_practice]);
 
-        if (array[index_value_practice].equals(value_kor)){
+        if (array[index_value_practice].equals(value_kor)){ //아두이노건반과 현재 음계가 맞음
             Log.e("맞음맞음", "맞음맞음");
             // 같으면 어댑터에 다음 포커싱이 될 음계위치를 hight_position으로 보냄
 
             // 만약 해당 음계가 2박이면 hight_position을 +2로 보냄
-            if (bit_array[index_value_practice].equals("2")){
+            if (bit_array[index_value_practice].equals("2")){ //맞음 + 박자가 2박
 
                 index_value_practice = index_value_practice + 2;
 
@@ -558,7 +561,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     // 아두이노에 계이름 코드와 박자수를 보냄
                     sendMessage(sendMsg);
                 }
-            }else{
+            }else{ //맞음 + 박자가 1박
                 // 1늘려줌
                 index_value_practice ++;
 
@@ -681,9 +684,12 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     }
 
     // 연습하기 모드 중 이전 음계를 선택 시 어댑터에서 선택한 음계와 hight_position값을 받아오는 함수
+    //position는 아이템 번호 (오선지번호 0~ )
     @Override
     public void onBeforeMusicNote(String value, final int hight_pos, final int position) {
-        Log.e("선택한 음계와 hight_position값: ", value + " / " + hight_pos);
+        Log.e("선택한 음계: ", value );//도
+        Log.e("hight_position값: ",  ""+ hight_pos);
+
 
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
         alertbuilder.setTitle("이전 음계");
@@ -702,14 +708,16 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                         /*선택 시 다시 이 부분 음계부터 연습모드 실행*/
 
-
-
                         // 악보에 해당 음계의 포커싱을 맞추기 위해 어댑터로 hight_position을 보냄
                         mAdapter.setHight_pos(hight_pos);
                         mAdapter.notifyDataSetChanged();
 
-                        // 포커싱을 어댑터서 받아온 position값으로 함
+                        // 리사이클러뷰 포커싱을 어댑터서 받아온 position값으로 함
                         mRecyclerView.smoothScrollToPosition(position);
+                        Log.i("testLog","포커싱 번호  :"+position );
+
+                        //연습모드에서의 인덱스?위치?를 선택된 위치로
+                        index_value_practice = hight_pos;
 
                         // 이전 계이름을 아두이노에 보냄
                         String sendMsg = musicnote_eng_array[hight_pos] + music.getBeat()[hight_pos-1];
@@ -723,7 +731,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         alertDialog.show();
     }
 
-    // 노래를 1초마다 실행시키는 스레드
+    // 노래를 1초마다 실행시키는 스레드 (자동연주)
     class music_thread extends Thread{
 
         @Override
@@ -804,15 +812,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     bool_music = false;
                     e.printStackTrace();
                 }
-
-
-
-
         }
     }
 
 
-
+    //자동연주 스레드 ui핸들러
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
