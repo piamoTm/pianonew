@@ -76,11 +76,12 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         //세번째 인수 factory 는 표준 cursor를 이용할 경우 null 로 지정
         //출처: https://aroundck.tistory.com/238 [돼지왕 왕돼지 놀이터]
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        Log.i("DBLog", "[DBMyProductHelper_Read] DBMyProductHelper_Write() ");
     }
 
     @Override //CREATE TABLE//
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        //DB가 처음 만들어질때 호출됨. 여기서 테이블 생성및 초기 레코드 삽입
+        //DB가 처음 만들어질때 호출됨. 여기서 테이블 생성 및 초기 레코드 삽입
         Log.i("DBLog", "[DBMyProductHelper_Read] CREATE TABLE ");
 
         String CREATE_MY_PRODUCT_TABLE = "CREATE TABLE " + TABLE_NAME_MY_PRODUCTS + " ("
@@ -109,6 +110,26 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         //create tables again
         onCreate(sqLiteDatabase);
 
+    }
+
+    //테이블이 자동으로 안만들어져서 수동으로 만들려고
+    public void creatTable(){
+        Log.i("DBLog", "[DBMyProductHelper_Read] creatTable() ");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String CREATE_MY_PRODUCT_TABLE = "CREATE TABLE " + TABLE_NAME_MY_PRODUCTS + " ("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " //0
+                + KEY_TITLE + " TEXT, " //1
+                + KEY_WRITER + " TEXT, " //2
+                + KEY_SCORE + " TEXT, " //3
+                + KEY_DATE + " TEXT, " //4
+                + KEY_BEAT + " TEXT " //5
+                + ")";
+
+        //date  datetime not null default current_timestamp
+
+        db.execSQL(CREATE_MY_PRODUCT_TABLE);
     }
 
     //하단 함수들에 대한 메뉴판 입니다. 여기서 보고 필요한 함수를 사용하세요//
