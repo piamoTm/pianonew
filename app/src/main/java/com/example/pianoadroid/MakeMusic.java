@@ -74,8 +74,6 @@ public class MakeMusic extends AppCompatActivity {
 
         //SQLite db helper init 초기화
         db = new DBMyProductHelper_Write(this);
-        db.creatTable(); //한ㄴ번만 실행해야해!
-
 
         //백버튼 누르면 뒤로가는 이벤트 붙임
         mBackBtn.setOnClickListener(new View.OnClickListener() {
