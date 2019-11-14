@@ -38,12 +38,17 @@ import java.util.List;
  * */
 public class MakeMusic extends AppCompatActivity {
     private static final String TAG = "MakeMusic";
+    private final int WRITE_NEW = 111;//작곡하기 -> 새로만들기
+    private final int WRITE_OLD = 222;//작곡하기 -> 기존곡
 
     private RecyclerView mMakeNoteRecycler;
     private MakeMusic_RecyclerAdapter adapter;
     private Button mPlayBtn,mSaveBtn;
     ArrayList<String> makeNotsArr;
     ArrayList<Integer> makeBeatArr;
+
+    //무엇을 눌러 왔는지 (새로만들기/ 기존곡)인지
+    int writeType;
 
     //BlueTooth
     private static String mConnectedDeviceName = null;
@@ -70,8 +75,37 @@ public class MakeMusic extends AppCompatActivity {
         mSaveBtn = (Button)findViewById(R.id.saveBtn);
         mPlayBtn =(Button)findViewById(R.id.palyBtn);
 
-        infoshow("확인","no","건반을 눌러주세요:)");// 안내 다이얼로그
-        init();//리사이클러뷰 초기 세팅
+        //SQLite db helper init 초기화
+        db = new DBMyProductHelper_Write(this);
+
+        //인텐트로 뭐 눌러왔는지 받기..
+        Intent receiveIntent = getIntent();
+        writeType = receiveIntent.getIntExtra("from", WRITE_NEW);//기본값은 새로만들기
+
+        if(writeType == WRITE_NEW){ //새로만들기 버튼을 눌러 왔음 [+]
+
+            //ArrayList를 사용해야하고
+
+            makeNotsArr = new ArrayList<>();
+            makeBeatArr = new ArrayList<>();
+
+            infoshow("확인","no","건반을 눌러주세요:)");// 안내 다이얼로그
+
+            //빈오선지일 때 버튼 비활성화
+            mPlayBtn.setEnabled(false);
+            mSaveBtn.setEnabled(false);
+
+        }else if(writeType == WRITE_OLD) { //기존 곡을 눌러 왔음....
+            //인텐트에서 뭐 눌렀는지 아이디 받기
+            int mid = receiveIntent.getIntExtra("id", 1);
+            //db에서 id로 Music 개체를 꺼내 사용해야함
+            Music music = db.getMusic(mid);
+
+            makeNotsArr = music.getScoreArr();
+            makeBeatArr = music.getBeatArr();
+        }
+
+        init(makeNotsArr, makeBeatArr );//리사이클러뷰 초기 세팅
 
         // 블루투스 소켓연결
         mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
@@ -80,13 +114,6 @@ public class MakeMusic extends AppCompatActivity {
 
         //아두이노로 작곡모드 보내기
         sendMessage("W");
-
-        //SQLite db helper init 초기화
-        db = new DBMyProductHelper_Write(this);
-
-        //빈오선지일 때 버튼 비활성화
-        mPlayBtn.setEnabled(false);
-        mSaveBtn.setEnabled(false);
 
         //백버튼 누르면 뒤로가는 이벤트 붙임
         mBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -239,14 +266,14 @@ public class MakeMusic extends AppCompatActivity {
 
 
     //리사이클러뷰 초기 세팅//
-    private void init() {
+    private void init(ArrayList<String> makeNotsArr, ArrayList<Integer> makeBeatArr) {
         mMakeNoteRecycler = (RecyclerView)findViewById(R.id.makenote);
         mMakeNoteRecycler.setHasFixedSize(true);// 불필요한 레이아웃과정을  피하게 만들어줌
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mMakeNoteRecycler.setLayoutManager(linearLayoutManager);
 
-        makeNotsArr = new ArrayList<>();
-        makeBeatArr = new ArrayList<>();
+        //makeNotsArr = new ArrayList<>();
+        //makeBeatArr = new ArrayList<>();
         adapter = new MakeMusic_RecyclerAdapter(makeNotsArr,makeBeatArr,-11);
         mMakeNoteRecycler.setAdapter(adapter);
     }

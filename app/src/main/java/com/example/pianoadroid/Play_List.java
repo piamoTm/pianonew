@@ -20,6 +20,9 @@ public class Play_List extends AppCompatActivity {
     private final int MENU_WRITE = 1;
     private final int REQUEST_ACT = 111;
 
+    private final int WRITE_NEW = 111;//작곡하기 -> 새로만들기
+    private final int WRITE_OLD = 222;//작곡하기 -> 기존곡
+
 
     private PlayList_RecyclerAdapter adapter;
     private RecyclerView recyclerView;
@@ -100,6 +103,7 @@ public class Play_List extends AppCompatActivity {
             @Override
             public void onItemClick() {
                 Intent intent = new Intent(getApplicationContext(), MakeMusic.class);
+                intent.putExtra("from", WRITE_NEW);
                 startActivityForResult(intent, REQUEST_ACT);
 
             }

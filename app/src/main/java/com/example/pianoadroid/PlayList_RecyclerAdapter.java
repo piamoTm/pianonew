@@ -21,8 +21,11 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
     private ArrayList<Music> listData = new ArrayList<>();
     private int menuIndex;
 
-    private final int MENU_READ = 0;
-    private final int MENU_WRITE = 1;
+    private final int MENU_READ = 0;//연습하기 버튼
+    private final int MENU_WRITE = 1;//작곡하기버튼
+
+    private final int WRITE_NEW = 111;//작곡하기 -> 새로만들기
+    private final int WRITE_OLD = 222;//작곡하기 ->기존곡
     private Context context;
     private OnItemClickListener onItemClickListener;
 
@@ -124,8 +127,14 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
             mLay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),MusicTest.class);
+                    Intent intent;
+                    if(menuIndex == MENU_READ){
+                        intent = new Intent(v.getContext(), MusicTest.class);
+                    }else{
+                        intent = new Intent(v.getContext(), MakeMusic.class);
+                    }
                     intent.putExtra("id", mId);
+                    intent.putExtra("from", WRITE_OLD);
                     v.getContext().startActivity(intent);
                     Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
                 }

@@ -12,6 +12,7 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Music {
@@ -147,6 +148,27 @@ public class Music {
             beatStr += b+"";
         }
         return beatStr;
+    }
+
+    //악보 score를 ArrayList 형식으로 만들어서 반환 (String -> ArrayList)
+    public ArrayList<String> getScoreArr(){
+        ArrayList<String> scoreArr = new ArrayList<>();
+
+        String[] split = score.split("");
+        for (int i = 1; i<split.length; i++){
+            scoreArr.add(split[i]);
+        }
+        return scoreArr;
+    }
+    //비트를 ArrayList 형식으로 만들어서 반환 (int[] -> ArrayList)
+    public ArrayList<Integer> getBeatArr(){
+        ArrayList<Integer> beatArr = new ArrayList<>();
+
+        for (int b: beat
+             ) {
+            beatArr.add(b);
+        }
+        return beatArr;
     }
 
 
