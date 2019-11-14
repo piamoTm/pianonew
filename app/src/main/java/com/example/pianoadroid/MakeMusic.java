@@ -48,6 +48,10 @@ public class MakeMusic extends AppCompatActivity {
     static boolean isConnectionError = false;
     ConnectedTask mConnectedTask = null;
 
+
+    //SQLite db 개체 생성
+    DBMyProductHelper_Write db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +72,9 @@ public class MakeMusic extends AppCompatActivity {
 
         sendMessage("W"); //작곡모드로
 
+        //SQLite db helper init 초기화
+        db = new DBMyProductHelper_Write(this);
+        db.creatTable(); //한ㄴ번만 실행해야해!
 
 
         //백버튼 누르면 뒤로가는 이벤트 붙임
@@ -376,13 +383,12 @@ public class MakeMusic extends AppCompatActivity {
 
                     // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
                     //SAVE//
-                    //SQLite db 개체 생성
-                    DBMyProductHelper_Write db;
-                    //SQLite db helper init 초기화
-                    db = new DBMyProductHelper_Write(MakeMusic.this);
+
+
                     //새로운 노래를(Music 개체를) db에 추가
 
-                     Music music = new Music(1,strTitle, strName, readNots(),readBeat());
+                    //Music(String title, String writer, String score, int[] beat)
+                     Music music = new Music(strTitle, strName, readNots(),readBeat());
                      db.addMusic(music);
 
                 dialog.dismiss();
