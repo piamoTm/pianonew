@@ -57,7 +57,8 @@ public class MakeMusic extends AppCompatActivity {
     Thread thread;
     boolean isThread = false;
     int count; // 리사이클러뷰 자리수 증가해서 배경색 변경
-    int stopCnt =0;
+    int stopCnt =0; // 재생하기에서 멈춤한 자리 포커스값
+    int focusing_cnt = 0; //리사이클러뷰 포커싱
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class MakeMusic extends AppCompatActivity {
         mSaveBtn = (Button)findViewById(R.id.saveBtn);
         mPlayBtn =(Button)findViewById(R.id.palyBtn);
 
-        //infoshow("확인","no","건반을 눌러주세요:)");// 안내 다이얼로그
+        infoshow("확인","no","건반을 눌러주세요:)");// 안내 다이얼로그
         init();//리사이클러뷰 초기 세팅
 
         // 블루투스 소켓연결
@@ -108,13 +109,32 @@ public class MakeMusic extends AppCompatActivity {
                     thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
+                            //아두이노에서 모드를 바꿀 때 딜레이를 줘야 가끔 포커싱 안맞는게 없어짐
+                            try {
+                                Thread.sleep(200);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
                             // 정지된  음표 자리값 가져와서함 count에 넘어서 시작함
                             count =stopCnt;
                             while (isThread){
                                 Message msg = handler.obtainMessage();
+                                // count가 증가하므로 음표 배경색이 바뀜
                                 msg.arg1 = count;
+                                // 핸들러 호출
                                 handler.sendMessage(msg);
 
+                                // 배열의 마지막값을 체크해서  whilw문 정지 시킴
+                                // 안그러면 count 증가되서 에러
+                                if(makeNotsArr.size() <= count){
+                                    // 작곡모드로
+                                    sendMessage("W");
+                                    focusing_cnt =0;
+                                    stopCnt = 0;
+                                    break;// while 정지
+                                }
+                                Log.i("testLog_MakeMusic", "noteArrsize g확인2222");
                                     try {
                                         // 음계 배열에서 공란일때 아두이노에 보내지 않음
                                         if (!makeNotsArr.get(count).equals(" ")) {
@@ -123,14 +143,15 @@ public class MakeMusic extends AppCompatActivity {
                                             String sendMsg =makeNotsArr.get(count) + makeBeatArr.get(count);
                                             Log.i("testLog_MakeMusic", "sendMsg "+sendMsg);
                                             sendMessage(sendMsg);
-
-                                            // 쓰레드 딜레이 주기
+                                            // 딜레이
                                             Thread.sleep(800);
                                         }
+
+
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
-                                    // 쓰레드  위치값 늘리기
+                                //쓰레드 위치값 늘리기
                                 count++;
                                 }
                         }
@@ -143,6 +164,7 @@ public class MakeMusic extends AppCompatActivity {
                    stopCnt = count;
                    isThread = false;
                    thread.interrupt();
+                   sendMessage("W");
 
                }
             }
@@ -170,16 +192,34 @@ public class MakeMusic extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            // 배열의 마지막값을 체크해서  whilw문 정지 시킴
+            // 안그러면 count 증가되서 에러
+            if(makeNotsArr.size() <= count) {
+                mPlayBtn.setText("재 생 하 기");
+                mMakeNoteRecycler.smoothScrollToPosition(0);
+                adapter.setHighlightPos(-11);
+                adapter.notifyDataSetChanged();
 
-            adapter.setHighlightPos(msg.arg1); //
-            adapter.notifyDataSetChanged();
-            mMakeNoteRecycler.smoothScrollToPosition(adapter.getItemCount());
-            //Toast.makeText(getApplicationContext(), "쓰레드 확인 ",Toast.LENGTH_SHORT).show();
+            }else{
+                adapter.setHighlightPos(msg.arg1); //
+                adapter.notifyDataSetChanged();
+                // 포커싱을 맞추기 위한 제어문
+                if(msg.arg1 != 1){
+                    // index_value가 8로 나누었을 시 나머지가 1일 때
+                    if (msg.arg1 % 8 == 1){
+                        Log.e("8나머지값: ", msg.arg1 % 8 + "");
+                        focusing_cnt += 1;
+                    }
+                }
+                // 현재 연주중인 음계를 포커싱을 맞추어 줌
+                mMakeNoteRecycler.smoothScrollToPosition(focusing_cnt);
+            }
+
         }
     };
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();// finish()임
         infoshow("취소","ok","저장하지 않고 끝내시겠습니까?");
     }
 
@@ -201,6 +241,7 @@ public class MakeMusic extends AppCompatActivity {
     //리사이클러뷰 초기 세팅//
     private void init() {
         mMakeNoteRecycler = (RecyclerView)findViewById(R.id.makenote);
+        mMakeNoteRecycler.setHasFixedSize(true);// 불필요한 레이아웃과정을  피하게 만들어줌
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mMakeNoteRecycler.setLayoutManager(linearLayoutManager);
 
@@ -430,7 +471,7 @@ public class MakeMusic extends AppCompatActivity {
             public void onClick(View v) {
                 String strTitle = title_make.getText().toString(); //제목
                 String strName = name_make.getText().toString(); //작곡자
-                Toast.makeText(getApplicationContext(), strTitle+"/"+strName,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), strTitle+"/"+strName,Toast.LENGTH_LONG).show();
 
                 // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
                 //새로운 노래를(Music 개체를) db에 추가
