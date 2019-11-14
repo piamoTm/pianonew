@@ -40,20 +40,6 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
         this.listData = listData;
     }
 
-    //============================================================================================
-        // EVENT 관련
-        public interface Playlist_viewClickListener{
-            void onPlatlistClicked(int position, String id);
-
-        }
-
-        private Playlist_viewClickListener mListener = null;
-
-        // Refri_ViewClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
-        public void setOnPlaylist_ViewClickListener(Playlist_viewClickListener listener){
-            this.mListener = listener;
-        }
-        //============================================================================================
 
     @NonNull
     @Override
@@ -136,7 +122,7 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
                     intent.putExtra("id", mId);
                     intent.putExtra("from", WRITE_OLD);
                     v.getContext().startActivity(intent);
-                    Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
                 }
             });
         }

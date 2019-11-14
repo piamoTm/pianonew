@@ -105,7 +105,6 @@ public class Play_List extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MakeMusic.class);
                 intent.putExtra("from", WRITE_NEW);
                 startActivityForResult(intent, REQUEST_ACT);
-
             }
         });
         recyclerView.setAdapter(adapter);
@@ -119,8 +118,7 @@ public class Play_List extends AppCompatActivity {
             musicArrayList = ((DBMyProductHelper_Write)db).getAllMusic();
         }
 
-        for (Music m: musicArrayList
-             ) {
+        for (Music m: musicArrayList) {
             Log.i("testLog", "music title " +m.getTitle() + m.getId());
         }
         return musicArrayList;

@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -44,11 +45,16 @@ public class MakeMusic extends AppCompatActivity {
     private RecyclerView mMakeNoteRecycler;
     private MakeMusic_RecyclerAdapter adapter;
     private Button mPlayBtn,mSaveBtn;
+    private TextView mTitleText;
     ArrayList<String> makeNotsArr;
     ArrayList<Integer> makeBeatArr;
 
+    // 기존곡의 악보 사이즈
+    int beforeSize;
     //무엇을 눌러 왔는지 (새로만들기/ 기존곡)인지
     int writeType;
+    //기존곡 뮤직 객체
+    Music oldmusic;
 
     //BlueTooth
     private static String mConnectedDeviceName = null;
@@ -74,6 +80,7 @@ public class MakeMusic extends AppCompatActivity {
         ImageView mBackBtn = (ImageView)findViewById(R.id.back_btn);
         mSaveBtn = (Button)findViewById(R.id.saveBtn);
         mPlayBtn =(Button)findViewById(R.id.palyBtn);
+        mTitleText = (TextView)findViewById(R.id.titleText);
 
         //SQLite db helper init 초기화
         db = new DBMyProductHelper_Write(this);
@@ -96,13 +103,25 @@ public class MakeMusic extends AppCompatActivity {
             mSaveBtn.setEnabled(false);
 
         }else if(writeType == WRITE_OLD) { //기존 곡을 눌러 왔음....
+
+            //기존곡이기 때문에 수정전에는 비활성화
+            mSaveBtn.setEnabled(false);
+
             //인텐트에서 뭐 눌렀는지 아이디 받기
             int mid = receiveIntent.getIntExtra("id", 1);
             //db에서 id로 Music 개체를 꺼내 사용해야함
-            Music music = db.getMusic(mid);
+             oldmusic = db.getMusic(mid);
 
-            makeNotsArr = music.getScoreArr();
-            makeBeatArr = music.getBeatArr();
+            makeNotsArr = oldmusic.getScoreArr();
+            makeBeatArr = oldmusic.getBeatArr();
+
+            // 기존곡의 악보 사이즈 저장
+            beforeSize = makeNotsArr.size();
+
+            // 기존곡의 타이틀
+            mTitleText.setText(oldmusic.getTitle());
+            mTitleText.setVisibility(View.VISIBLE);
+
         }
 
         //리사이클러뷰 초기 세팅
@@ -120,7 +139,24 @@ public class MakeMusic extends AppCompatActivity {
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                infoshow("취소","ok","저장하지 않고 끝내시겠습니까?");
+
+                // 빈 악보 가 아닐때  띄워줌
+                if (makeNotsArr.size() != 0) {
+                    // 이전 곡이 아닌 새로운 곡일 경우
+                    if(beforeSize == 0) {
+                        infoshow("아니오", "ok", "악보를 저장하지 않고 나가시겠습니까? ");
+                        // 이전 곡인데 수정이 되었을 경우
+                    } else if(beforeSize != makeNotsArr.size()){
+                        infoshow("아니오", "ok", "수정된 내용을 저장하지 않고 나가시겠습니까? ");
+                    }else{
+                        // 이전 곡인데 수정되지 않았을 경우
+                        finish();
+                    }
+                }else{
+                    //빈악보 일경우
+                    finish();
+                }
+
             }
         });
 
@@ -203,11 +239,23 @@ public class MakeMusic extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
+                if(makeNotsArr.size() > 0){ //빈오선기가 아님 , 새로만들기 + 수정한게 여기로 들어오지
+                    if(beforeSize == 0) {// 새로운곡
+                        //제목 , 작곡자 입력 dialog
+                        show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
+                    }
+                    else if(beforeSize != makeNotsArr.size()){ // 수정된 곡
+                        oldmusic.setBeat(readBeat());
+                        oldmusic.setScore(readNots());
+                        db.updateMusic(oldmusic);
 
-                if(makeNotsArr.size() > 0){
-                    //제목 , 작곡자 입력 dialog
-                    show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
-                }else{
+                        //플레이 리스트로
+                        Intent intent = new Intent();
+                        intent.putExtra("result_msg", true);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                }
+                }else if (makeNotsArr.size() == 0){
                     // 빈오선지 일경우 저장이 안됨
                     Toast.makeText(MakeMusic.this,"작곡된 음표가 없습니다 작곡 후 저장하세요!",Toast.LENGTH_LONG).show();
                 }
@@ -247,8 +295,22 @@ public class MakeMusic extends AppCompatActivity {
     };
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();// finish()임
-        infoshow("취소","ok","저장하지 않고 끝내시겠습니까?");
+        // 빈 악보 가 아닐때  띄워줌
+        if (makeNotsArr.size() != 0) {
+            // 이전 곡이 아닌 새로운 곡일 경우
+            if(beforeSize == 0) {
+                infoshow("아니오", "ok", "악보를 저장하지 않고 나가시겠습니까? ");
+            // 이전 곡인데 수정이 되었을 경우
+            } else if(beforeSize != makeNotsArr.size()){
+                infoshow("아니오", "ok", "수정된 내용을 저장하지 않고 나가시겠습니까? ");
+            }else{
+                // 이전 곡인데 수정되지 않았을 경우
+                super.onBackPressed();//finish
+            }
+        }else{
+            //빈악보 일경우
+            super.onBackPressed();//finish
+        }
     }
 
     @Override
@@ -392,10 +454,14 @@ public class MakeMusic extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             Log.i("MakeMusic : ",mConnectedDeviceName + ": " + recvMessage[0]);
 
-            //오선지에 음표가 들어왔을 경우 활성화
-            if(makeNotsArr.size() == 1) {
-                mPlayBtn.setEnabled(true);  // 재생하기
-                mSaveBtn.setEnabled(true);  // 저장하기 버튼
+            if(writeType == WRITE_NEW) {
+                //오선지에 음표가 들어왔을 경우 활성화
+                if (makeNotsArr.size() == 1) {
+                    mPlayBtn.setEnabled(true);  // 재생하기
+                    mSaveBtn.setEnabled(true);  // 저장하기 버튼
+                }
+            }else if(writeType == WRITE_OLD){
+                mSaveBtn.setEnabled(true);
             }
 
         }
@@ -475,7 +541,7 @@ public class MakeMusic extends AppCompatActivity {
 
         // 종료 하겠다고 하면 액티비티 종료됨
         if(okFinish.equals("ok")){
-            builder.setNegativeButton("종료",
+            builder.setNegativeButton("예",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
@@ -502,6 +568,7 @@ public class MakeMusic extends AppCompatActivity {
                 String strName = name_make.getText().toString(); //작곡자
                 //Toast.makeText(getApplicationContext(), strTitle+"/"+strName,Toast.LENGTH_LONG).show();
 
+
                 // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
                 //새로운 노래를(Music 개체를) db에 추가
                 //Music(String title, String writer, String score, int[] beat)
@@ -509,8 +576,7 @@ public class MakeMusic extends AppCompatActivity {
                 //id는 자동으로 됨
                  Music music = new Music(strTitle, strName, readNots(),readBeat());
                  db.addMusic(music);
-
-                dialog.dismiss();
+                 dialog.dismiss();
 
                 //플레이 리스트로
                 Intent intent = new Intent();

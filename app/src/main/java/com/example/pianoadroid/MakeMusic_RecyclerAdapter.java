@@ -29,8 +29,6 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
     // adapter에 들어갈 list 입니다.
     private ArrayList<String> listData ;  // 계이름 list
     private ArrayList<Integer> beatData ;  //박자 list
-    private int adapter_size; // ArrayList 아이템 개수
-    private Music music;   //노래
     private int highlightPos;  //하이라이트 포지션
 
     //작곡할때 리사이클러뷰 데이터 가져오기
@@ -39,12 +37,6 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         this.listData = listData;
         this.highlightPos = highlightPos;
     }
-
-    // 작곡한 저장곡 연주하기
-    public MakeMusic_RecyclerAdapter(Music music,int highlightPos) {
-        this.music = music; this.highlightPos =highlightPos;
-    }
-
 
     public void setHighlightPos(int highlightPos) {
         Log.i("testLog", "setHighlightPos "+ highlightPos);
@@ -77,25 +69,18 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         String scorePiece = ""; //0~7 /8~15로 악보자르기
         String beatPiece = ""; //박자도 자르기
 
-        if(music != null){
-            //작곡된 곡 play시 하이라이트 적용
-            if (endNote >= music.getScoreLen()) {
-                endNote = music.getScoreLen();
-            }
-            scorePiece = music.getScore().substring(startNote, endNote);// 0~7 /8~15 로 악보자르기
 
-        } else{
-            // 작곡중
+        // 작곡중
 
-            if (endNote >= listData.size()) {
-                endNote = listData.size();
-            }
-            for (int j = startNote; j<endNote; j++){
-                scorePiece += listData.get(j);
-                //Log.i("testLog", "listData.get("+j+") " + listData.get(j)  );
-                beatPiece += beatData.get(j); //박자
-            }
+        if (endNote >= listData.size()) {
+            endNote = listData.size();
         }
+        for (int j = startNote; j<endNote; j++){
+            scorePiece += listData.get(j);
+            //Log.i("testLog", "listData.get("+j+") " + listData.get(j)  );
+            beatPiece += beatData.get(j); //박자
+        }
+
         Log.i("testLog", "" + startNote + "~" + endNote + "의 악보조각 : "+scorePiece);
 
         //악보 조각(한줄)을 계이름 하나씩 자르기
@@ -232,13 +217,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         //아이템의 개수
         //오선지 한줄의 개수
         //8개로 잘라서 나머지 있으면 +1
-
-        if(music == null){
-            adapter_size = listData.size();// 작곡 중
-        }else{
-            adapter_size = music.getScoreLen();//작곡완료 연주중
-        }
-        int len =adapter_size;
+        int len =listData.size();
         int cnt = len/8;
         len -= (cnt*8);
         if(len > 0){
