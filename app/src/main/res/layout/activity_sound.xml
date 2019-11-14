@@ -3,6 +3,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/backpressBtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="30px"
+        android:layout_marginTop="30px"
+        android:src="@drawable/back_button" />
+
     <Button
         android:id="@+id/btn_piano"
         android:layout_width="match_parent"

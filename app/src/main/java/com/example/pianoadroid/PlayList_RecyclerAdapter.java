@@ -2,10 +2,12 @@ package com.example.pianoadroid;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +48,7 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             // LayoutInflater를 이용하여 전 단계에서 만들었던 item.xml을 inflate 시킵니다.
             // return 인자는 ViewHolder 입니다.
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleritem_playlist, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_playlist, parent, false);
             return new ItemViewHolder(view);
         }
 
@@ -88,10 +90,11 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private LinearLayout mLay;
+        private ConstraintLayout mLay;
         private TextView mTitle; // 노래 제목
         private TextView mWriter; //작곡가
         private  int mId;   // 노래 sqlite id
+        private ImageView mAddimg;
 
 
         ItemViewHolder(View itemView) {
@@ -99,6 +102,7 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
             mLay = itemView.findViewById(R.id.lay_item);
             mTitle = itemView.findViewById(R.id.title);
             mWriter = itemView.findViewById(R.id.writer);
+            mAddimg = itemView.findViewById(R.id.addimg);
 
         }
 
@@ -106,6 +110,7 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
             mTitle.setText(data.getTitle()); //타이틀
             mWriter.setText(data.getWriter()); //작가
             mId = data.getId();//노래 아이디
+            mAddimg.setVisibility(View.INVISIBLE);//이미지
 
             mLay.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,10 +122,14 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
                 }
             });
         }
-        void onBindMakePlusBtn(){ //+버튼
-            mTitle.setText("+"); //타이틀
 
-            mLay.setOnClickListener(new View.OnClickListener() {
+        void onBindMakePlusBtn(){ //+버튼
+            mTitle.setVisibility(View.INVISIBLE); //타이틀
+            mWriter.setVisibility(View.INVISIBLE);//작가
+            //mAddimg.setVisibility(View.VISIBLE);//이미지
+
+
+           mLay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), MakeMusic.class);
@@ -128,8 +137,6 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
                     //Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
                 }
             });
-
-
         }
     }
 }

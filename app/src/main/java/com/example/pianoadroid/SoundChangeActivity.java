@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -103,6 +104,10 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         for (boolean b: isClicked) {
             b = false;
         }
+
+        ImageView backpressBtn = (ImageView)findViewById(R.id.backpressBtn2);
+        backpressBtn.setOnClickListener(this);
+
     }
 
     @Override
@@ -110,7 +115,6 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         super.onDestroy();
 
         mConnectedTask.cancel(true); //쓰레드종료
-
         sendMessage("N"); //아두이노를 기본모드로
     }
 
@@ -157,7 +161,7 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
                     soundID = null;
                     sendMessage("N"); //아두이노를 작곡모드로
                     buttons[xylophone].setTextColor(Color.BLACK);
-                    isClicked[piano] = false;
+                    isClicked[xylophone] = false;
 
                 }else{ //비활성화->활성화
                     soundID = xylophoneSoundID;
@@ -166,6 +170,10 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
                     isClicked[xylophone] = true;
                     setAllCancelWithoutN(xylophone); //피아노 말고 다른건 모두 해제
                 }
+                break;
+
+            case R.id.backpressBtn2:
+                finish();
                 break;
         }
     }
