@@ -26,7 +26,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 
-public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.ThreadFinishListener {
+public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.ThreadFinishListener, MusicTest_Adapter.BeforeMusicNoteListener {
     private static final String TAG = "MusicTest";
 
     //SQLite db 개체 생성
@@ -325,6 +325,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
         // 콜백 리스너
         mAdapter.ThreadFinishListener(MusicTest.this);
+        mAdapter.BeforeMusicNoteListener(MusicTest.this);
+
 
         // 원곡중지 버튼 클릭 이벤트
         btn_stop.setOnClickListener(new View.OnClickListener() {
@@ -404,9 +406,10 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                         bool_practice = true;
 
-
                         // 연습모드 시작 함수
-                        start_practice_mode();
+                        int first_index = 1;
+
+                        start_practice_mode(first_index);
                     }
                 });
 
@@ -430,6 +433,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                 .setNegativeButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         stop_practice_mode();
                     }
                 });
@@ -438,12 +442,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     }
 
     // 처음 연습모드 버튼 클릭 시 시작
-    public void start_practice_mode(){
+    // 처음이므로 index값은 1이어야 됨
+    public void start_practice_mode(int first_index){
         Log.e("처음 연습모드 시작", "시작시작");
         // 음계 포커싱 위치
         // index_value_practice++;
 
-        index_value_practice = 1;
+        index_value_practice = first_index;
         Log.e("index_value_practice: ", index_value_practice + "");
         // 악보 첫번째 부터 포커싱이 되게끔 1을 넣어줌
         mAdapter.setHight_pos(index_value_practice);
@@ -673,6 +678,49 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
             // 악보 포커싱을 초기화 해줌
             focusing_cnt = 0;
         }
+    }
+
+    // 연습하기 모드 중 이전 음계를 선택 시 어댑터에서 선택한 음계와 hight_position값을 받아오는 함수
+    @Override
+    public void onBeforeMusicNote(String value, final int hight_pos, final int position) {
+        Log.e("선택한 음계와 hight_position값: ", value + " / " + hight_pos);
+
+        AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
+        alertbuilder.setTitle("이전 음계");
+
+        alertbuilder.setMessage("선택한 음계에서부터 다시 연습하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        /*선택 시 다시 이 부분 음계부터 연습모드 실행*/
+
+
+
+                        // 악보에 해당 음계의 포커싱을 맞추기 위해 어댑터로 hight_position을 보냄
+                        mAdapter.setHight_pos(hight_pos);
+                        mAdapter.notifyDataSetChanged();
+
+                        // 포커싱을 어댑터서 받아온 position값으로 함
+                        mRecyclerView.smoothScrollToPosition(position);
+
+                        // 이전 계이름을 아두이노에 보냄
+                        String sendMsg = musicnote_eng_array[hight_pos] + music.getBeat()[hight_pos-1];
+
+                        Log.e("sendMsg: ", sendMsg);
+                        // 아두이노에 계이름 코드와 박자수를 보냄
+                        sendMessage(sendMsg);
+                    }
+                });
+        AlertDialog alertDialog = alertbuilder.create();
+        alertDialog.show();
     }
 
     // 노래를 1초마다 실행시키는 스레드
