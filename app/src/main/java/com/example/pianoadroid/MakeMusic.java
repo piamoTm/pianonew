@@ -95,9 +95,6 @@ public class MakeMusic extends AppCompatActivity {
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                adapter.setHighlightPos(1);
-                adapter.notifyDataSetChanged();
 //                isThread = true;
 //                thread = new Thread() {
 //                    public void run(){
