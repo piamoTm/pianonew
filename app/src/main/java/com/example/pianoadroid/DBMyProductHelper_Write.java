@@ -112,11 +112,12 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
 
     }
 
-    //테이블이 자동으로 안만들어져서 수동으로 만들려고
+    //테이블이 자동으로 안만들어져서 수동으로 만들려고. 한번만 실행하세요
     public void creatTable(){
         Log.i("DBLog", "[DBMyProductHelper_Read] creatTable() ");
 
         SQLiteDatabase db = this.getWritableDatabase();
+        //getWritableDatabase(): 읽고 쓰기 위해 DB 연다. 권한이 없거나 디스크가 가득 차면 실패
 
         String CREATE_MY_PRODUCT_TABLE = "CREATE TABLE " + TABLE_NAME_MY_PRODUCTS + " ("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " //0
