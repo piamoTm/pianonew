@@ -79,6 +79,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     // 연습모드 bool
     boolean bool_practice = false;
 
+    boolean bool_music_state = false;
+
     // 악보의 계이름을 담는 리스트 변수
     ArrayList<String> MusicNoteList = new ArrayList<>();
     // 악보의 계이름의 박자를 담는 리스트 변수
@@ -92,6 +94,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 연주 순서대로 갈 때 포커싱을 주기 위한 변수
     int focusing_cnt = 0;
+    // 연습하기 모드 일 경우 포커싱을 맞춤
+    int focusing_cnt_practice = 0;
 
     // SQLite에서 받아온 노래 비트를 담는 배열 변수
     int db_musicnote_bit[];
@@ -153,7 +157,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         db_musicnote_bit = music.getBeat();
         Log.e("musicnote_bit.length: ", db_musicnote_bit.length + "");
         Log.e("musicnote_bit[0]: ", db_musicnote_bit[0] + "");
-        Log.e("musicnote_bit[47]: ", db_musicnote_bit[47] + "");
+        //Log.e("musicnote_bit[47]: ", db_musicnote_bit[47] + "");
         // 디비에서 계이름 코드를 받는 변수
         //musicnote_eng = "BDEFGABCDEFGAB";
 
@@ -335,7 +339,10 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         btn_listen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage("P"); //자동연주 모드로
+                if (bool_music_state){
+                    //sendMessage("P"); //자동연주 모드로
+                }
+
                 // 원곡듣기 버튼 클릭 시 발생 메서드
                 btn_listen_func();
             }
@@ -348,7 +355,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 //                btn_practice.setVisibility(View.INVISIBLE);
 //                btn_practice_stop.setVisibility(View.VISIBLE);
 
-                sendMessage("R"); // 연습하기 모드로
+                //sendMessage("R"); // 연습하기 모드로
                 btn_practice_func();
             }
         });
@@ -356,8 +363,8 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         btn_practice_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn_practice.setVisibility(View.VISIBLE);
-                btn_practice_stop.setVisibility(View.INVISIBLE);
+                //btn_practice.setVisibility(View.VISIBLE);
+                //btn_practice_stop.setVisibility(View.INVISIBLE);
                 // 연습모드 중지 함수
                 btn_practice_stop_func();
             }
@@ -383,10 +390,21 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+
+                        // 원곡재생 모드가 진행중 일때 연습모드를 실행할 경우, 기본 원곡재생의 스레드를 죽임
+                        if (bool_music_state){
+                            thread.interrupt();
+                            btn_listen.setVisibility(View.VISIBLE);
+                            btn_stop.setVisibility(View.INVISIBLE);
+                        }
+
+                        sendMessage("R"); // 연습하기 모드로
                         btn_practice.setVisibility(View.INVISIBLE);
                         btn_practice_stop.setVisibility(View.VISIBLE);
 
                         bool_practice = true;
+
+
                         // 연습모드 시작 함수
                         start_practice_mode();
                     }
@@ -431,6 +449,10 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
         mAdapter.setHight_pos(index_value_practice);
         mAdapter.notifyDataSetChanged();
 
+        focusing_cnt_practice = 0;
+        Log.e("focusing_cnt_practice: ", focusing_cnt_practice + "");
+        mRecyclerView.smoothScrollToPosition(focusing_cnt_practice);
+
         // 처음 악보 첫번째꺼의 계이름을 아두이노에 보내줘야지 아두이노 건반에서 불빛이 들어옴.
         String sendMsg = musicnote_eng_array[index_value_practice] + music.getBeat()[index_value_practice-1];
 
@@ -444,8 +466,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
     public void stop_practice_mode(){
         // 어댑터로 보내는 hight_position값을 0으로 초기화
         index_value_practice = 0;
+        // 연습모드 일 경우 리사이클러뷰 포커싱을 하는 변수 0으로 초기화
+        focusing_cnt_practice = 0;
 
         bool_practice = false;
+
+        // 연습중지를 연습하기 로 바꿔줌
+        handler.sendEmptyMessage(4);
 
         // 0을 넣어서 이떄까지 포커싱 된 것들을 초기화 시킴
         mAdapter.setHight_pos(index_value_practice);
@@ -551,7 +578,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                 Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }                                                                     // Activity에서 Toast메시지를 뛰우려다가 발생한 에러
+            }
             // 처음에 악보 첫번째꺼의 계이름을 아두이노에 보내줘야지 아두이노 건반에서 불빛이 들어옴.
             String sendMsg = musicnote_eng_array[index_value_practice] + music.getBeat()[index_value_practice-1];
             // 아두이노에 계이름 코드와 박자수를 보냄
@@ -563,6 +590,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 원곡중지 버튼 클릭 시 발생 메서드
     public void btn_listen_func_stop(){
+
         Log.e("노래중지", "중지중지");
         Log.e("현재 index_value값: ", index_value + "");
 
@@ -575,13 +603,61 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 원곡듣기 버튼 클릭 시 발생 메서드
     public void btn_listen_func(){
-        btn_listen.setVisibility(View.INVISIBLE);
-        btn_stop.setVisibility(View.VISIBLE);
+//        btn_listen.setVisibility(View.INVISIBLE);
+//        btn_stop.setVisibility(View.VISIBLE);
         Log.e("원곡재생 클릭", "~~~");
 
-        thread = new music_thread();
-        thread.start();
+        // 연습모드가 실행 중일 때 경고창을 뛰어서 연습모드를 취소할건지 물어 봄
+        if (bool_practice){
+            AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
+            alertbuilder.setTitle("연습모드 실행 중");
+
+            alertbuilder.setMessage("연습모드를 중지하고 원곡듣기를 하시겠습니까?")
+                    .setCancelable(false)
+                    .setPositiveButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.e("원곡듣기 실행", "실행실행");
+
+                            sendMessage("P"); //자동연주 모드로
+
+                            bool_music_state = true;
+
+                            btn_listen.setVisibility(View.INVISIBLE);
+                            btn_stop.setVisibility(View.VISIBLE);
+                            // 연습모드 중지
+                            stop_practice_mode();
+
+                            // 원곡재생을 처음 index에서 부터 시작하게 1을 넣어줌
+                            index_value = 1;
+                            //  연주포커싱을 0으로 맞춤
+                            focusing_cnt = 0;
+                            // 원곡재생 시작
+                            thread = new music_thread();
+                            thread.start();
+
+                        }
+                    });
+            AlertDialog alertDialog = alertbuilder.create();
+            alertDialog.show();
+        }else{
+            sendMessage("P"); //자동연주 모드로
+            bool_music_state = true;
+
+            btn_listen.setVisibility(View.INVISIBLE);
+            btn_stop.setVisibility(View.VISIBLE);
+
+            thread = new music_thread();
+            thread.start();
+        }
     }
+
 
     // 노래가 완전 끝났을 시 콜백함수로 finish라는 값이 넘어옴
     @Override
@@ -721,11 +797,12 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     // index_value가 8로 나누었을 시 나머지가 1일 때
                     if (index_value_practice % 8 == 1){
                         Log.e("8나머지값: ", index_value_practice % 8 + "");
-                        focusing_cnt += 1;
+                        focusing_cnt_practice += 1;
                     }
                 }
+
                 // 현재 연주중인 음계를 포커싱을 맞추어 줌
-                mRecyclerView.smoothScrollToPosition(focusing_cnt);
+                mRecyclerView.smoothScrollToPosition(focusing_cnt_practice);
 
                 // 만약 연습하기 모드에서 건반칠 시 틀린 음계를 치게되면
             }else if (msg.what == 3){
