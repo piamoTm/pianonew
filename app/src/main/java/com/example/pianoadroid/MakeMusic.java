@@ -38,8 +38,6 @@ import java.util.List;
 public class MakeMusic extends AppCompatActivity {
     private static final String TAG = "MakeMusic";
 
-    private ImageView mBackBtn;
-    private Button mPlayBtn,mSaveBtn;
     private RecyclerView mMakeNoteRecycler;
     private MakeMusic_RecyclerAdapter adapter;
     ArrayList<String> makeNotsArr;
@@ -54,8 +52,10 @@ public class MakeMusic extends AppCompatActivity {
     //SQLite db 개체 생성
     DBMyProductHelper_Write db;
 
+    //쓰레드 관련
     Thread thread;
     boolean isThread = false;
+    int count; // 리사이클러뷰 자리수 증가해서 배경색 변경
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,9 @@ public class MakeMusic extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_make_music);
 
-        mBackBtn = (ImageView)findViewById(R.id.back_btn);
-        mSaveBtn = (Button)findViewById(R.id.saveBtn);
-        mPlayBtn =(Button)findViewById(R.id.palyBtn);
+        ImageView mBackBtn = (ImageView)findViewById(R.id.back_btn);
+        Button mSaveBtn = (Button)findViewById(R.id.saveBtn);
+        final Button mPlayBtn =(Button)findViewById(R.id.palyBtn);
 
         //infoshow("확인","no","건반을 눌러주세요:)");// 안내 다이얼로그
         init();//리사이클러뷰 초기 세팅
@@ -75,7 +75,8 @@ public class MakeMusic extends AppCompatActivity {
         mConnectedTask.execute();
 
 
-        sendMessage("W"); //작곡모드로
+        //아두이노로 작곡모드 보내기
+        sendMessage("W");
 
         //SQLite db helper init 초기화
         db = new DBMyProductHelper_Write(this);
@@ -95,25 +96,36 @@ public class MakeMusic extends AppCompatActivity {
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
+               if(mPlayBtn.getText().toString().equals("재 생 하 기")){
+                   mPlayBtn.setText("중 지 하 기");
+                    isThread = true;
+                    thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            count =0;
+                            while (isThread){
+                                Message msg = handler.obtainMessage();
+                                msg.arg1 = count;
+                                count++;
+                                handler.sendMessage(msg);
 
-                adapter.setHighlightPos(1);
-                adapter.notifyDataSetChanged();
+                                    try {
+                                        Thread.sleep(800);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                        }
+                    });
+                    thread.start();
+                // 중지하기 눌렀을 경우 재생하기로 바꿔주기
+               }else if(mPlayBtn.getText().toString().equals("중 지 하 기") ){
+                   mPlayBtn.setText("재 생 하 기");
+                   isThread = false;
+                   thread.interrupt();
 
-//                isThread = true;
-//                thread = new Thread() {
-//                    public void run(){
-//                        while (isThread){
-//                            try {
-//                                sleep(1000);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                            handler.sendEmptyMessage(0);
-//                        }
-//                    }
-//                };
-//                thread.start();
-
+               }
 //                String[] str;
 //                int i = 0;
 //                str = new String[8];
@@ -131,7 +143,6 @@ public class MakeMusic extends AppCompatActivity {
 //                mMakeNoteRecycler.getLayoutManager().scrollToPosition(adapter.getItemCount()-1);
 //                adapter.notifyDataSetChanged();
 
-
             }
         });
 
@@ -139,23 +150,15 @@ public class MakeMusic extends AppCompatActivity {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
 
-
-
-//                isThread = false;
-//                thread.interrupt();
-               // Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
-
-
-//
-//                if(makeNotsArr.size() > 0){
-//                    //제목 , 작곡자 입력 dialog
-//                    show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
-//                }else{
-//                    // 빈오선지 일경우 저장이 안됨
-//                    Toast.makeText(MakeMusic.this,"작곡된 음표가 없습니다 작곡 후 저장하세요!",Toast.LENGTH_LONG).show();
-//
-//                }
+                if(makeNotsArr.size() > 0){
+                    //제목 , 작곡자 입력 dialog
+                    show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
+                }else{
+                    // 빈오선지 일경우 저장이 안됨
+                    Toast.makeText(MakeMusic.this,"작곡된 음표가 없습니다 작곡 후 저장하세요!",Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -164,7 +167,11 @@ public class MakeMusic extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            Toast.makeText(getApplicationContext(), "쓰레드 확인 ",Toast.LENGTH_SHORT).show();
+            super.handleMessage(msg);
+            adapter.setHighlightPos(msg.arg1); //
+            adapter.notifyDataSetChanged();
+
+            //Toast.makeText(getApplicationContext(), "쓰레드 확인 ",Toast.LENGTH_SHORT).show();
         }
     };
     @Override

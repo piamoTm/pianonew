@@ -379,6 +379,16 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 연습모드 버튼 클릭 시 발생 이벤트
     public void btn_practice_func(){
+
+//        여기서 자동연주중인게 있다면 스레드를 중지시켜야 됨
+
+        // 자동연주가 진행중임
+        if (bool_music_state){
+            // 자동연주 중인 스레드를 중지시킴
+            thread.interrupt();
+        }
+
+
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
         alertbuilder.setTitle("연습모드");
 
@@ -389,6 +399,9 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
 
+                        thread = new music_thread();
+                        thread.start();
+
                     }
                 })
                 .setNegativeButton("시작", new DialogInterface.OnClickListener() {
@@ -398,12 +411,19 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                         // 원곡재생 모드가 진행중 일때 연습모드를 실행할 경우, 기본 원곡재생의 스레드를 죽임
                         if (bool_music_state){
-                            thread.interrupt();
+                            //thread.interrupt();
                             btn_listen.setVisibility(View.VISIBLE);
                             btn_stop.setVisibility(View.INVISIBLE);
                         }
 
                         sendMessage("R"); // 연습하기 모드로
+
+                        // 딜레이 0.3초를 줘야지 아두이누에서 연습하기 음계를 받아짐
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         btn_practice.setVisibility(View.INVISIBLE);
                         btn_practice_stop.setVisibility(View.VISIBLE);
 
@@ -703,8 +723,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                         mAdapter.setHight_pos(hight_pos);
                         mAdapter.notifyDataSetChanged();
 
+                        focusing_cnt_practice = position;
+
                         // 리사이클러뷰 포커싱을 어댑터서 받아온 position값으로 함
-                        mRecyclerView.smoothScrollToPosition(position);
+                        mRecyclerView.smoothScrollToPosition(focusing_cnt_practice);
+
                         Log.i("testLog","포커싱 번호  :"+position );
 
                         //연습모드에서의 인덱스?위치?를 선택된 위치로
@@ -889,6 +912,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     //아두이노로 데이터 보내기
     void sendMessage(String msg){
+
 
         if ( mConnectedTask != null ) {
             mConnectedTask.write(msg.trim());
