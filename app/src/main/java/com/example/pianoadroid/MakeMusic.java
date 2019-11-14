@@ -3,6 +3,7 @@ package com.example.pianoadroid;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -48,7 +49,6 @@ public class MakeMusic extends AppCompatActivity {
     private static String mConnectedDeviceName = null;
     static boolean isConnectionError = false;
     ConnectedTask mConnectedTask = null;
-
 
     //SQLite db 개체 생성
     DBMyProductHelper_Write db;
@@ -482,7 +482,12 @@ public class MakeMusic extends AppCompatActivity {
                  db.addMusic(music);
 
                 dialog.dismiss();
-                finish();  //플레이 리스트로
+
+                //플레이 리스트로
+                Intent intent = new Intent();
+                intent.putExtra("result_msg", true);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
         cancelBtn.setOnClickListener(new View.OnClickListener() {
