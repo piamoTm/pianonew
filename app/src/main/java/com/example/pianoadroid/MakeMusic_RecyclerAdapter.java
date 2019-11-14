@@ -30,8 +30,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
     private ArrayList<String> listData ;  // 계이름 list
     private ArrayList<Integer> beatData ;  //박자 list
 
-    Music music;   //노래
-    int highlightPos;  //하이라이트 포지션
+    private Music music;   //노래
+    private int highlightPos;  //하이라이트 포지션
 
     //작곡할때 리사이클러뷰 데이터 가져오기
     public MakeMusic_RecyclerAdapter(ArrayList<String> listData, ArrayList<Integer> beetData,int highlightPos) {
@@ -48,6 +48,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
 
     public void setHighlightPos(int highlightPos) {
+        Log.i("testLog", "setHighlightPos "+ highlightPos);
         this.highlightPos = highlightPos;
     }
 
@@ -101,7 +102,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
 
             //TODO  --  작곡인지 연주인지 if문 추가 할것
-            highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
+            //highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
 //        }
 
         Log.i("testLog", "" + startNote + "~" + endNote + "의 악보조각 : "+scorePiece);
@@ -224,6 +225,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
                 if((position == highlightPos) && (highlightPos != -11) ){
                     //argb 투명색까지 포함   , rgb는 그냥  색상만  //헥사 코드로 넣을것
                    // Log.i("MakeMusic:  ","하이라이트 포지션 값 :    "+highlightPos);
+                    Log.i("testLog", "highlightPos "+highlightPos);
                     ((ItemViewHolder)holder).imageViews[n].setBackgroundColor(Color.argb(0xA0,0xeb,0xbc,0xbb));
                 }
             }

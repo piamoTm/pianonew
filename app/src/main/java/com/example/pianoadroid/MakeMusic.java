@@ -98,6 +98,7 @@ public class MakeMusic extends AppCompatActivity {
 
                 adapter.setHighlightPos(1);
                 adapter.notifyDataSetChanged();
+
 //                isThread = true;
 //                thread = new Thread() {
 //                    public void run(){
