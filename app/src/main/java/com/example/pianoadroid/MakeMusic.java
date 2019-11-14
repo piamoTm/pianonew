@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,6 +54,9 @@ public class MakeMusic extends AppCompatActivity {
     //SQLite db 개체 생성
     DBMyProductHelper_Write db;
 
+    Thread thread;
+    boolean isThread = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,22 +95,37 @@ public class MakeMusic extends AppCompatActivity {
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] str;
-                int i = 0;
-                str = new String[8];
-                str[0] = "C";
-                str[1] = "D";
-                str[2] = "E";
-                str[3] = "F";
-                str[4] = "G";
-                str[5] = "A";
-                str[6] = "B";
-                str[7] = "H";
-                str[8] = " ";
-                makeNotsArr.add(str[8]);
-                // Log.i("TESTLOG_YYJ","postion : "+testAdapter3.getItemCount());
-                mMakeNoteRecycler.getLayoutManager().scrollToPosition(adapter.getItemCount()-1);
-                adapter.notifyDataSetChanged();
+                isThread = true;
+                thread = new Thread() {
+                    public void run(){
+                        while (isThread){
+                            try {
+                                sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            handler.sendEmptyMessage(0);
+                        }
+                    }
+                };
+                thread.start();
+
+//                String[] str;
+//                int i = 0;
+//                str = new String[8];
+//                str[0] = "C";
+//                str[1] = "D";
+//                str[2] = "E";
+//                str[3] = "F";
+//                str[4] = "G";
+//                str[5] = "A";
+//                str[6] = "B";
+//                str[7] = "H";
+//                str[8] = " ";
+//                makeNotsArr.add(str[8]);
+//                // Log.i("TESTLOG_YYJ","postion : "+testAdapter3.getItemCount());
+//                mMakeNoteRecycler.getLayoutManager().scrollToPosition(adapter.getItemCount()-1);
+//                adapter.notifyDataSetChanged();
 
 
             }
@@ -115,25 +135,31 @@ public class MakeMusic extends AppCompatActivity {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 빈오선지 여부 체크  함정은 음표 하나일때도 된다는거.. ㅠ
+                isThread = false;
+                thread.interrupt();
+               // Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
 
-                //Log.i("testLog", "adparter_size " + adapter.adparter_size );
-                Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
 
-                if(makeNotsArr.size() > 0){ //작곡된게 있음
-                    //제목 , 작곡자 입력 dialog
-                    show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
-                }else{
-                    // 빈오선지 일경우 저장이 안됨
-                    Toast.makeText(MakeMusic.this,"작곡된 음표가 없습니다 작곡 후 저장하세요!",Toast.LENGTH_LONG).show();
-
-                }
+//
+//                if(makeNotsArr.size() > 0){
+//                    //제목 , 작곡자 입력 dialog
+//                    show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
+//                }else{
+//                    // 빈오선지 일경우 저장이 안됨
+//                    Toast.makeText(MakeMusic.this,"작곡된 음표가 없습니다 작곡 후 저장하세요!",Toast.LENGTH_LONG).show();
+//
+//                }
 
             }
         });
     }
 
-
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            Toast.makeText(getApplicationContext(), "쓰레드 확인 ",Toast.LENGTH_SHORT).show();
+        }
+    };
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -160,7 +186,6 @@ public class MakeMusic extends AppCompatActivity {
         makeBeatArr = new ArrayList<>();
         adapter = new MakeMusic_RecyclerAdapter(makeNotsArr,makeBeatArr);
         mMakeNoteRecycler.setAdapter(adapter);
-
     }
 
     //아두이노로 데이터 보내기
@@ -283,7 +308,6 @@ public class MakeMusic extends AppCompatActivity {
         protected void onPostExecute(Boolean isSucess) {
             super.onPostExecute(isSucess);
 
-
             if ( !isSucess ) {
                 closeSocket();
                 Log.d(TAG, "장치 연결이 끊어졌습니다");
@@ -292,12 +316,8 @@ public class MakeMusic extends AppCompatActivity {
             }
         }
 
-
-
         void closeSocket(){
-
             try {
-
                 mBluetoothSocket.close();
                 Log.d(TAG, "close socket()");
 
@@ -356,6 +376,7 @@ public class MakeMusic extends AppCompatActivity {
                     }
                 });
 
+        // 종료 하겠다고 하면 액티비티 종료됨
         if(okFinish.equals("ok")){
             builder.setNegativeButton("종료",
                     new DialogInterface.OnClickListener() {
@@ -380,21 +401,20 @@ public class MakeMusic extends AppCompatActivity {
         final AlertDialog dialog = builder.create();
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String strTitle = title_make.getText().toString();
-                String strName = name_make.getText().toString();
+                String strTitle = title_make.getText().toString(); //제목
+                String strName = name_make.getText().toString(); //작곡자
                 Toast.makeText(getApplicationContext(), strTitle+"/"+strName,Toast.LENGTH_LONG).show();
 
-                    // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
-                    //SAVE//
-
-
-                    //새로운 노래를(Music 개체를) db에 추가
-
-                    //Music(String title, String writer, String score, int[] beat)
-                     Music music = new Music(strTitle, strName, readNots(),readBeat());
-                     db.addMusic(music);
+                // 뮤직 객체에 넣고 dblite 메소드에 넣어줄것
+                //새로운 노래를(Music 개체를) db에 추가
+                //Music(String title, String writer, String score, int[] beat)
+                // 노래제목, 작곡자 , 악보, 비트를 저장한다
+                //id는 자동으로 됨
+                 Music music = new Music(strTitle, strName, readNots(),readBeat());
+                 db.addMusic(music);
 
                 dialog.dismiss();
+                finish();  //플레이 리스트로
             }
         });
         cancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -431,7 +451,7 @@ public class MakeMusic extends AppCompatActivity {
     }
 
     // 아두이노 millis 컨버터
-    //눌러진 만큼의 밀리수를
+    //눌러진 만큼의 밀리수를 박자로 바꿔줌
     public  int convertBeat(String originalBeat){
         int basic = 333; //아두이노 기본 비트
         int orBeat = Integer.parseInt(originalBeat);//박자

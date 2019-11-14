@@ -1,12 +1,10 @@
 package com.example.pianoadroid;
 
-import android.app.Application;
-import android.content.Context;
+
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 //작곡 MakeMusic 액티비티에서 사용되는 리사이클러뷰 어댑터
 //아두이노로부터 블루투스 통신으로 'C' 라는 데이터가 오면 악보에 도를 그리는 역할
@@ -37,16 +32,19 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
     Music music;   //노래
     int highlightPos;  //하이라이트 포지션
-    int adparter_size; //ArrayList 아이템의 개수
 
+    //작곡할때 리사이클러뷰 데이터 가져오기
     public MakeMusic_RecyclerAdapter(ArrayList<String> listData, ArrayList<Integer> beetData) {
         this.beatData = beetData;
         this.listData = listData;
     }
-    public MakeMusic_RecyclerAdapter(Music music,int highlightPos){
-        this.music = music;
+    // 연주하기 리사이클러뷰 데이터 가져오기
+    public MakeMusic_RecyclerAdapter(ArrayList<String> listData, ArrayList<Integer> beetData,int highlightPos) {
+        this.beatData = beetData;
+        this.listData = listData;
         this.highlightPos =highlightPos;
     }
+
 
     public void setHighlightPos(int highlightPos) {
         this.highlightPos = highlightPos;
@@ -69,7 +67,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
         int width = 35;//음표의 크기였음
         int space = 7;
-        int rspace = 30;
+        int rspace = 30;  //음표 right 마진 고정값
 
         //i는 아이템 악보 한줄,두줄 이거
         int startNote = i*8;// 0,8,16,24
@@ -81,15 +79,15 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         String scorePiece = ""; //0~7 /8~15로 악보자르기
         String beatPiece = ""; //박자도 자르기
 
-        if(music != null) {
-            //String score = music.getScore();
-            // 작곡된 곡 play시 하이라이트 적용
-            if(endNote >= music.getScoreLen()){
-                endNote = music.getScoreLen();
-            }
-              scorePiece =  music.getScore().substring(startNote, endNote); //0~7 /8~15로 악보자르기
-
-        }else{//작곡
+//        if(music != null) {
+//            //String score = music.getScore();
+//            // 작곡된 곡 play시 하이라이트 적용
+//            if(endNote >= music.getScoreLen()){
+//                endNote = music.getScoreLen();
+//            }
+//              scorePiece =  music.getScore().substring(startNote, endNote); //0~7 /8~15로 악보자르기
+//
+//        }else{//작곡
 
             if (endNote >= listData.size()) {
                 endNote = listData.size();
@@ -100,8 +98,10 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
                 beatPiece += beatData.get(j); //박자
             }
 
+
+            //TODO  --  작곡인지 연주인지 if문 추가 할것
             highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
-        }
+//        }
 
         Log.i("testLog", "" + startNote + "~" + endNote + "의 악보조각 : "+scorePiece);
 
@@ -125,6 +125,7 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 //        for (int h = 0; h < split.length; h++){
 //            Log.i("testLog", "split["+h+"] "+split[h] );
 ////        }
+
 //        Log.i("testLog", "Beat 확인 ");  //yyj
 //        for (int h = 0; h < beatData.size(); h++){//yyj
 //            Log.i("testLog", "Beet["+h+"] "+beatData.get(h) );//yyj
@@ -233,14 +234,8 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         //아이템의 개수
         //오선지 한줄의 개수
         //8개로 잘라서 나머지 있으면 +1
-        if( music == null){
-            adparter_size  = listData.size();  // 작곡 중
-        }else{
-            adparter_size =  music.getScoreLen(); // 작곡완료 연주중
-        }
-        //Log.i("listSize 확인확인 adpater" ,"번호:"+adparter_size);
 
-        int len = adparter_size;
+        int len =listData.size();
         int cnt = len/8;
         len -= (cnt*8);
         if(len > 0){
@@ -251,12 +246,6 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         }
         return cnt;
     }
-
-//    void addItem(Write data) {
-//        // 외부에서 item을 추가시킬 함수입니다.
-//        // 오선지를 추가하는 함수
-//        listData.add(data);
-//    }
 
     // RecyclerView의 핵심인 ViewHolder 입니다.
     // 여기서 subView를 setting 해줍니다.
