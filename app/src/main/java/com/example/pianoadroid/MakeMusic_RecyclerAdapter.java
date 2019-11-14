@@ -75,35 +75,18 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         int startNote = i*8;// 0,8,16,24
         int endNote = startNote + 8; //
 
-
-       // Log.i("testLog", "악보 확인 확인 확인 " + score);
-
         String scorePiece = ""; //0~7 /8~15로 악보자르기
         String beatPiece = ""; //박자도 자르기
 
-//        if(music != null) {
-//            //String score = music.getScore();
-//            // 작곡된 곡 play시 하이라이트 적용
-//            if(endNote >= music.getScoreLen()){
-//                endNote = music.getScoreLen();
-//            }
-//              scorePiece =  music.getScore().substring(startNote, endNote); //0~7 /8~15로 악보자르기
-//
-//        }else{//작곡
 
-            if (endNote >= listData.size()) {
-                endNote = listData.size();
-            }
-            for (int j = startNote; j<endNote; j++){
-                scorePiece += listData.get(j);
-                //Log.i("testLog", "listData.get("+j+") " + listData.get(j)  );
-                beatPiece += beatData.get(j); //박자
-            }
-
-
-            //TODO  --  작곡인지 연주인지 if문 추가 할것
-            //highlightPos = -11;// 작곡시 하이라이트 처리가 안되게
-//        }
+        if (endNote >= listData.size()) {
+            endNote = listData.size();
+        }
+        for (int j = startNote; j<endNote; j++){
+            scorePiece += listData.get(j);
+            //Log.i("testLog", "listData.get("+j+") " + listData.get(j)  );
+            beatPiece += beatData.get(j); //박자
+        }
 
         Log.i("testLog", "" + startNote + "~" + endNote + "의 악보조각 : "+scorePiece);
 
@@ -114,10 +97,11 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
 
         Log.i("testLog", "beatpiece 비트 조각덜: "+beatPiece);
         int[] bsplit =  new int[bbsplit.length];
+
         // 스트링 비트 배열을 int 배열로 바꿔주기
         for(int p=1; p< bbsplit.length; p++){
                 bsplit[p] = Integer.parseInt(bbsplit[p]);
-            Log.i("testLog", "beatpiece 비트 조각덜int형 : "+bsplit[p]);
+            //Log.i("testLog", "beatpiece 비트 조각덜int형 : "+bsplit[p]);
         }
 
         //bsplit 배열에 temp(String)을 하나하나 잘라서 넣어주기
@@ -219,14 +203,17 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
                 ((ItemViewHolder) holder).imageViews[n].setVisibility(View.VISIBLE);
                 ((ItemViewHolder) holder).imageViews[n].setLayoutParams(((ItemViewHolder) holder).layoutParams);
             }
+            // 음표 배경색 투명으로 리셋시키기
+            ((ItemViewHolder)holder).imageViews[n].setBackgroundColor(Color.argb(0,0,0,0));
 
+            // 연주시 연줃되는 음표에 배경색 넣어주기
             int position = n+(i*8);
             if(highlightPos != -11){
                 if((position == highlightPos) && (highlightPos != -11) ){
-                    //argb 투명색까지 포함   , rgb는 그냥  색상만  //헥사 코드로 넣을것
                    // Log.i("MakeMusic:  ","하이라이트 포지션 값 :    "+highlightPos);
-                    Log.i("testLog", "highlightPos "+highlightPos);
-                    ((ItemViewHolder)holder).imageViews[n].setBackgroundColor(Color.argb(0xA0,0xeb,0xbc,0xbb));
+                   Log.i("testLog", "highlightPos "+highlightPos);
+                   //argb 투명색까지 포함   , rgb는 그냥  색상만  //헥사 코드로 넣을것
+                   ((ItemViewHolder)holder).imageViews[n].setBackgroundColor(Color.argb(0xA0,0xeb,0xbc,0xbb));
                 }
             }
         }
@@ -237,7 +224,6 @@ public class MakeMusic_RecyclerAdapter  extends RecyclerView.Adapter<RecyclerVie
         //아이템의 개수
         //오선지 한줄의 개수
         //8개로 잘라서 나머지 있으면 +1
-
         int len =listData.size();
         int cnt = len/8;
         len -= (cnt*8);
