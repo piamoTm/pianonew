@@ -75,6 +75,8 @@ public class MakeMusic extends AppCompatActivity {
         //SQLite db helper init 초기화
         db = new DBMyProductHelper_Write(this);
 
+
+
         //백버튼 누르면 뒤로가는 이벤트 붙임
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +117,10 @@ public class MakeMusic extends AppCompatActivity {
             public void onClick(View v) {
                 // 빈오선지 여부 체크  함정은 음표 하나일때도 된다는거.. ㅠ
 
-                if(adapter.adparter_size != 0){
+                //Log.i("testLog", "adparter_size " + adapter.adparter_size );
+                Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
+
+                if(makeNotsArr.size() > 0){ //작곡된게 있음
                     //제목 , 작곡자 입력 dialog
                     show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
                 }else{
