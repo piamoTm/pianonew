@@ -101,7 +101,9 @@ public class MakeMusic extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                if(mPlayBtn.getText().toString().equals("재 생 하 기")){
+                   // 연주모드로 아두이노에 보냄
                    mPlayBtn.setText("중 지 하 기");
+                   sendMessage("P");
                     isThread = true;
                     thread = new Thread(new Runnable() {
                         @Override
@@ -111,11 +113,9 @@ public class MakeMusic extends AppCompatActivity {
                             while (isThread){
                                 Message msg = handler.obtainMessage();
                                 msg.arg1 = count;
-                                count++;
                                 handler.sendMessage(msg);
 
                                     try {
-                                        sendMessage("P");
                                         // 음계 배열에서 공란일때 아두이노에 보내지 않음
                                         if (!makeNotsArr.get(count).equals(" ")) {
                                             // 아두이노로 블루투스 통신으로 음계를 보냄
@@ -123,12 +123,15 @@ public class MakeMusic extends AppCompatActivity {
                                             String sendMsg =makeNotsArr.get(count) + makeBeatArr.get(count);
                                             Log.i("testLog_MakeMusic", "sendMsg "+sendMsg);
                                             sendMessage(sendMsg);
-                                        }
 
-                                        Thread.sleep(800);
+                                            // 쓰레드 딜레이 주기
+                                            Thread.sleep(800);
+                                        }
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
+                                    // 쓰레드  위치값 늘리기
+                                count++;
                                 }
                         }
                     });
