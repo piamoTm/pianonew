@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,8 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     float dp;
     RelativeLayout.LayoutParams layoutParams;
 
-
+    // 액티비티로 hight_position값을 넘겨주기 위한 변수. 이전 곡을 다시 연습하기 위헤
+    int sendHight_pos;
 
     int hight_pos;
 
@@ -34,14 +36,25 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     //아이템 클릭 시 실행 함수 최근 수정사항
     MusicTest_Adapter.ThreadFinishListener tfliListener;
-
     public interface ThreadFinishListener{
         void onMusicFinish(String finish, Context context);
     }
-
     public void ThreadFinishListener(MusicTest_Adapter.ThreadFinishListener threadFinishListener){
         tfliListener = threadFinishListener;
     }
+
+
+    // 연습하기 중 이미 끝난 음을 치고 싶을 때 음계를 클릭 시 해당 위치의 hight_position과 음계를 액티비티로 보내기 위한 리스너
+    MusicTest_Adapter.BeforeMusicNoteListener bListener;
+    public interface BeforeMusicNoteListener{
+        void onBeforeMusicNote(String value, int hight_pos, int position);
+    }
+    public void BeforeMusicNoteListener(MusicTest_Adapter.BeforeMusicNoteListener beforeMusicNote){
+        bListener = beforeMusicNote;
+    }
+
+
+
 
 
 
@@ -147,6 +160,87 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         myViewHolder.img6.setImageResource(R.drawable.music_icon);
         myViewHolder.img7.setImageResource(R.drawable.music_icon);
         myViewHolder.img8.setImageResource(R.drawable.music_icon);
+
+
+        // 각 포지션에 맞는 음계들(8개)
+        final String [] list = musicNoteList.get(position).split("");
+
+        Log.e("index: ", 1 + (position * 8) + "");
+
+        // 이 부분부터 첫번째 음계부터 마지막 음계까지의 클릭 리스너
+        myViewHolder.img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택한 음계의 hight_position값을 구함
+                sendHight_pos = 1 + (position * 8);
+                // 액티비티에 해당 음계와 hight_position값과 position값을 인자로 보냄
+                bListener.onBeforeMusicNote(list[1], sendHight_pos, position);
+            }
+        });
+
+        myViewHolder.img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택한 음계의 hight_position값을 구함
+                sendHight_pos = 2 + (position * 8);
+                // 액티비티에 해당 음계와 hight_position과 position값을 인자로 보냄
+                bListener.onBeforeMusicNote(list[2], sendHight_pos, position);
+            }
+        });
+        myViewHolder.img3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택한 음계의 hight_position값을 구함
+                sendHight_pos = 3 + (position * 8);
+                // 액티비티에 해당 음계와 hight_position과 position값을 인자로 보냄
+                bListener.onBeforeMusicNote(list[3], sendHight_pos, position);
+            }
+        });
+        myViewHolder.img4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택한 음계의 hight_position값을 구함
+                sendHight_pos = 4 + (position * 8);
+                // 액티비티에 해당 음계와 hight_position과 position값을 인자로 보냄
+                bListener.onBeforeMusicNote(list[4], sendHight_pos, position);
+            }
+        });
+        myViewHolder.img5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택한 음계의 hight_position값을 구함
+                sendHight_pos = 5 + (position * 8);
+                // 액티비티에 해당 음계와 hight_position과 position값을 인자로 보냄
+                bListener.onBeforeMusicNote(list[5], sendHight_pos, position);
+            }
+        });
+        myViewHolder.img6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택한 음계의 hight_position값을 구함
+                sendHight_pos = 6 + (position * 8);
+                // 액티비티에 해당 음계와 hight_position과 position값을 인자로 보냄
+                bListener.onBeforeMusicNote(list[6], sendHight_pos, position);
+            }
+        });
+        myViewHolder.img7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택한 음계의 hight_position값을 구함
+                sendHight_pos = 7 + (position * 8);
+                // 액티비티에 해당 음계와 hight_position과 position값을 인자로 보냄
+                bListener.onBeforeMusicNote(list[7], sendHight_pos, position);
+            }
+        });
+        myViewHolder.img8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택한 음계의 hight_position값을 구함
+                sendHight_pos = 8 + (position * 8);
+                // 액티비티에 해당 음계와 hight_position과 position값을 인자로 보냄
+                bListener.onBeforeMusicNote(list[8], sendHight_pos, position);
+            }
+        });
 
 
         // 넘어온 배열의 포지션에 있는 값을 악보에 세팅해줌
