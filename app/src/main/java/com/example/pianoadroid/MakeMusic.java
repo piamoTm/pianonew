@@ -105,7 +105,8 @@ public class MakeMusic extends AppCompatActivity {
             makeBeatArr = music.getBeatArr();
         }
 
-        init(makeNotsArr, makeBeatArr );//리사이클러뷰 초기 세팅
+        //리사이클러뷰 초기 세팅
+        init(makeNotsArr, makeBeatArr );
 
         // 블루투스 소켓연결
         mConnectedTask = new ConnectedTask(SocketHandler.getmBluetoothsocket(),SocketHandler.getmDeviceName());
