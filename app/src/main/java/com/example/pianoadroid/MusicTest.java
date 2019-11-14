@@ -726,11 +726,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                         //연습모드에서의 인덱스?위치?를 선택된 위치로
                         index_value_practice = hight_pos;
 
-                        // 이전 계이름을 아두이노에 보냄
+                        // 이전 계이름과 비트를 (ex)C1) 아두이노에게 보냄
                         String sendMsg = musicnote_eng_array[hight_pos] + music.getBeat()[hight_pos-1];
 
                         Log.e("sendMsg: ", sendMsg);
-                        // 아두이노에 계이름 코드와 박자수를 보냄
+                        // 이전 계이름과 비트를 (ex)C1) 아두이노에게 보냄
                         sendMessage(sendMsg);
                     }
                 });

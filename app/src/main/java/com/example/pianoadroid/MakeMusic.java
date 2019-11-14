@@ -106,7 +106,7 @@ public class MakeMusic extends AppCompatActivity {
                     thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            // 정지된  음표 자리값 가져와서함 count에 넘어서 시작함 
+                            // 정지된  음표 자리값 가져와서함 count에 넘어서 시작함
                             count =stopCnt;
                             while (isThread){
                                 Message msg = handler.obtainMessage();
@@ -115,6 +115,16 @@ public class MakeMusic extends AppCompatActivity {
                                 handler.sendMessage(msg);
 
                                     try {
+                                        sendMessage("P");
+                                        // 음계 배열에서 공란일때 아두이노에 보내지 않음
+                                        if (!makeNotsArr.get(count).equals(" ")) {
+                                            // 아두이노로 블루투스 통신으로 음계를 보냄
+                                            //현재 계이름과 비트를 (ex)C1)
+                                            String sendMsg =makeNotsArr.get(count) + makeBeatArr.get(count);
+                                            Log.i("testLog_MakeMusic", "sendMsg "+sendMsg);
+                                            sendMessage(sendMsg);
+                                        }
+
                                         Thread.sleep(800);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
@@ -132,23 +142,6 @@ public class MakeMusic extends AppCompatActivity {
                    thread.interrupt();
 
                }
-//                String[] str;
-//                int i = 0;
-//                str = new String[8];
-//                str[0] = "C";
-//                str[1] = "D";
-//                str[2] = "E";
-//                str[3] = "F";
-//                str[4] = "G";
-//                str[5] = "A";
-//                str[6] = "B";
-//                str[7] = "H";
-//                str[8] = " ";
-//                makeNotsArr.add(str[8]);
-//                // Log.i("TESTLOG_YYJ","postion : "+testAdapter3.getItemCount());
-//                mMakeNoteRecycler.getLayoutManager().scrollToPosition(adapter.getItemCount()-1);
-//                adapter.notifyDataSetChanged();
-
             }
         });
 
@@ -174,9 +167,10 @@ public class MakeMusic extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
             adapter.setHighlightPos(msg.arg1); //
             adapter.notifyDataSetChanged();
-
+            mMakeNoteRecycler.smoothScrollToPosition(adapter.getItemCount());
             //Toast.makeText(getApplicationContext(), "쓰레드 확인 ",Toast.LENGTH_SHORT).show();
         }
     };
@@ -192,9 +186,11 @@ public class MakeMusic extends AppCompatActivity {
         if ( mConnectedTask != null ) {
             mConnectedTask.cancel(true);
         }
-        //  재생하기 중지 시키기
-        isThread = false;
-        thread.interrupt();
+        if (thread != null) {
+            //  재생하기 중지 시키기
+            isThread = false;
+            thread.interrupt();
+        }
         sendMessage("N");  //노말 모드로
     }
 
