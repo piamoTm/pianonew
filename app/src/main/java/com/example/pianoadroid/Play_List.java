@@ -53,6 +53,16 @@ public class Play_List extends AppCompatActivity {
 //        Music music = new Music("작은 별", "미상", "CCGGAAG FFEEDDC GGFFEED GGFFEED CCGGAAG FFEEDDC ",beat);
 //        db.addMusic(music);
 
+//        int beat1[] = {1,1,2,0,1,1,2,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,2,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,2,0,1,1,1,1,1,1,1,0,1,1,2,0,1,1,2,0,1,1,1,1,1,1,1,0};
+//        Music music = new Music("나비", "미상", "GEE FDD CDEFGGG GEEEFDD CEGGEEE DDDDDEF EEEEEFG GEE FDD CEGGEEE ",beat1);
+//        db.addMusic(music);
+//
+//        int beat2[] = {1,1,1,1,1,1,2,0,1,1,1,1,2,0,0,0,1,1,1,1,1,1,2,0,1,1,1,1,2,0,0,0};
+//        Music music1 = new Music("학교종", "미상", "GGAAGGE GGEED   GGAAGGE GEDEC   ",beat2);
+//        db.addMusic(music1);
+
+
+
 
     }
 
