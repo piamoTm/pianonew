@@ -272,8 +272,9 @@ public class MakeMusic extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mMakeNoteRecycler.setLayoutManager(linearLayoutManager);
 
-        //makeNotsArr = new ArrayList<>();
-        //makeBeatArr = new ArrayList<>();
+        //makeNotsArr = new ArrayList<>(); // 계이름
+        //makeBeatArr = new ArrayList<>(); // 비트
+
         adapter = new MakeMusic_RecyclerAdapter(makeNotsArr,makeBeatArr,-11);
         mMakeNoteRecycler.setAdapter(adapter);
     }
