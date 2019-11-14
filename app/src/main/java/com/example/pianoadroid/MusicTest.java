@@ -703,8 +703,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                         mAdapter.setHight_pos(hight_pos);
                         mAdapter.notifyDataSetChanged();
 
+                        focusing_cnt_practice = position;
+
                         // 리사이클러뷰 포커싱을 어댑터서 받아온 position값으로 함
-                        mRecyclerView.smoothScrollToPosition(position);
+                        mRecyclerView.smoothScrollToPosition(focusing_cnt_practice);
+
                         Log.i("testLog","포커싱 번호  :"+position );
 
                         //연습모드에서의 인덱스?위치?를 선택된 위치로
