@@ -16,9 +16,14 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
 
     // adapter에 들어갈 list 입니다.
     private ArrayList<Music> listData = new ArrayList<>();
+    private int menuIndex;
 
-    public PlayList_RecyclerAdapter(ArrayList<Music> listData) {
+    private final int MENU_READ = 0;
+    private final int MENU_WRITE = 1;
+
+    public PlayList_RecyclerAdapter(ArrayList<Music> listData, int menuIndex) {
         this.listData = listData;
+        this.menuIndex = menuIndex;
     }
 
     //============================================================================================
@@ -48,13 +53,30 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
             // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
-            holder.onBind(listData.get(position));
+
+            if (menuIndex == MENU_READ){
+                holder.onBind(listData.get(position));
+            }else{ //MENU_WRITE
+                if(position == 0){
+                    //Intex 0은 +버튼
+                    holder.onBindMakePlusBtn();
+
+               }else{
+                    holder.onBind(listData.get(position-1));
+                }
+            }
         }
 
-        @Override
+        @Override // RecyclerView 아이템의 총 개수 입니다.
         public int getItemCount() {
-                // RecyclerView의 총 개수 입니다.
-                return listData.size();
+            int itemCnt = 0;
+            if(menuIndex == MENU_READ){ //연습하기
+                itemCnt= listData.size(); //노래목록 만큼만
+
+            }else if(menuIndex == MENU_WRITE){//작곡하
+                itemCnt= listData.size() + 1; //노래목록 만큼에 [+]버튼용 하나 추가
+            }
+            return itemCnt;
         }
 
         void addItem(Music data) {
@@ -81,9 +103,9 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
         }
 
         void onBind(Music data) {
-            mTitle.setText(data.getTitle());
-            mWriter.setText(data.getWriter());
-            mId = data.getId();
+            mTitle.setText(data.getTitle()); //타이틀
+            mWriter.setText(data.getWriter()); //작가
+            mId = data.getId();//노래 아이디
 
             mLay.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,6 +116,20 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
                     Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+        void onBindMakePlusBtn(){ //+버튼
+            mTitle.setText("+"); //타이틀
+
+            mLay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), MakeMusic.class);
+                    v.getContext().startActivity(intent);
+                    //Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
         }
     }
 }

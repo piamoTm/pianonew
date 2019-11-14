@@ -45,27 +45,29 @@ public class Main_menu extends AppCompatActivity {
         mPlayBtn.setEnabled(false);
         mWriteBtn.setEnabled(false);
         btn_change.setEnabled(false);
-        //연주하기
+        //연주하기 버튼
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Play_List.class);
                 //intent.putExtra("imageUri", uri);
+                intent.putExtra("menuIndex", 0);
                 startActivity(intent);
             }
         });
 
-        // 작곡하기
+        // 작곡하기 버튼
         mWriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MakeMusic.class);
+                Intent intent = new Intent(getApplicationContext(), Play_List.class);
                 //intent.putExtra("imageUri", uri);
+                intent.putExtra("menuIndex", 1);
                 startActivity(intent);
 
             }
         });
-        //사운드변경 버튼 클릭이벤트 연결
+        //사운드변경 버튼 : 클릭이벤트 연결
         btn_change.setOnClickListener(new View.OnClickListener(){
 
             @Override

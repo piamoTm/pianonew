@@ -417,6 +417,13 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                         }
 
                         sendMessage("R"); // 연습하기 모드로
+
+                        // 딜레이 0.3초를 줘야지 아두이누에서 연습하기 음계를 받아짐
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         btn_practice.setVisibility(View.INVISIBLE);
                         btn_practice_stop.setVisibility(View.VISIBLE);
 
@@ -905,6 +912,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     //아두이노로 데이터 보내기
     void sendMessage(String msg){
+
 
         if ( mConnectedTask != null ) {
             mConnectedTask.write(msg.trim());
