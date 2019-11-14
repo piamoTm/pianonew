@@ -1,5 +1,6 @@
 package com.example.pianoadroid;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -22,10 +23,18 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
 
     private final int MENU_READ = 0;
     private final int MENU_WRITE = 1;
+    private Context context;
+    private OnItemClickListener onItemClickListener;
 
-    public PlayList_RecyclerAdapter(ArrayList<Music> listData, int menuIndex) {
+    public PlayList_RecyclerAdapter(ArrayList<Music> listData, int menuIndex, OnItemClickListener onItemClickListener) {
         this.listData = listData;
         this.menuIndex = menuIndex;
+        this.context = context;
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setListData(ArrayList<Music> listData) {
+        this.listData = listData;
     }
 
     //============================================================================================
@@ -130,13 +139,15 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
 
 
            mLay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), MakeMusic.class);
-                    v.getContext().startActivity(intent);
-                    //Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
-                }
-            });
+               @Override
+               public void onClick(View view) {
+                   onItemClickListener.onItemClick();
+               }
+           });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick();
     }
 }

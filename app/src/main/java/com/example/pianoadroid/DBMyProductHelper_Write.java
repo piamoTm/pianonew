@@ -237,7 +237,7 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
         ArrayList<Music> musicArr = new ArrayList<Music>();
 
         //select all query
-        String selectQuery = "SELECT * FROM " + TABLE_NAME_MY_PRODUCTS ;
+        String selectQuery = "SELECT * FROM " + TABLE_NAME_MY_PRODUCTS +" ORDER BY " + KEY_ID +" DESC " ;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -253,7 +253,6 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
                         cursor.getString(3),     //code
                         cursor.getString(4),     //date
                         cursor.getString(5)     //beat
-
                 );
 
                 //adding myProduct to list

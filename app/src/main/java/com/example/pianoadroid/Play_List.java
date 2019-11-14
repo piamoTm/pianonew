@@ -3,6 +3,7 @@ package com.example.pianoadroid;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ public class Play_List extends AppCompatActivity {
 
     private final int MENU_READ = 0;
     private final int MENU_WRITE = 1;
+    private final int REQUEST_ACT = 111;
 
 
     private PlayList_RecyclerAdapter adapter;
@@ -94,7 +96,14 @@ public class Play_List extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new PlayList_RecyclerAdapter(musicArr, menuIndex);
+        adapter = new PlayList_RecyclerAdapter(musicArr, menuIndex, new PlayList_RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                Intent intent = new Intent(getApplicationContext(), MakeMusic.class);
+                startActivityForResult(intent, REQUEST_ACT);
+
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 
@@ -112,4 +121,23 @@ public class Play_List extends AppCompatActivity {
         }
         return musicArrayList;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.i("testLog", "onActivityResult] requestCode" +requestCode +" resultCode " +resultCode);
+
+        if(resultCode == RESULT_OK && requestCode == REQUEST_ACT){
+
+            boolean isSave = data.getBooleanExtra("result_msg",false);
+
+            Log.i("testLog", "잘돌아옴 "+isSave);
+            if(isSave){
+                adapter.setListData(loadMusicList());
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
 }
