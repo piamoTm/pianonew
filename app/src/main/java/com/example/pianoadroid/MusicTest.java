@@ -379,6 +379,16 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 연습모드 버튼 클릭 시 발생 이벤트
     public void btn_practice_func(){
+
+//        여기서 자동연주중인게 있다면 스레드를 중지시켜야 됨
+
+        // 자동연주가 진행중임
+        if (bool_music_state){
+            // 자동연주 중인 스레드를 중지시킴
+            thread.interrupt();
+        }
+
+
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
         alertbuilder.setTitle("연습모드");
 
@@ -389,6 +399,9 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
 
+                        thread = new music_thread();
+                        thread.start();
+
                     }
                 })
                 .setNegativeButton("시작", new DialogInterface.OnClickListener() {
@@ -398,7 +411,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                         // 원곡재생 모드가 진행중 일때 연습모드를 실행할 경우, 기본 원곡재생의 스레드를 죽임
                         if (bool_music_state){
-                            thread.interrupt();
+                            //thread.interrupt();
                             btn_listen.setVisibility(View.VISIBLE);
                             btn_stop.setVisibility(View.INVISIBLE);
                         }
