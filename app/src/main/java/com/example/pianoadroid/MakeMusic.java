@@ -40,6 +40,7 @@ public class MakeMusic extends AppCompatActivity {
 
     private RecyclerView mMakeNoteRecycler;
     private MakeMusic_RecyclerAdapter adapter;
+    private Button mPlayBtn,mSaveBtn;
     ArrayList<String> makeNotsArr;
     ArrayList<Integer> makeBeatArr;
 
@@ -56,6 +57,7 @@ public class MakeMusic extends AppCompatActivity {
     Thread thread;
     boolean isThread = false;
     int count; // 리사이클러뷰 자리수 증가해서 배경색 변경
+    int stopCnt =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +66,8 @@ public class MakeMusic extends AppCompatActivity {
         setContentView(R.layout.activity_make_music);
 
         ImageView mBackBtn = (ImageView)findViewById(R.id.back_btn);
-        Button mSaveBtn = (Button)findViewById(R.id.saveBtn);
-        final Button mPlayBtn =(Button)findViewById(R.id.palyBtn);
+        mSaveBtn = (Button)findViewById(R.id.saveBtn);
+        mPlayBtn =(Button)findViewById(R.id.palyBtn);
 
         //infoshow("확인","no","건반을 눌러주세요:)");// 안내 다이얼로그
         init();//리사이클러뷰 초기 세팅
@@ -81,7 +83,9 @@ public class MakeMusic extends AppCompatActivity {
         //SQLite db helper init 초기화
         db = new DBMyProductHelper_Write(this);
 
-
+        //빈오선지일 때 버튼 비활성화
+        mPlayBtn.setEnabled(false);
+        mSaveBtn.setEnabled(false);
 
         //백버튼 누르면 뒤로가는 이벤트 붙임
         mBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -96,14 +100,14 @@ public class MakeMusic extends AppCompatActivity {
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("testLog", "makeNotsArr.size() :" + makeNotsArr.size());
                if(mPlayBtn.getText().toString().equals("재 생 하 기")){
                    mPlayBtn.setText("중 지 하 기");
                     isThread = true;
                     thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            count =0;
+                            // 정지된  음표 자리값 가져와서함 count에 넘어서 시작함 
+                            count =stopCnt;
                             while (isThread){
                                 Message msg = handler.obtainMessage();
                                 msg.arg1 = count;
@@ -122,6 +126,8 @@ public class MakeMusic extends AppCompatActivity {
                 // 중지하기 눌렀을 경우 재생하기로 바꿔주기
                }else if(mPlayBtn.getText().toString().equals("중 지 하 기") ){
                    mPlayBtn.setText("재 생 하 기");
+                   Log.i("testLog", "정지된 쓰레드의 list값: stopCnt" + count);
+                   stopCnt = count;
                    isThread = false;
                    thread.interrupt();
 
@@ -183,9 +189,12 @@ public class MakeMusic extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-            if ( mConnectedTask != null ) {
-                mConnectedTask.cancel(true);
-            }
+        if ( mConnectedTask != null ) {
+            mConnectedTask.cancel(true);
+        }
+        //  재생하기 중지 시키기
+        isThread = false;
+        thread.interrupt();
         sendMessage("N");  //노말 모드로
     }
 
@@ -314,6 +323,11 @@ public class MakeMusic extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             Log.i("MakeMusic : ",mConnectedDeviceName + ": " + recvMessage[0]);
 
+            //오선지에 음표가 들어왔을 경우 활성화
+            if(makeNotsArr.size() == 1) {
+                mPlayBtn.setEnabled(true);  // 재생하기
+                mSaveBtn.setEnabled(true);  // 저장하기 버튼
+            }
 
         }
 
