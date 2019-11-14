@@ -379,6 +379,16 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
     // 연습모드 버튼 클릭 시 발생 이벤트
     public void btn_practice_func(){
+
+//        여기서 자동연주중인게 있다면 스레드를 중지시켜야 됨
+
+        // 자동연주가 진행중임
+        if (bool_music_state){
+            // 자동연주 중인 스레드를 중지시킴
+            thread.interrupt();
+        }
+
+
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
         alertbuilder.setTitle("연습모드");
 
@@ -389,6 +399,9 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
 
+                        thread = new music_thread();
+                        thread.start();
+
                     }
                 })
                 .setNegativeButton("시작", new DialogInterface.OnClickListener() {
@@ -398,7 +411,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
                         // 원곡재생 모드가 진행중 일때 연습모드를 실행할 경우, 기본 원곡재생의 스레드를 죽임
                         if (bool_music_state){
-                            thread.interrupt();
+                            //thread.interrupt();
                             btn_listen.setVisibility(View.VISIBLE);
                             btn_stop.setVisibility(View.INVISIBLE);
                         }
@@ -522,64 +535,55 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
 
         if (array[index_value_practice].equals(value_kor)){ //아두이노건반과 현재 음계가 맞음
             Log.e("맞음맞음", "맞음맞음");
+
             // 같으면 어댑터에 다음 포커싱이 될 음계위치를 hight_position으로 보냄
 
-            // 만약 해당 음계가 2박이면 hight_position을 +2로 보냄
-            if (bit_array[index_value_practice].equals("2")){ //맞음 + 박자가 2박
-
-                index_value_practice = index_value_practice + 2;
-
-                Log.e("2박자index_value: ", index_value_practice + "");
-                //Log.e("2박자 musicnote_eng_array[index_value_practice]: ", musicnote_eng_array[index_value_practice] + "");
-
-
-                // handler롤 통해 포커싱 UI를 바꿈
-                handler.sendEmptyMessage(2);
-
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            do {
+                index_value_practice++; //다음으로
+                if (index_value_practice >= array.length){ // 연습모드 끝. 더이상의 악보가 없어.
+                    break;
                 }
+            }while (bit_array[index_value_practice].equals("0")); //0이면 다음으로++;
 
-                // 연습모드가 완전 끝났을 시
-                if (index_value_practice == array.length){
-                    Log.e("연습모드 끝남", "끝남끝남");
-                    // index값 초기화
-                    index_value_practice = 1;
 
-                    // 끝났으니 false로 바꿔주어야지 건반을 눌려도 아두이누에서 데이터를 안받아옴
-                    bool_practice = false;
+            //handler롤 통해 포커싱 UI를 바꿈
+            handler.sendEmptyMessage(2);
 
-                    // 연습중지를 연습하기 로 바꿔줌
-                    handler.sendEmptyMessage(4);
-                    //btn_practice.setVisibility(View.VISIBLE);
-                    //btn_practice_stop.setVisibility(View.INVISIBLE);
-                }else {
-                    // 처음에 악보 첫번째꺼의 계이름을 아두이노에 보내줘야지 아두이노 건반에서 불빛이 들어옴.
-                    String sendMsg = musicnote_eng_array[index_value_practice] + music.getBeat()[index_value_practice-1];
-                    // 아두이노에 계이름 코드와 박자수를 보냄
-                    sendMessage(sendMsg);
-                }
-            }else{ //맞음 + 박자가 1박
-                // 1늘려줌
-                index_value_practice ++;
+            //0.3초 쉬기
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                // 처음에 악보 첫번째꺼의 계이름을 아두이노에 보내줘야지 아두이노 건반에서 불빛이 들어옴.
+            // 연습모드가 끝났어. 더이상의 악보가 없어.
+            if (index_value_practice >= array.length){
+                Log.e("연습모드 끝남", "끝남끝남");
+                // index값 초기화
+                index_value_practice = 1;
+
+                // 끝났으니 false로 바꿔주어야지 건반을 눌려도 아두이누에서 데이터를 안받아옴
+                bool_practice = false;
+
+                // 연습중지를 연습하기 로 바꿔줌
+                handler.sendEmptyMessage(4);
+                //btn_practice.setVisibility(View.VISIBLE);
+                //btn_practice_stop.setVisibility(View.INVISIBLE);
+
+                //포커스 맨위로
+                focusing_cnt_practice = 0;
+                mRecyclerView.smoothScrollToPosition(focusing_cnt_practice);
+
+
+            }else { //아직 연습모드 안끝남. 다음꺼 보낼껀데.
+
+                // 지금꺼의 계이름과 박자를 아두이노에 보내줘야지 아두이노 건반에서 불빛이 들어옴.
                 String sendMsg = musicnote_eng_array[index_value_practice] + music.getBeat()[index_value_practice-1];
-
                 // 아두이노에 계이름 코드와 박자수를 보냄
                 sendMessage(sendMsg);
-
-                // handler롤 통해 포커싱 UI를 바꿈
-                handler.sendEmptyMessage(2);
             }
-        }else{
+
+        }else{//틀림
             Log.e("틀림틀림", "틀림틀림");
            // Toast.makeText(this, "틀렸습니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show(); // Can't toast on a thread that has not called Looper.prepare()
             try {
@@ -712,8 +716,11 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                         mAdapter.setHight_pos(hight_pos);
                         mAdapter.notifyDataSetChanged();
 
+                        focusing_cnt_practice = position;
+
                         // 리사이클러뷰 포커싱을 어댑터서 받아온 position값으로 함
-                        mRecyclerView.smoothScrollToPosition(position);
+                        mRecyclerView.smoothScrollToPosition(focusing_cnt_practice);
+
                         Log.i("testLog","포커싱 번호  :"+position );
 
                         //연습모드에서의 인덱스?위치?를 선택된 위치로
@@ -838,7 +845,7 @@ public class MusicTest extends AppCompatActivity implements MusicTest_Adapter.Th
                 // 현재 연주중인 음계를 포커싱을 맞추어 줌
                 mRecyclerView.smoothScrollToPosition(focusing_cnt);
 
-                // 연습하기 모두일 시 포커싱 UI를 바꿈
+                // 연습하기 모드일 시 포커싱 UI를 바꿈
             }else if (msg.what == 2){
 
                 mAdapter.setHight_pos(index_value_practice);
