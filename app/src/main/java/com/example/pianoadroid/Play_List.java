@@ -90,6 +90,11 @@ public class Play_List extends AppCompatActivity {
 
 
     }
+    // backpress 홈버튼 옆에 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     //리사이클러뷰 세팅
     //menuIndex에 따라 리사이클러뷰 모양이 좀 달라야해.

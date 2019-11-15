@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +41,7 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
     private static final String TAG = "soundChange";
 
     private Button[] buttons; //버튼들
+    private LinearLayout[] lay_buttons;// 레이아웃 버튼들
     private boolean[] isClicked;// 버튼 활성화
     private final int cat = 0; //버튼활성화 배열,버튼배열 인덱스로 사용할거야
     private final int piano = 1;
@@ -91,13 +93,19 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         int size = 3;
 
         //버튼 연결
+        lay_buttons  = new LinearLayout[size];
+        lay_buttons[cat] = (LinearLayout) findViewById(R.id.catlay_btn);
+        lay_buttons[piano] = (LinearLayout)findViewById(R.id.pianolay_btn);
+        lay_buttons[xylophone] = (LinearLayout)findViewById(R.id.xylolay_btn);
+        lay_buttons[cat].setOnClickListener(this);
+        lay_buttons[piano].setOnClickListener(this);
+        lay_buttons[xylophone].setOnClickListener(this);
+        //버튼 연결 ..이전
         buttons = new Button[size];
         buttons[cat] = (Button) findViewById(R.id.btn_cat);
         buttons[piano] = (Button)findViewById(R.id.btn_piano);
         buttons[xylophone] = (Button)findViewById(R.id.btn_xylophone);
-        buttons[cat].setOnClickListener(this);
-        buttons[piano].setOnClickListener(this);
-        buttons[xylophone].setOnClickListener(this);
+
 
         //버튼 비활성화 init
         isClicked = new boolean[size];
@@ -109,7 +117,6 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
         backpressBtn.setOnClickListener(this);
 
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -121,7 +128,7 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_cat : //고양이버튼 누름
+            case R.id.catlay_btn : //고양이버튼 누름
                 Log.i("testLog", "고양이");
                 if(isClicked[cat]){ //활성화 -> 비활성화
                     soundID = null;
@@ -138,7 +145,7 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
 
-            case R.id.btn_piano :
+            case R.id.pianolay_btn :
                 Log.i("testLog", "클래식피아노");
                 if(isClicked[piano]){ //활성화 -> 비활성화
                     soundID = null;
@@ -155,7 +162,7 @@ public class SoundChangeActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
 
-            case R.id.btn_xylophone :
+            case R.id.xylolay_btn :
                 Log.i("testLog", "실로폰");
                 if(isClicked[xylophone]){ //활성화 -> 비활성화
                     soundID = null;
