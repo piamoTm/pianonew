@@ -22,7 +22,7 @@
             android:background="@drawable/btn_rectangle_line_white"
             android:padding="70px"
             android:textSize="25sp"
-            android:text="연 습 하 기"/>
+            android:text="연 주 하 기"/>
 
         <Button
             android:id="@+id/write_btn"

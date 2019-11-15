@@ -146,6 +146,7 @@ public class MakeMusic extends AppCompatActivity {
                     if(beforeSize == 0) {
                         infoshow("아니오", "ok", "악보를 저장하지 않고 나가시겠습니까? ");
                         // 이전 곡인데 수정이 되었을 경우
+
                     } else if(beforeSize != makeNotsArr.size()){
                         infoshow("아니오", "ok", "수정된 내용을 저장하지 않고 나가시겠습니까? ");
                     }else{
@@ -245,15 +246,8 @@ public class MakeMusic extends AppCompatActivity {
                         show();  // 제목 , 작곡자 입력  dialog-->db 저장 여기서 진행
                     }
                     else if(beforeSize != makeNotsArr.size()){ // 수정된 곡
-                        oldmusic.setBeat(readBeat());
-                        oldmusic.setScore(readNots());
-                        db.updateMusic(oldmusic);
+                        saveshow();
 
-                        //플레이 리스트로
-                        Intent intent = new Intent();
-                        intent.putExtra("result_msg", true);
-                        setResult(RESULT_OK, intent);
-                        finish();
                 }
                 }else if (makeNotsArr.size() == 0){
                     // 빈오선지 일경우 저장이 안됨
@@ -550,6 +544,38 @@ public class MakeMusic extends AppCompatActivity {
         }
         builder.show();
     }
+
+    //저장
+    void saveshow()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("수정 사항을 저장 하시겠습니까 ?");
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        oldmusic.setBeat(readBeat());
+                        oldmusic.setScore(readNots());
+                        db.updateMusic(oldmusic);
+
+                        //플레이 리스트로
+                        Intent intent = new Intent();
+                        intent.putExtra("result_msg", true);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                });
+
+
+            builder.setNegativeButton("아니요",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+        builder.show();
+    }
+
     // 제목 , 작곡자 입력 dialog
     void show(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
