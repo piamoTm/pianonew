@@ -1504,7 +1504,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         }else {
                             myViewHolder.img5.setImageResource(R.drawable.note2_do);
                         }
-                        myViewHolder.img5.setImageResource(R.drawable.do_icon);
+                        //myViewHolder.img5.setImageResource(R.drawable.do_icon);
                         myViewHolder.img5.setVisibility(View.VISIBLE);
                         myViewHolder.img5.setLayoutParams(layoutParams);
                     }
@@ -1786,7 +1786,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             myViewHolder.img6_color.setImageResource(R.drawable.note2_do);
                         }
 
-                        myViewHolder.img6_color.setImageResource(R.drawable.do_icon);
+                       //myViewHolder.img6_color.setImageResource(R.drawable.do_icon);
                         myViewHolder.img6_color.setLayoutParams(layoutParams);
                         myViewHolder.img6.setVisibility(View.INVISIBLE);
                         myViewHolder.img6_color.setVisibility(View.VISIBLE);
@@ -1797,7 +1797,7 @@ public class MusicTest_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         }else {
                             myViewHolder.img6.setImageResource(R.drawable.note2_do);
                         }
-                        myViewHolder.img6.setImageResource(R.drawable.do_icon);
+                        //myViewHolder.img6.setImageResource(R.drawable.do_icon);
                         myViewHolder.img6.setVisibility(View.VISIBLE);
                         myViewHolder.img6.setLayoutParams(layoutParams);
                     }
