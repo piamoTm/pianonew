@@ -342,4 +342,19 @@ public class DBMyProductHelper_Write extends SQLiteOpenHelper {
 
         return deletedRowCount;// 삭제된 row갯수.
     }
+
+    public void deleteAllMusic (){
+        Log.i("DBLog", "[DBMyProductHelper_Read] deleteMusic()");
+
+        //getWritableDatabase(): 읽고 쓰기 위해 DB 연다. 권한이 없거나 디스크가 가득 차면 실패
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String countQuery = "DELETE FROM " + TABLE_NAME_MY_PRODUCTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        db.close();
+
+
+
+        //return deletedRowCount;// 삭제된 row갯수.
+    }
 }

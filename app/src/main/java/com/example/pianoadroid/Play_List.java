@@ -88,6 +88,13 @@ public class Play_List extends AppCompatActivity {
 //        Music music1 = new Music("학교종", "미상", "GGAAGGE GGEED   GGAAGGE GEDEC   ",beat2);
 //        db.addMusic(music1);
 
+        ArrayList<Music> musicArrayList = ((DBMyProductHelper_Write)db).getAllMusic();
+        for (Music m: musicArrayList
+             ) {
+            ((DBMyProductHelper_Write)db).deleteMusic(m);
+        }
+
+
 
     }
     // backpress 홈버튼 옆에 
