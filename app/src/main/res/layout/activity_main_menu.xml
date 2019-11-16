@@ -17,19 +17,21 @@
         <Button
             android:id="@+id/play_btn"
             android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_rectangle_line_white"
             android:padding="70px"
             android:textSize="25sp"
+            android:layout_marginHorizontal="500px"
             android:text="연 주 하 기"/>
 
         <Button
             android:id="@+id/write_btn"
             android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40px"
+            android:layout_marginHorizontal="500px"
             android:padding="70px"
             android:textSize="25sp"
             android:text="작 곡 하 기"
@@ -38,10 +40,11 @@
         <Button
             android:id="@+id/btn_change"
             android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="소 리 변 환"
+            android:text="악기 소리 변경"
             android:layout_marginTop="40px"
+            android:layout_marginHorizontal="500px"
             android:padding="70px"
             android:textSize="25sp"
             android:background="@drawable/btn_rectangle_line_white"
