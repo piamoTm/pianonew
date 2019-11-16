@@ -168,7 +168,7 @@ public class MakeMusic extends AppCompatActivity {
             public void onClick(View v) {
                if(mPlayBtn.getText().toString().equals("재 생 하 기")){
                    // 연주모드로 아두이노에 보냄
-                   mPlayBtn.setText("중 지 하 기");
+                   mPlayBtn.setText("정 지 하 기");
                    sendMessage("P");
                     isThread = true;
                     thread = new Thread(new Runnable() {
@@ -223,7 +223,7 @@ public class MakeMusic extends AppCompatActivity {
                     });
                     thread.start();
                 // 중지하기 눌렀을 경우 재생하기로 바꿔주기
-               }else if(mPlayBtn.getText().toString().equals("중 지 하 기") ){
+               }else if(mPlayBtn.getText().toString().equals("정 지 하 기") ){
                    mPlayBtn.setText("재 생 하 기");
                    Log.i("testLog", "정지된 쓰레드의 list값: stopCnt" + count);
                    stopCnt = count;
