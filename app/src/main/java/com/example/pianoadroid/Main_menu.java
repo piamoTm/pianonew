@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +47,8 @@ public class Main_menu extends AppCompatActivity {
         mPlayBtn.setEnabled(false);
         mWriteBtn.setEnabled(false);
         btn_change.setEnabled(false);
+
+
         //연주하기 버튼
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override

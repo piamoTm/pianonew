@@ -144,7 +144,6 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION) {
-                        Log.i("TestLogtt","     "+pos);
 
                             listData.remove(pos -1);
                             notifyItemRemoved(pos -1);
