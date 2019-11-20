@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +31,9 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
     private Context context;
     private OnItemClickListener onItemClickListener;
 
-    public PlayList_RecyclerAdapter(ArrayList<Music> listData, int menuIndex, OnItemClickListener onItemClickListener) {
+    private  DBMyProductHelper_Write db;
+
+    public PlayList_RecyclerAdapter(ArrayList<Music> listData, int menuIndex, Context context, OnItemClickListener onItemClickListener) {
         this.listData = listData;
         this.menuIndex = menuIndex;
         this.context = context;
@@ -54,15 +58,15 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
             // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
 
-            if (menuIndex == MENU_READ){
-                holder.onBind(listData.get(position));
-            }else{ //MENU_WRITE
+            if (menuIndex == MENU_READ){ //연습하기
+                holder.onBind(listData.get(position),MENU_READ);
+            }else{ //MENU_WRITE //작곡하기
                 if(position == 0){
                     //Intex 0은 +버튼
                     holder.onBindMakePlusBtn();
 
                }else{
-                    holder.onBind(listData.get(position-1));
+                    holder.onBind(listData.get(position-1),MENU_WRITE);
                 }
             }
         }
@@ -93,6 +97,7 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
         private TextView mWriter; //작곡가
         private  int mId;   // 노래 sqlite id
         private ImageView mAddimg;
+        private ImageView mDelimg;
 
 
         ItemViewHolder(View itemView) {
@@ -101,14 +106,21 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
             mTitle = itemView.findViewById(R.id.title);
             mWriter = itemView.findViewById(R.id.writer);
             mAddimg = itemView.findViewById(R.id.addimg);
+            mDelimg = itemView.findViewById(R.id.delete_btn);
 
         }
 
-        void onBind(Music data) {
+        void onBind(Music data ,int Index) {
             mTitle.setText(data.getTitle()); //타이틀
             mWriter.setText(data.getWriter()); //작가
             mId = data.getId();//노래 아이디
-            mAddimg.setVisibility(View.INVISIBLE);//이미지
+            if(Index == 1){// 작곡일때
+                mAddimg.setVisibility(View.INVISIBLE);//이미지
+            }else{  //연주하기 일때
+                mAddimg.setVisibility(View.INVISIBLE);//이미지
+                mDelimg.setVisibility(View.INVISIBLE);//삭제 이미지
+            }
+
 
             mLay.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -125,11 +137,35 @@ public class PlayList_RecyclerAdapter extends RecyclerView.Adapter<PlayList_Recy
                     //Toast.makeText(v.getContext(),"선택됨 id: "+mId,Toast.LENGTH_SHORT).show();
                 }
             });
+
+            //작곡하기에만  있는 삭제하기 버튼
+            mDelimg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        Log.i("TestLogtt","     "+pos);
+
+                            listData.remove(pos -1);
+                            notifyItemRemoved(pos -1);
+                            notifyDataSetChanged();
+                            //notifyItemChanged(pos -1);
+                            //notifyItemRangeChanged(pos - 1, listData.size());
+                    }
+
+                    //SQLite db helper init 초기화
+                    db = new DBMyProductHelper_Write(context);
+                    // DB Lite 에서 클릭된 악보 삭제하기
+                    db.deleteMusic(mId);
+
+                }
+            });
         }
 
         void onBindMakePlusBtn(){ //+버튼
             mTitle.setVisibility(View.INVISIBLE); //타이틀
             mWriter.setVisibility(View.INVISIBLE);//작가
+            mDelimg.setVisibility(View.INVISIBLE); // 삭제 버튼
             //mAddimg.setVisibility(View.VISIBLE);//이미지
 
 
