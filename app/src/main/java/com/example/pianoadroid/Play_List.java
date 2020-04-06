@@ -111,7 +111,7 @@ public class Play_List extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new PlayList_RecyclerAdapter(musicArr, menuIndex, new PlayList_RecyclerAdapter.OnItemClickListener() {
+        adapter = new PlayList_RecyclerAdapter(musicArr, menuIndex,this,new PlayList_RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick() {
                 Intent intent = new Intent(getApplicationContext(), MakeMusic.class);
